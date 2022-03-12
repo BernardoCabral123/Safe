@@ -74,6 +74,7 @@ router.get("/logoEnta.png",(req,res)=>{
     res.sendFile(path.join(srcLocation,"/view/assets/logoEnta.png"));
 })
 
+
 router.get("/logoPlataforma.png",(req,res)=>{
     res.sendFile(path.join(srcLocation,"/view/assets/logoPlataforma.png"));
 })
@@ -97,6 +98,8 @@ router.get("/criarAnuncio.svg",(req,res)=>{
     res.sendFile(path.join(srcLocation,"/view/assets/criarAnuncio.svg"));
 })
 
+
+
 //profile
 router.get("/profile.svg",(req,res)=>{
     res.sendFile(path.join(srcLocation,"/view/assets/profile.svg"));
@@ -118,6 +121,10 @@ router.get("/curso.svg",(req,res)=>{
 
 router.get("/turma.svg",(req,res)=>{
     res.sendFile(path.join(srcLocation,"/view/assets/turma.svg"));
+})
+
+router.get("/diretor.svg",(req,res)=>{
+    res.sendFile(path.join(srcLocation,"/view/assets/diretor.svg"));
 })
 
 //duvidas
