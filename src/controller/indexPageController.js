@@ -132,51 +132,55 @@ function renderInicio(){
     <div class="row">
         <div class="col-sm-4">
             <div class="card text-center shadow-lg hover-translate-y-n10">
-                <div class="px-4 py-4">
+                <div class="px-4 py-2">
                     <div class="position-relative">
                         <div class="position-absolute top-0 start-0">
                             <img style="height: 50px;" class="img-fluid" src="http://localhost:3000/files/Assets/numero-1.png" alt="">
                         </div>
                         <img style="height: 150px;" class="img-fluid" src="http://localhost:3000/files/Assets/userLogin.png" alt="">
                     </div>
-                    <h5>Login</h5>
                 </div>
 
-               
+                <div class="px-4 py-3">
+                    <h5>Login</h5>
+                </div>
             </div>
         </div>
 
         <div class="col-sm-4">
             <div class="card text-center shadow-lg hover-translate-y-n10">
-                <div class="px-4 py-4">
+                <div class="px-4 py-2">
                     <div class="position-relative">
                         <div class="position-absolute top-0 start-0">
                             <img style="height: 50px;" class="img-fluid" src="http://localhost:3000/files/Assets/numero-2.png" alt="">
                         </div>
                         <img style="height: 150px;" class="img-fluid" src="http://localhost:3000/files/Assets/candidate.png" alt="">
                     </div>
-                    <h5>Encontrar Estagio</h5>
                 </div>
 
-               
+                <div class="px-4 py-3">
+                    <h5>Encontrar Estagio</h5>
+                </div>
             </div>
         </div>
 
         <div class="col-sm-4">
             <div class="card text-center shadow-lg hover-translate-y-n10">
-                <div class="px-4 py-4">
+                <div class="px-4 py-2">
                     <div class="position-relative">
                         <div class="position-absolute top-0 start-0">
                             <img style="height: 50px;" class="img-fluid" src="http://localhost:3000/files/Assets/numero-3.png" alt="">
                         </div>
                         <img style="height: 150px;" class="img-fluid" src="http://localhost:3000/files/Assets/serAceito.png" alt="">
-                    </div>
-                    <h5>Ser aceite</h5>
+                    </div>    
                 </div>
 
-               
+                <div class="px-4 py-3">
+                    <h5>Ser aceite</h5>
+                </div>
             </div>
         </div>
+    </div>
 
     <div class="row mt-5">
         <div class="col-sm-4">
@@ -190,9 +194,8 @@ function renderInicio(){
                     </div>
                 </div>
 
-                <div class="px-4 py-1">
+                <div class="px-4 py-3">
                     <h5>Criar Conta</h5>
-                    <p>Lorem ipsum, libero delectus vero, itaque earum?</p>
                 </div>
             </div>
         </div>
@@ -208,9 +211,8 @@ function renderInicio(){
                     </div>
                 </div>
 
-                <div class="px-4 py-1">
+                <div class="px-4 py-3">
                     <h5>Criar Anuncio</h5>
-                    <p>Lorem ipsum, libero delectus vero, itaque earum?</p>
                 </div>
             </div>
         </div>
@@ -226,9 +228,8 @@ function renderInicio(){
                     </div>
                 </div>
 
-                <div class="px-4 py-1">
+                <div class="px-4 py-3">
                     <h5>Aceitar Estagiarios</h5>
-                    <p>Lorem ipsum, libero delectus vero, itaque earum?</p>
                 </div>
             </div>
         </div>
@@ -2316,7 +2317,7 @@ function fillAreas(){
 /****   Todos   ****/
 //renders
 function renderFooter(){
-    renderCode('foot',`<footer class="bg-dark text-white"><div class="container text-center text-md-left"><div class="row text-center text-md-left"><div class="col-md-3 col-sm-3 col-sml-3 mx-auto mt-3"><h5 class="text-uppercase mb-4 font-weight-bold text-white">ENTA</h5><p> A Enta, iniciou a sua actividade a 6 de Outubro de 1993,sendo parte integrante do INOVA até Setembro de 2001,desde então, tem vindo a promover a formação profissionalizante,disponibilizando cursos de nível V e nivel IV.</p></div><div class="col-md-4 col-sm-3 col-sm-3 mx-auto mt-3"><h5 class="text-uppercase mb-4 font-weight-bold text-white">Contact</h5><p><i class="fas fa-home mr-3"></i> R. de São Gonçalo 101, Ponta Delgada</p><p><i class="fas fa-envelope mr-3"></i> enta@gmail.com</p><p><i class="fas fa-phone mr-3"></i> +351 296 650 660</p></div></div><hr class="mb-2"><div class="row align-items-center"><div class="col-sm-6 col-sm-6"><p>Copyright ©2021:<a href="https://www.enta.store/" style="text-decoration: none;"><strong class="text-white"> ENTA</strong></a></p></div><div class="col-sm-6 col-sm-6"><div class="text-center text-sm-right"><ul class="list-unstyled list-inline"><li class="list-inline-item"><a href="https://www.facebook.com/escoladenovastecnologias/" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="fab fa-facebook"></i></a></li><li class="list-inline-item"><a href="https://www.enta.store/" target="_blank" class="btn-floating btn-sm text-white"style="font-size: 23px;"><i class="fas fa-globe"></i></a></li></ul></div></div></div></div></footer>`);
+    renderCode('foot',`<footer class="bg-dark text-white"><div class="container text-left"><div class="row text-left"><div class="col-md-3 col-sm-3 col-sml-3 mx-auto mt-3"><h5 class="text-uppercase text-center mb-4 font-weight-bold text-white">ENTA</h5><p class=" text-justify"> A Enta iniciou a sua atividade a 6 de outubro de 1993, sendo parte integrante do INOVA até setembro de 2001, desde então, tem vindo a promover a formação profissionalizante, disponibilizando cursos de nível V e nivel IV.</p></div><div class="col-md-4 col-sm-3 col-sm-3 mx-auto mt-3"><h5 class="text-uppercase text-center mb-4 font-weight-bold text-white">Contacto</h5><p><i class="fas fa-home mr-3"></i> R. de São Gonçalo 101, Ponta Delgada</p><p><i class="fas fa-envelope mr-3"></i> enta@gmail.com</p><p><i class="fas fa-phone mr-3"></i> +351 296 650 660</p></div></div><hr class="mb-2"><div class="row align-items-center"><div class="col-sm-6 col-sm-6"><p>Copyright ©2021:<a href="https://www.enta.store/" style="text-decoration: none;"><strong class="text-white"> ENTA</strong></a></p></div><div class="col-sm-6 col-sm-6"><div class="text-right text-sm-right"><ul class="list-unstyled list-inline"><li class="list-inline-item"><a href="https://www.facebook.com/escoladenovastecnologias/" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="fab fa-facebook"></i></a></li><li class="list-inline-item"><a href="https://www.enta.store/" target="_blank" class="btn-floating btn-sm text-white"style="font-size: 23px;"><i class="fas fa-globe"></i></a></li></ul></div></div></div></div></footer>`);
 }
 //funções
 function logout(){
