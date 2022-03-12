@@ -1,0 +1,107 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: white;
+    height: 100vh;
+    width: 100%;
+    color: #434343;
+    font-size: 16px;
+}
+
+.banner1{
+    position: relative;
+    z-index: 1;
+}
+
+.top{
+    position: relative;
+    background-image: linear-gradient(to right, #3898ec, #3898ec);
+    color: white;
+    padding-top: 2%;
+}
+
+.ban-img{
+    position: relative;
+    z-index: 1;
+}
+
+.wave{
+    position: absolute;
+    bottom: -10%;
+    left: 0;
+}
+
+#background{
+    clip-path: polygon(0 0, 100% 0%, 100% 100%, 80% 100%);
+    background-color: #3E8AFF;
+}
+.estagio p{
+    text-align: justify;
+}
+
+
+
+.img-1 img{
+    width: 350px;
+    height: auto;
+}
+
+.img-2 img{
+    width: 350px;
+    height: auto;
+}
+
+.img-3 img{
+    display: flex;
+    justify-content: center;
+    width: 30%;
+    height: auto;
+}
+
+#imgPerfil{
+    width: 270px;
+    height: 260px;
+    border-radius: 265px;
+}
+
+@media screen and (max-width: 720px) {
+    section.cards {
+        flex-direction: column;
+    }
+
+    section.cards section.card {
+        margin-left: 0;
+        margin-bottom: 32px;
+    }
+
+    section.cards section.card:last-child {
+        margin-bottom: 0;
+    }
+
+    section.cards section.card button {
+        font-size: 70%;
+    }
+}
+
+@media screen and (min-width: 720px) {
+    .mobile-nav {
+    display: none;
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .main-content{
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 720px) {
+    #nav{
+        display: none !important;
+    }
+}
