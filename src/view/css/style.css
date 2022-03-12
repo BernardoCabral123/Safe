@@ -13,6 +13,16 @@ body {
     font-size: 16px;
 }
 
+.logo{
+    display: flex;
+    align-items: center !important;
+}
+
+.img img{
+    border-style: solid;
+    border-radius: 15px;
+}
+
 .banner1{
     position: relative;
     z-index: 1;

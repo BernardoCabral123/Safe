@@ -93,10 +93,8 @@ function renderInicio(){
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 mt-5">
-                    <strong><h1>Plataforma de estágios</h1></strong>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur 
-                    quos vitae eveniet ex officia repellat molestiae possimus ut perferendis voluptate voluptatum quasi ducimus, 
-                    libero rem esse impedit nesciunt mollitia aliquam.</p>
+                    <strong><h1>Plataforma Estágios</h1></strong>
+                    <p>A Plataforma que simplifica todo o processo para obter o local de estagio.</p>
                 </div>
 
                 <div class="col-sm-6">
@@ -117,9 +115,8 @@ function renderInicio(){
 
             <div class="estagio col-sm-6">
                 <h1>O que é formação em contexto de traballho?</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur 
-                    quos vitae eveniet ex officia repellat molestiae possimus ut perferendis voluptate voluptatum quasi ducimus, 
-                    libero rem esse impedit nesciunt mollitia aliquam.
+                <p>A formação em contexto de trabalho integra um conjunto de atividades profissionais desenvolvidas sob cordenação e acompanhamento da escola. 
+                A zero custo para empresa.
                 <p>
             </div>
         </div>
@@ -127,7 +124,7 @@ function renderInicio(){
     </div>
 
     <div class="container mt-5 text-center">
-    <h5>Como começar?</h5>
+    <h1>Como começar?</h1>
     </div>
 
     <!-- cartoes -->
@@ -251,52 +248,88 @@ function renderInicio(){
 }
 function renderDuvidas(){
     renderCode("content",
-`<div class="container text-center">
-    <h1>Duvidas</h1>
-</div>
-
-<div class="container mt-5 shadow-lg p-3 mb-5 bg-body rounded">
-    <div class="row">
-        <div class="col-sm-6">
-            <form class="row needs-validation" action="" novalidate>
-                <div class="col-sm-12 mt-2">
-                    <label for="nomeempresa" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="nome" maxlength="50" required>
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
-                </div>
-
-                <div class="col-sm-12 mt-2">
-                    <label for="nomeempresa" class="form-label">Email</label>
-                    <input type="text" class="form-control" id="nome" maxlength="50" required>
-                </div>
-
-                <div class="col-sm-6 mt-2">
-                    <label for="conselho" class="form-label">Tipo de duvida</label>
-                    <select class="form-select" id="concelho" required>
-                        <option selected>Tipo de duvida</option>
-                        <option>Erros</option>
-                        <option>bugs</option>
-                    </select>
-                </div>
-
-                <div class="col-sm-12 mt-2">
-                    <label for="descricao" class="form-label">Descrição da duvida</label>
-                    <textarea class="form-control" id="descricao" style="border-radius: 15px;" rows="3"></textarea required>
-                </div>
-                
-                <div class="col-12 mt-3">
-                    <button class="btn btn-primary" type="btn">Submeter duvida</button>
-                </div>
-            </form>
+    `
+        <div class="container text-center">
+            <h1>Duvidas</h1>
         </div>
 
-        <div class="col-sm-6">
-            <img class="img-fluid" src="http://localhost:3000/files/Assets/duvidas.svg" alt="">
+        <div class="container shadow-lg p-3 mb-5 bg-body rounded">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                Accordion Item #1
+                </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+            </div>
+            </div>
+            <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                Accordion Item #2
+                </button>
+            </h2>
+            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.</div>
+            </div>
+            </div>
+            <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                Accordion Item #3
+                </button>
+            </h2>
+            <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+            </div>
+            </div>
+            </div>
         </div>
-    </div>
-    </div>
+
+        <div class="container mt-5 shadow-lg p-3 mb-5 bg-body rounded">
+            <div class="row">
+                <div class="col-sm-6">
+                    <form class="row needs-validation" action="" novalidate>
+                        <div class="col-sm-12 mt-2">
+                            <label for="nomeempresa" class="form-label">Nome</label>
+                            <input type="text" class="form-control" id="nome" maxlength="50" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 mt-2">
+                            <label for="nomeempresa" class="form-label">Email</label>
+                            <input type="text" class="form-control" id="nome" maxlength="50" required>
+                        </div>
+
+                        <div class="col-sm-6 mt-2">
+                            <label for="conselho" class="form-label">Tipo de duvida</label>
+                            <select class="form-select" id="concelho" required>
+                                <option selected>Tipo de duvida</option>
+                                <option>Erros</option>
+                                <option>bugs</option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-12 mt-2">
+                            <label for="descricao" class="form-label">Descrição da duvida</label>
+                            <textarea class="form-control" id="descricao" style="border-radius: 15px;" rows="3"></textarea required>
+                        </div>
+                        
+                        <div class="col-12 mt-3">
+                            <button class="btn btn-primary" type="btn">Submeter duvida</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-sm-6">
+                    <img class="img-fluid" src="http://localhost:3000/files/Assets/duvidas.svg" alt="">
+                </div>
+            </div>
+        </div>
     `);
 }
 function renderLogin(){
@@ -2083,13 +2116,13 @@ function renderOfertas(){
 }
 function renderPerfilFormando(){
     renderCode("content",
-`<div class="container mt-2">
-<div id="imgPerfil" class="shadow-lg p-1 mt-2 mx-auto d-block border">
-    <img src="http://localhost:3000/files/Assets/profile.svg" class="img-thumbnail rounded rounded-circle mx-auto d-block border border-light" alt="..." style="height: 250px;">
-    <button class="btn btn-primary" type="button"><i class="fas fa-camera"></i></button>
-    <input type="file" class="form-control" id="fotoPerfil" aria-describedby="inputGroupFileAddon03" aria-label="Upload">
-</div>
-
+    `<div class="container mt-2">
+    <div id="imgPerfil" class="shadow-lg p-1 mt-2 mx-auto d-block border">
+        <div class="position-relative">
+        <img src="http://localhost:3000/files/Assets/profile.svg" class="img-thumbnail rounded rounded-circle mx-auto d-block border border-light" alt="..." style="height: 250px;">
+        <button class="btn btn-primary position-absolute bottom-0 end-0" type="button"><i class="fas fa-camera"></i></button>
+        </div>
+    </div>
 <div class="mt-3 shadow-lg p-3 mb-5 bg-body rounded">
     <div class="row">
         <div class="conteudo col-sm-12 mt-4">
@@ -2120,8 +2153,13 @@ function renderPerfilFormando(){
                 </div>
 
                 <div class="col-sm-4">
-                    <h5>Currícolo</h5>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-user-alt"></i></button>                         
+                    <h5>Currículo</h5>
+                    <button type="submit" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                        <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                        </svg>
+                    </button>                         
                 </div>
             </div>
         </div>
