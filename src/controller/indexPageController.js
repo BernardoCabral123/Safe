@@ -408,7 +408,7 @@ function renderRegisto(){
                             
                             <!-- <Modal> -->
                             <div class="modal fade" id="termos">
-                                <div class="modal-dialog">
+                                <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Termos de uso da utilização do sistema</h5>
@@ -627,7 +627,7 @@ function renderGerirFormacao(){
 
 
     <div class="modal fade" id="criacaoCurso" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="container mb-1">
@@ -679,7 +679,7 @@ function renderGerirFormacao(){
 
 
 <div class="modal fade" id="criacaoTurma" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
                     <div class="container mb-2">
@@ -731,7 +731,7 @@ function renderGerirFormacao(){
 </div>
 
 <div class="modal fade" id="criacaoFormando" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
         <div class="modal-content">
         <div class="modal-body">
         <div class="container mb-1">
@@ -840,7 +840,7 @@ function renderGerirAdministracao(){
     </div>
 
     <div class="modal fade" id="criacaoCurso" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="container mb-1">
@@ -892,7 +892,7 @@ function renderGerirAdministracao(){
 
 
 <div class="modal fade" id="criacaoDiretor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
                     <div class="container mb-2">
@@ -1012,7 +1012,7 @@ function fillTabelaCursos(){
                         </td>
                     </tr>
                     <div class="modal fade" id="edicaoCurso${data[i].idCurso}" style="text-align: left;" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-body">
                                 <div class="container mb-1">
@@ -1068,7 +1068,7 @@ function fillTabelaCursos(){
                 </div>` 
                 
                 str+=`<div class="modal fade" id="eliminacaoCurso${data[i].idCurso}" style="text-align: left;" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="container mb-1">
@@ -1174,7 +1174,7 @@ function fillTabelaTurmas(){
                     </tr>
 
                     <div class="modal fade" id="edicaoTurma${data[i].idTurma}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                        <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-body">
                                         <div class="container mb-2">
@@ -1226,7 +1226,7 @@ function fillTabelaTurmas(){
 
 
                     <div class="modal fade" id="eliminacaoTurma${data[i].idTurma}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                        <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-body">
                                         <div class="container mb-2">
@@ -1326,7 +1326,7 @@ function fillTabelaFormandos(idTurma){
 
                 
                 <div class="modal fade" id="edicaoFormando${data[i].idConta}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
                         <div class="modal-content">
                         <div class="modal-body">
                         <div class="container mb-1">
@@ -1377,7 +1377,7 @@ function fillTabelaFormandos(idTurma){
                 </div>
 
                 <div class="modal fade" id="eliminacaoFormando${data[i].idConta}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
                         <div class="modal-content">
                         <div class="modal-body">
                         <div class="container mb-1">
@@ -2334,7 +2334,7 @@ function renderMinhaArea(){
 
 
 <div class="modal fade" id="criacaoOferta" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-xl modal-dialog-scrollable">
+<div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-body">
         <div class="registo shadow-lg p-3 bg-body rounded">
