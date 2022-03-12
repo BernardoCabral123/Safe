@@ -1286,7 +1286,7 @@ function fillTabelaFormandos(idTurma){
                         document.getElementById(`trF${data[i].idConta}`).innerHTML+= `<td style="color:red">Sem turma atribuída</td>`
                     document.getElementById(`trF${data[i].idConta}`).innerHTML += `
                     <td class="my-auto" style="display: none;" id="botoesF${data[i].idConta}">
-                    <button type="button"  class="col-6 btn btn-primary mx-1"  onclick="resetModalEdicaoFormando('${data[i].idConta}','${data[i].nome}','${data[i].email}','${data[i].idCurso}','${data[i].idTurma}'); openModal('edicaoFormando${data[i].idConta}');">editar</button>
+                    <button type="button"  class="col-6 btn btn-primary mx-1"  onclick="console.log('${data[i].idCurso}'); resetModalEdicaoFormando('${data[i].idConta}','${data[i].nome}','${data[i].email}','${data[i].idCurso}','${data[i].idTurma}'); openModal('edicaoFormando${data[i].idConta}');">editar</button>
                     <button type="button" class="col-6 btn btn-danger mx-1"  onclick="openModal('eliminacaoFormando${data[i].idConta}');">eliminar</button>
                     </td>
                 </tr>
@@ -1542,9 +1542,7 @@ async function resetModalEdicaoTurma(idTurma,idCurso,idConta,ano,numero){
 
 }
 
-function editarTurma(idTurma,idCurso,idConta,ano,numero){
-    console.log(numero);
-    
+function editarTurma(idTurma,idCurso,idConta,ano,numero){    
     const options = {
             method: 'PUT',
             headers: {
@@ -1611,12 +1609,8 @@ async function resetModalEdicaoFormando(idConta,nome,email,idCurso,idTurma){
         fillCursos(`formandoCurso${idConta}`);
     }
     else{
-
-        console.log(idCurso)
-        console.log(idTurma)
         await fillCursos(`formandoCurso${idConta}`);
         document.getElementById(`formandoCurso${idConta}`).value = idCurso;
-
      
         await fillTurmas(idCurso,`formandoTurma${idConta}`);
         document.getElementById(`formandoTurma${idConta}`).style.color = "black";
@@ -1769,6 +1763,7 @@ async function fillAnos(idCurso,id){
     }
 }
 function eliminarTurma(idTurma){
+console.log(idTurma)
     const options = {
         method: 'DELETE',
         headers: {
