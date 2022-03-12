@@ -489,1212 +489,1245 @@ async function registar(){
 
 
 /****   Admin   ****/
-
-//renders
-function renderNavAdmin(){
-    renderCode("navbar",`<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #3898ec;">
-                    <div class="container-fluid">
-                        <div class="ml-5"  onclick='renderEstatisticas()'>
-                            <img class="d-inline-block align-text-top" src="http://localhost:3000/files/Assets/logoPlataformaPrincipal.png" alt="img-fluid" height="60px" width="auto" style="cursor: pointer;">
-                        </div>
-                        
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        
-                        <div class="collapse navbar-collapse" style="justify-content: end !important;" id="navbarNav">
-                            <ul class="navbar-nav" style="cursor: pointer;">
-                                <li class="nav-item" onclick="renderGerirRecursos();">
-                                    <a class="nav-link">Gestão de recursos</a>
-                                </li>
-                                
-                                <li class="nav-item" onclick="logout();">
-                                    <a class="nav-link">Logout</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-                `)
-}
-function renderGerirRecursos(){
-    renderCode("content",
-`<div class="container mt-3 mb-4">
-<div class="row">
-  <h2>Gerir recursos</h2>
-  <div class="col-xl-2 col-md-3 col-sm-5">
-    <select id="estado" class="form-select col-sm-6 mx-1 " onchange="selecionarRender();">
-      <option selected value="alunos">Formação</option>
-      <option value="adminsDiretores">Administração</option>
-      <option value="empresa">Empresas</option>
-    </select>
-  </div>
-</div>
-</div>
-
-<div class="container">
-    <div id="painelGestao">
-
-    </div>
-</div>`);
-}
-function renderGerirFormacao(){
-    document.getElementById("painelGestao").innerHTML =`
-    <div class="mt-4">
-        <div class="container mb-4 shadow-lg p-3 bg-body rounded" onmouseover="mostrarBotao('btnCriarCurso')" onmouseout="esconderBotao('btnCriarCurso')">
-            <div class="criar d-flex">
-                <div>
-                    <h3>Cursos</h3>
-                </div>
-                <div id="btnCriarCurso" style="display: none;">
-                    <button type="button" class="btn btn-primary mx-3" style="border-radius: 30px;" onclick="fillAreas(); openModal('criacaoCurso');">Abrir formulário</button>
-                </div>
-            </div>
-        
-            <div class="table-responsive-sm">
-                <table class="table text-center">
-                    <thead>
-                        <tr>
-                            <th class="col-sm-4 mx-auto" scope="col">Nome</th>
-                            <th class="col-sm-1 mx-auto" scope="col">Sigla</th>
-                            <th class="col-sm-4 mx-auto" scope="col">Área</th>  
-                            <th class="col-sm-3 mx-auto" style="display:none" id="acoesCursos" scope="col">Ações</th>  
-                        </tr>
-                    </thead>
-                    <tbody id="tblCursos" onmouseover="document.getElementById('acoesCursos').style.display = 'block';" onmouseout="document.getElementById('acoesCursos').style.display = 'none';">
-                    </tbody>
-                </table>
-            </div>
-            <div class="text-center"><label class="text-danger" id="msgCursos"></label></div>
-        </div>
-    
-        <div class="container mb-4  shadow-lg p-3 bg-body rounded" onmouseover="mostrarBotao('btnCriarTurma')" onmouseout="esconderBotao('btnCriarTurma')">
-            <div class="criar d-flex align-items-center">
-                <h3>Turmas</h3>
-                <div id="btnCriarTurma" style="display: none;">
-                    <button type="button" class="btn btn-primary mx-3" style="border-radius: 30px;" onclick="fillCursos('turmaCurso');fillDiretoresTurma('diretor'); openModal('criacaoTurma');">Abrir formulário</button>
-                </div>
-                    
-            </div>
-            <div class="table-responsive-sm">
-                <table class="table text-center">
-                <thead >
-                    <tr>
-                    <th scope="col"><input class="form-check-input" type="radio" name="inlineRadioOptions" id="allTurmas" value=0 checked="checked" onchange="fillTabelaFormandos('')"></th>
-                    <th scope="col">Turma</th>
-                    <th scope="col">Diretor de turma</th>
-                    <th class="col-sm-3 mx-auto" style="display:none" id="acoesTurmas" scope="col">Ações</th> 
-                    </tr>
-                </thead>
-                <tbody id="tblTurmas" onmouseover="document.getElementById('acoesTurmas').style.display = 'block';" onmouseout="document.getElementById('acoesTurmas').style.display = 'none';">
-                    
-                </tbody>
-            </table>
-                <div class="text-center"><label class="text-danger" id="msgTurmas"></label></div>
-            </div>
-        </div>
-    
-        <div class="container shadow-lg p-3 mb-5 bg-body rounded" onmouseover="mostrarBotao('btnCriarAluno')" onmouseout="esconderBotao('btnCriarAluno')">
-            <div class="criar d-flex align-items-center">
-            <h3>Formandos</h3>
-            <div id="btnCriarAluno" style="display: none;"> <button type="button" class="btn btn-primary mx-3" style="border-radius: 30px;" onclick="fillCursos('formandoCurso'); openModal('criacaoFormando');">Abrir formulário</button></div>
-            </div>
-    
-            <div class="table-responsive-sm">
-            <table class="table text-center">
-                <thead >
-                <tr>
-                <th scope="col">Nome</th>
-                <th scope="col">Email</th>
-                <th scope="col">Turma</th>
-                <th scope="col" style="display:none" id="acoesFormandos" >Ações</th>
-                </tr>
-                </thead>
-                <tbody id="tblFormandos" onmouseover="document.getElementById('acoesFormandos').style.display = 'block';" onmouseout="document.getElementById('acoesFormandos').style.display = 'none';">
-
-                </tbody>
-            </table>
-            <div class="text-center"><label class="text-danger" id="msgAlunos"></label></div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="modal fade" id="criacaoCurso" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="container mb-1">
-                    <div class="shadow-lg p-3 bg-body rounded">
-                        <div class="row">
-                            <div class="col-4 mx-auto">
-                                <img class="img-fluid" style="width:auto;" src="http://localhost:3000/files/Assets/curso.svg" alt="aluno">
-                            </div>
-                            <div class="col-md-8">
-                                <form>
-                                    <div class="row mt-4">
-                                        <div class="col-sm-6 mt-1">
-                                            <label for="curso" class="form-label"><strong>Nome do curso</strong></label>
-                                            <input type="text" class="form-control" id="curso" placeholder='Ex: "Técnico de vendas e marketing"'>
-                                        </div>
-                                        <div class="col-sm-6 mt-1">
-                                            <label for="sigla" class="form-label"><strong>Sigla</strong></label>
-                                            <input type="text" class="form-control" id="sigla" placeholder='Ex: "TVM"' onKeyUp="this.value = this.value.toUpperCase()">
-                                        </div>
-                                        <div class="col-sm-6 mt-1">
-                                            <label for="area" class="form-label"><strong>Área</strong></label>
-                                            <select id="area" class="form-select col-sm-12" style="color:gray" onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-6 mt-1">
-                                            <label for="duracao" class="form-label"><strong>Duração</strong></label>
-                                            <select id="duracao" class="form-select col-sm-12" style="color:gray" onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
-                                                <option value="0" style="color:gray !important">Selecionar duração</option>
-                                                <option value="1" style="color:black !important" >1 ano</option>
-                                                <option value="3" style="color:black !important">3 anos</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 mt-4">
-                                        <center><button type="button" class="col-sm-3 btn btn-primary  mx-1" style="border-radius: 30px;" onclick="criarCurso(\`\${document.getElementById('curso').value}\`,\`\${document.getElementById('sigla').value}\`,\`\${document.getElementById('area').value}\`,\`\${document.getElementById('duracao').value}\`)">Criar curso</button></center>                                
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="criacaoTurma" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                    <div class="container mb-2">
-                        <div class="criarAluno shadow-lg p-3 mb-1 bg-body rounded">
-                            <div class="row">
-                                <div class="col-4 mx-auto">
-                                    <img class="img-fluid" src="http://localhost:3000/files/Assets/turma.svg" alt="aluno">
-                                </div>
-            
-                                <div class="col-md-8 mx-auto mt-3">
-                                    <form>
-                                        <div class="row mt-4">
-                                            <div class="col-sm-6 mt-1">
-                                                <label class="form-label"><strong>Curso</strong></label>
-                                                <select id="turmaCurso" class="form-select col-sm-12" style="color:gray" onChange="fillAnos(this.value,'ano'); if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-6 mt-1">
-                                                <label for="diretor" class="form-label"><strong>Diretor de turma</strong></label>
-                                                
-                                                <select id="diretor" class="form-select col-sm-12" style="color:gray" onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">           
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-6 mt-1">
-                                                <label for="ano"class="form-label"><strong>Ano</strong></label>
-                                                    <select id="ano" class="form-select col-sm-12" disabled onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
-                                                    </select>
-                                            </div>
-                                            <div class="col-sm-6 mt-1">
-                                                <label for="numero" class="form-label"><strong>Numero de turma</strong></label>
-                                                <input type="number" min="0" class="form-control" id="numero" placeholder='ex: "1" (Preencher se necessário)' onKeyPress="if(this.value.length==1) return false;" onchange="if(this.value == '0')this.value =''"> </input>
-                                            </div>'
-
-                                            <div class="col-sm-12 mt-4">
-                                                        <center><button type="button" class="col-sm-3 btn btn-primary  mx-1" style="border-radius: 30px;"onclick="criarTurma(\`\${document.getElementById('turmaCurso').value}\`,\`\${document.getElementById('diretor').value}\`,\`\${document.getElementById('ano').value}\`,\`\${document.getElementById('numero').value}\`)">Criar turma</button></center>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="criacaoFormando" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
-        <div class="modal-content">
-        <div class="modal-body">
-        <div class="container mb-1">
-            <div class="criarAluno shadow-lg p-3 bg-body rounded">
-                <div class="row">
-                    <div class="col-4 mx-auto">
-                        <img class="img-fluid" style="width:auto;" src="http://localhost:3000/files/Assets/criarAluno.svg" alt="aluno">
-                    </div>
-                    <div class="col-md-8">
-                        <form>
-                            <div class="row mt-4">
-                                <div class="col-sm-6 mt-1">
-                                    <label for="nome" class="form-label"><strong>Primeiro e último nome</strong></label>
-                                    <input type="text" class="form-control" id="nome">
-                                </div>
-                                    <div class="col-sm-6 mt-1">
-                                        <label for="email" class="form-label"><strong>Email</strong></label>
-                                        <input type="text" class="form-control" id="email">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6 mt-1">
-                                        <label for="formandoCurso" class="form-label"><strong>Curso</strong></label>
-                                        <select id="formandoCurso" class="form-select col-sm-12" style="color:gray" onChange="fillTurmas(this.value,'formandoTurma'); if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
-                                        </select>
-                                    </div>
-
-                                    <div class="col-sm-6 mt-1">
-                                        <label for="formandoTurma" class="form-label"><strong>Turma</strong></label>
-                                        <select id="formandoTurma" class="form-select col-sm-12" disabled style="color:gray" onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">>
-                                        </select>
-                                    </div>
-                                </div>
-                        </form>
-                        <div class="col-sm-12 mt-4">
-                            <center><button type="button" class="col-sm-3 btn btn-primary mx-1" style="border-radius: 30px;" onclick="criarFormando(\`\${document.getElementById('nome').value}\`,\`\${document.getElementById('email').value}\`,\`\${document.getElementById('formandoTurma').value}\`)">Criar conta</button></center>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-    `;
-    fillTabelaCursos();
-    fillTabelaTurmas();
-    fillTabelaFormandos('');
-}
-function renderGerirAdministracao(){
-    document.getElementById("painelGestao").innerHTML =`
-    <div class="mt-4">
-        <div class="container mb-4 shadow-lg p-3 bg-body rounded" onmouseover="mostrarBotao('btnCriarAdmin')" onmouseout="esconderBotao('btnCriarAdmin')">
-            <div class="criar d-flex">
-                <div>
-                    <h3>Administradores</h3>
-                </div>
-                <div id="btnCriarAdmin" style="display: none;">
-                    <button type="button" class="btn btn-primary mx-3" style="border-radius: 30px;" onclick="openModal('criacaoAdmin');">Abrir formulário</button>
-                </div>
-            </div>
-        
-            <div class="table-responsive-sm">
-                <table class="table text-center">
-                    <thead>
-                        <tr>
-                            <th class="mx-auto" scope="col">Nome</th>
-                            <th class="mx-auto" scope="col">Email</th> 
-                            <th class="mx-auto" style="display:none" id="acoesAdmins" scope="col">Ações</th>  
-                        </tr>
-                    </thead>
-                    <tbody id="tblCursos" onmouseover="document.getElementById('acoesAdmins').style.display = 'block';" onmouseout="document.getElementById('acoesAdmins').style.display = 'none';">
-                    </tbody>
-                </table>
-            </div>
-            <div class="text-center"><label class="text-danger" id="msgCursos"></label></div>
-        </div>
-    
-        <div class="container mb-4 shadow-lg p-3 bg-body rounded" onmouseover="mostrarBotao('btnCriarDiretorTurma')" onmouseout="esconderBotao('btnCriarDiretorTurma')">
-            <div class="criar d-flex">
-                <div>
-                    <h3>Diretores de turma</h3>
-                </div>
-                <div id="btnCriarDiretorTurma" style="display: none;">
-                    <button type="button" class="btn btn-primary mx-3" style="border-radius: 30px;" onclick="openModal('criacaoDiretorTurma');">Abrir formulário</button>
-                </div>
-             </div>
-            <div class="table-responsive-sm">
-                <table class="table text-center">
-                    <thead>
-                        <th class="mx-auto" scope="col">Nome</th>
-                        <th class="mx-auto" scope="col">Email</th> 
-                        <th class="mx-auto" style="display:none" id="acoesDiretoresTurma" scope="col">Ações</th>  
-                        </tr>
-                    </thead>
-                    <tbody id="tblCursos" onmouseover="document.getElementById('acoesDiretoresTurma').style.display = 'block';" onmouseout="document.getElementById('acoesDiretoresTurma').style.display = 'none';">
-                    </tbody>
-                </table>
-            </div>
-        <div class="text-center"><label class="text-danger" id="msgCursos"></label></div>
-    </div>
-
-    <div class="modal fade" id="criacaoCurso" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="container mb-1">
-                    <div class="shadow-lg p-3 bg-body rounded">
-                        <div class="row">
-                            <div class="col-4 mx-auto">
-                                <img class="img-fluid" style="width:auto;" src="http://localhost:3000/files/Assets/curso.svg" alt="aluno">
-                            </div>
-                            <div class="col-md-8">
-                                <form>
-                                    <div class="row mt-4">
-                                        <div class="col-sm-6 mt-1">
-                                            <label for="curso" class="form-label"><strong>Nome do curso</strong></label>
-                                            <input type="text" class="form-control" id="curso" placeholder='Ex: "Técnico de vendas e marketing"'>
-                                        </div>
-                                        <div class="col-sm-6 mt-1">
-                                            <label for="sigla" class="form-label"><strong>Sigla</strong></label>
-                                            <input type="text" class="form-control" id="sigla" placeholder='Ex: "TVM"' onKeyUp="this.value = this.value.toUpperCase()">
-                                        </div>
-                                        <div class="col-sm-6 mt-1">
-                                            <label for="area" class="form-label"><strong>Área</strong></label>
-                                            <select id="area" class="form-select col-sm-12" style="color:gray" onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-6 mt-1">
-                                            <label for="duracao" class="form-label"><strong>Duração</strong></label>
-                                            <select id="duracao" class="form-select col-sm-12" style="color:gray" onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
-                                                <option value="0" style="color:gray !important">Selecionar duração</option>
-                                                <option value="1" style="color:black !important" >1 ano</option>
-                                                <option value="3" style="color:black !important">3 anos</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 mt-4">
-                                        <center><button type="button" class="col-sm-3 btn btn-primary  mx-1" style="border-radius: 30px;" onclick="criarCurso(\`\${document.getElementById('curso').value}\`,\`\${document.getElementById('sigla').value}\`,\`\${document.getElementById('area').value}\`,\`\${document.getElementById('duracao').value}\`)">Criar curso</button></center>                                
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="criacaoDiretor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                    <div class="container mb-2">
-                        <div class="shadow-lg p-3 mb-1 bg-body rounded">
-                            <div class="row">
-                                <div class="col-4 mx-auto">
-                                    <img class="img-fluid" src="http://localhost:3000/files/Assets/turma.svg" alt="aluno">
-                                </div>
-            
-                                <div class="col-md-8 mx-auto mt-3">
-                                    <form>
-                                        <div class="row mt-4">
-                                            <div class="col-sm-6 mt-1">
-                                                <label for="turmaCurso" class="form-label"><strong>Curso</strong></label>
-                                                <select id="turmaCurso" class="form-select col-sm-12" style="color:gray" onChange="console.log('rebuçado'); if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-6 mt-1">
-                                                <label for="diretor" class="form-label"><strong>Diretor de turma</strong></label>
-                                                
-                                                <select id="diretor" class="form-select col-sm-12" style="color:gray" onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">           
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-6 mt-1">
-                                                <label for="ano"class="form-label"><strong>Ano</strong></label>
-                                                    <select id="ano" class="form-select col-sm-12" disabled>
-                                                    </select>
-                                            </div>
-                                            <div class="col-sm-6 mt-1">
-                                                <label for="numero" class="form-label"><strong>Numero de turma</strong></label>
-                                                <input type="number" min="0" class="form-control" id="numero" placeholder='ex: "1" (Preencher se necessário)' onKeyPress="if(this.value.length==1) return false;" onchange="if(this.value == '0')this.value =''"> </input>
-                                            </div>'
-
-                                            <div class="col-sm-12 mt-4">
-                                                        <center><button type="button" class="col-sm-3 btn btn-primary  mx-1" style="border-radius: 30px;">Criar turma</button></center>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-            </div>
-        </div>
-    </div>
-</div>
-`;
-}
-function renderGerirEmpresas(){
-    document.getElementById("painelGestao").innerHTML =`
-    <div class="mt-4">
-        <div class="container mb-4 shadow-lg p-3 bg-body rounded">
-            <h3>Empresas</h3>
-        
-            <div class="table-responsive-sm">
-                <table class="table text-center">
-                    <thead>
-                        <tr>
-                            <th class="col-sm-4 mx-auto" scope="col">Nome</th>
-                            <th class="col-sm-1 mx-auto" scope="col">Sigla</th>
-                            <th class="col-sm-4 mx-auto" scope="col">Área</th>  
-                            <th class="col-sm-3 mx-auto" style="display:none" id="acoesCursos" scope="col">Ações</th>  
-                        </tr>
-                    </thead>
-                    <tbody id="tblCursos" onmouseover="document.getElementById('acoesCursos').style.display = 'block';" onmouseout="document.getElementById('acoesCursos').style.display = 'none';">
-                    </tbody>
-                </table>
-            </div>
-            <div class="text-center"><label class="text-danger" id="msgCursos"></label></div>
-        </div>
-`;
-}
-
-
-//funçoes
-function selecionarRender(){
-    switch(document.getElementById("estado").value){
-        case "alunos":
-            renderGerirFormacao();
-            break
-        case "adminsDiretores":
-            renderGerirAdministracao();
-            break;
-        case "empresa":
-            renderGerirEmpresas()
-            break;
-    } 
-}
-function fillTabelaCursos(){
-    str = ``;
-    const options = {
-        method: 'GET',
-        headers: {
-            'authorization': localStorage.getItem("token")
+    /****   renders{   ****/
+        function selecionarRender(){
+            switch(document.getElementById("estado").value){
+                case "alunos":
+                    renderGerirFormacao();
+                    break
+                case "adminsDiretores":
+                    renderGerirAdministracao();
+                    break;
+                case "empresa":
+                    renderGerirEmpresas()
+                    break;
+            } 
         }
-    }
-    fetch('http://localhost:3000/api/admin/cursos',options)
-    .then((res) =>{
-        if(res.status =200) return res.json()
-        return null
-    })
-    .then((data) => {
-        if(data){
-            for(let i = 0; i< data.length; i++){
-                
-                str+=`
-                    <tr id="trC${data[i].idCurso}" onmouseover="document.getElementById('botoesC${data[i].idCurso}').style.display = 'flex';" onmouseout="document.getElementById('botoesC${data[i].idCurso}').style.display = 'none';">
-                        <td id="tdCurso${data[i].idCurso}">${data[i].curso}</td>
-                        <td id="tdSigla${data[i].idCurso}">${data[i].sigla}</td>
-                        <td id="tdArea${data[i].idCurso}">${data[i].area}</td>
-                        <td class="my-auto" style="display: none;" id="botoesC${data[i].idCurso}">
-                            <button type="button"  class="col-6 btn btn-primary mx-1"  onclick="resetModalEdicaoCurso('${data[i].idCurso}','${data[i].curso}','${data[i].sigla}','${data[i].idArea}','${data[i].duracao}'); openModal('edicaoCurso${data[i].idCurso}');">editar</button>
-                            <button type="button" class="col-6 btn btn-danger mx-1"  onclick="openModal('eliminacaoCurso${data[i].idCurso}');">eliminar</button>
-                        </td>
-                    </tr>
-                    <div class="modal fade" id="edicaoCurso${data[i].idCurso}" style="text-align: left;" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <div class="container mb-1">
-                                    <div class="criarAluno shadow-lg p-3 bg-body rounded">
-                                        <div class="row">
-                                            <div class="col-4 mx-auto">
-                                                <img class="img-fluid" style="width:auto;" src="http://localhost:3000/files/Assets/curso.svg" alt="aluno">
-                                            </div>
-                                            <div class="col-md-8">
-                                                <form id="formEdicaoCurso${data[i].idCurso}">
-                                                    <div class="row mt-4">
-                                                        <div class="col-sm-6 mt-1">
-                                                            <label for="curso${data[i].idCurso}" class="form-label"><strong>Nome do curso</strong></label>
-                                                            <input type="text" class="form-control" id="curso${data[i].idCurso}" value="${data[i].curso}">
-                                                        </div>
-                                                        <div class="col-sm-6 mt-1">
-                                                            <label for="sigla${data[i].idCurso}" class="form-label"><strong>Sigla</strong></label>
-                                                            <input type="text" class="form-control" id="sigla${data[i].idCurso}" value="${data[i].sigla}">
-                                                        </div>
-                                                        <div class="col-sm-6 mt-1">
-                                                            <label for="area${data[i].idCurso}" class="form-label"><strong>Area</strong></label>
-                                                            <select id="area${data[i].idCurso}" class="form-select col-sm-12">
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-sm-6 mt-1">
-                                                            <label for="duracao${data[i].idCurso}" class="form-label"><strong>Duração</strong></label>
-                                                            <select id="duracao${data[i].idCurso}" class="form-select col-sm-12">`
+        function renderNavAdmin(){
+            renderCode("navbar",`<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #3898ec;">
+                            <div class="container-fluid">
+                                <div class="ml-5"  onclick='renderEstatisticas()'>
+                                    <img class="d-inline-block align-text-top" src="http://localhost:3000/files/Assets/logoPlataformaPrincipal.png" alt="img-fluid" height="60px" width="auto" style="cursor: pointer;">
+                                </div>
+                                
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                
+                                <div class="collapse navbar-collapse" style="justify-content: end !important;" id="navbarNav">
+                                    <ul class="navbar-nav" style="cursor: pointer;">
+                                        <li class="nav-item" onclick="renderGerirRecursos() selecionarRender()">
+                                            <a class="nav-link">Gestão de recursos</a>
+                                        </li>
+                                        
+                                        <li class="nav-item" onclick="logout();">
+                                            <a class="nav-link">Logout</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                        `)
+        }
+        function renderGerirRecursos(){
+            renderCode("content",
+        `<div class="container mt-3 mb-4">
+        <div class="row">
+        <h2>Gerir recursos</h2>
+        <div class="col-xl-2 col-md-3 col-sm-5">
+            <select id="estado" class="form-select col-sm-6 mx-1 " onchange="selecionarRender();">
+            <option selected value="alunos">Formação</option>
+            <option value="adminsDiretores">Administração</option>
+            <option value="empresa">Empresas</option>
+            </select>
+        </div>
+        </div>
+        </div>
 
-                if(data[i].duracao == '1') 
-                    str += `<option value="${data[i].duracao}" selected>${data[i].duracao} ano</option>
-                            <option value="3">3 anos</option>`;
-                else 
-                    str += `<option value="${data[i].duracao}" selected>${data[i].duracao} anos</option>
-                            <option value="1">1 ano</option>`;
-                    
-                str += `
-                                                            </select>                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-12 mt-4">
-                                                        <center><button type="button" class="col-sm-4 btn btn-primary  mx-1" style="border-radius: 30px;" data-bs-dismiss="modal" onclick="editarCurso('${data[i].idCurso}',\`\${document.getElementById('curso${data[i].idCurso}').value}\`,\`\${document.getElementById('sigla${data[i].idCurso}').value}\`,\`\${document.getElementById('area${data[i].idCurso}').value}\`,\`\${document.getElementById('duracao${data[i].idCurso}').value}\`);">Confirmar alterações</button></center>                                
-                                                    </div>
-                                                </form>
+        <div class="container">
+            <div id="painelGestao">
+
+            </div>
+        </div>`);
+        }
+        function renderGerirFormacao(){
+            document.getElementById("painelGestao").innerHTML =`
+            <div class="mt-4">
+                <div class="container mb-4 shadow-lg p-3 bg-body rounded" onmouseover="mostrarBotao('btnCriarCurso')" onmouseout="esconderBotao('btnCriarCurso')">
+                    <div class="criar d-flex">
+                        <div>
+                            <h3>Cursos</h3>
+                        </div>
+                        <div id="btnCriarCurso" style="display: none;">
+                            <button type="button" class="btn btn-primary mx-3" style="border-radius: 30px;" onclick="fillAreas(); openModal('criacaoCurso');">Abrir formulário</button>
+                        </div>
+                    </div>
+                
+                    <div class="table-responsive-sm">
+                        <table class="table text-center">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-4 mx-auto" scope="col">Nome</th>
+                                    <th class="col-sm-1 mx-auto" scope="col">Sigla</th>
+                                    <th class="col-sm-4 mx-auto" scope="col">Área</th>  
+                                    <th class="col-sm-3 mx-auto" style="display:none" id="acoesCursos" scope="col">Ações</th>  
+                                </tr>
+                            </thead>
+                            <tbody id="tblCursos" onmouseover="document.getElementById('acoesCursos').style.display = 'block';" onmouseout="document.getElementById('acoesCursos').style.display = 'none';">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center"><label class="text-danger" id="msgCursos"></label></div>
+                </div>
+            
+                <div class="container mb-4  shadow-lg p-3 bg-body rounded" onmouseover="mostrarBotao('btnCriarTurma')" onmouseout="esconderBotao('btnCriarTurma')">
+                    <div class="criar d-flex align-items-center">
+                        <h3>Turmas</h3>
+                        <div id="btnCriarTurma" style="display: none;">
+                            <button type="button" class="btn btn-primary mx-3" style="border-radius: 30px;" onclick="fillCursos('turmaCurso');fillDiretoresTurma('diretor'); openModal('criacaoTurma');">Abrir formulário</button>
+                        </div>
+                            
+                    </div>
+                    <div class="table-responsive-sm">
+                        <table class="table text-center">
+                        <thead >
+                            <tr>
+                            <th scope="col"><input class="form-check-input" type="radio" name="inlineRadioOptions" id="allTurmas" value=0 checked="checked" onchange="fillTabelaFormandos('')"></th>
+                            <th scope="col">Turma</th>
+                            <th scope="col">Diretor de turma</th>
+                            <th class="col-sm-3 mx-auto" style="display:none" id="acoesTurmas" scope="col">Ações</th> 
+                            </tr>
+                        </thead>
+                        <tbody id="tblTurmas" onmouseover="document.getElementById('acoesTurmas').style.display = 'block';" onmouseout="document.getElementById('acoesTurmas').style.display = 'none';">
+                            
+                        </tbody>
+                    </table>
+                        <div class="text-center"><label class="text-danger" id="msgTurmas"></label></div>
+                    </div>
+                </div>
+            
+                <div class="container shadow-lg p-3 mb-5 bg-body rounded" onmouseover="mostrarBotao('btnCriarAluno')" onmouseout="esconderBotao('btnCriarAluno')">
+                    <div class="criar d-flex align-items-center">
+                    <h3>Formandos</h3>
+                    <div id="btnCriarAluno" style="display: none;"> <button type="button" class="btn btn-primary mx-3" style="border-radius: 30px;" onclick="fillCursos('formandoCurso'); openModal('criacaoFormando');">Abrir formulário</button></div>
+                    </div>
+            
+                    <div class="table-responsive-sm">
+                    <table class="table text-center">
+                        <thead >
+                        <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Turma</th>
+                        <th scope="col" style="display:none" id="acoesFormandos" >Ações</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tblFormandos" onmouseover="document.getElementById('acoesFormandos').style.display = 'block';" onmouseout="document.getElementById('acoesFormandos').style.display = 'none';">
+
+                        </tbody>
+                    </table>
+                    <div class="text-center"><label class="text-danger" id="msgAlunos"></label></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="criacaoCurso" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="container mb-1">
+                            <div class="shadow-lg p-3 bg-body rounded">
+                                <div class="row">
+                                    <div class="col-4 mx-auto">
+                                        <img class="img-fluid" style="width:auto;" src="http://localhost:3000/files/Assets/curso.svg" alt="aluno">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <form>
+                                            <div class="row mt-4">
+                                                <div class="col-sm-6 mt-1">
+                                                    <label for="curso" class="form-label"><strong>Nome do curso</strong></label>
+                                                    <input type="text" class="form-control" id="curso" placeholder='Ex: "Técnico de vendas e marketing"'>
+                                                </div>
+                                                <div class="col-sm-6 mt-1">
+                                                    <label for="sigla" class="form-label"><strong>Sigla</strong></label>
+                                                    <input type="text" class="form-control" id="sigla" placeholder='Ex: "TVM"' onKeyUp="this.value = this.value.toUpperCase()">
+                                                </div>
+                                                <div class="col-sm-6 mt-1">
+                                                    <label for="area" class="form-label"><strong>Área</strong></label>
+                                                    <select id="area" class="form-select col-sm-12" style="color:gray" onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-6 mt-1">
+                                                    <label for="duracao" class="form-label"><strong>Duração</strong></label>
+                                                    <select id="duracao" class="form-select col-sm-12" style="color:gray" onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
+                                                        <option value="0" style="color:gray !important">Selecionar duração</option>
+                                                        <option value="1" style="color:black !important" >1 ano</option>
+                                                        <option value="3" style="color:black !important">3 anos</option>
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
+                                            <div class="col-sm-12 mt-4">
+                                                <center><button type="button" class="col-sm-3 btn btn-primary  mx-1" style="border-radius: 30px;" onclick="criarCurso(\`\${document.getElementById('curso').value}\`,\`\${document.getElementById('sigla').value}\`,\`\${document.getElementById('area').value}\`,\`\${document.getElementById('duracao').value}\`)">Criar curso</button></center>                                
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-                            </div>
                         </div>
                     </div>
-                </div>` 
-                
-                str+=`<div class="modal fade" id="eliminacaoCurso${data[i].idCurso}" style="text-align: left;" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="container mb-1">
-                                <div class="criarAluno shadow-lg p-3 bg-body rounded">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="criacaoTurma" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                            <div class="container mb-2">
+                                <div class="criarAluno shadow-lg p-3 mb-1 bg-body rounded">
                                     <div class="row">
                                         <div class="col-4 mx-auto">
-                                            <img class="img-fluid" style="width:auto;" src="http://localhost:3000/files/Assets/curso.svg" alt="aluno">
+                                            <img class="img-fluid" src="http://localhost:3000/files/Assets/turma.svg" alt="aluno">
                                         </div>
-                                        <div class="col-md-8">
-                                            <form">
+                    
+                                        <div class="col-md-8 mx-auto mt-3">
+                                            <form>
                                                 <div class="row mt-4">
                                                     <div class="col-sm-6 mt-1">
-                                                        <label class="form-label"><strong>Nome do curso</strong></label>
-                                                        <input type="text" class="form-control" value="${data[i].curso}" disabled>
-                                                    </div>
-                                                    <div class="col-sm-6 mt-1">
-                                                        <label class="form-label"><strong>Sigla</strong></label>
-                                                        <input type="text" class="form-control" value="${data[i].sigla}" disabled>
-                                                    </div>
-                                                    <div class="col-sm-6 mt-1">
-                                                        <label  class="form-label"><strong>Area</strong></label>
-                                                        <select class="form-select col-sm-12" disabled>
-                                                            <option selected>${data[i].area}</option>
+                                                        <label class="form-label"><strong>Curso</strong></label>
+                                                        <select id="turmaCurso" class="form-select col-sm-12" style="color:gray" onChange="fillAnos(this.value,'ano'); if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6 mt-1">
-                                                        <label class="form-label"><strong>Duração</strong></label>
-                                                        <select class="form-select col-sm-12" disabled>
-                                                            <option selected>${data[i].duracao}</option>
+                                                        <label for="diretor" class="form-label"><strong>Diretor de turma</strong></label>
+                                                        
+                                                        <select id="diretor" class="form-select col-sm-12" style="color:gray" onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">           
                                                         </select>
                                                     </div>
-                                                </div>
-                                                <div class="col-sm-12 mt-4">
-                                                    <center><button type="button" class="col-sm-4 btn btn-danger  mx-1" style="border-radius: 30px;"  onclick="(eliminarCurso('${data[i].idCurso}'))" data-bs-dismiss="modal">Eliminar Curso</button></center>                                
+                                                    <div class="col-sm-6 mt-1">
+                                                        <label for="ano"class="form-label"><strong>Ano</strong></label>
+                                                            <select id="ano" class="form-select col-sm-12" disabled onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
+                                                            </select>
+                                                    </div>
+                                                    <div class="col-sm-6 mt-1">
+                                                        <label for="numero" class="form-label"><strong>Numero de turma</strong></label>
+                                                        <input type="number" min="0" class="form-control" id="numero" placeholder='ex: "1" (Preencher se necessário)' onKeyPress="if(this.value.length==1) return false;" onchange="if(this.value == '0')this.value =''"> </input>
+                                                    </div>'
+
+                                                    <div class="col-sm-12 mt-4">
+                                                                <center><button type="button" class="col-sm-3 btn btn-primary  mx-1" style="border-radius: 30px;"onclick="criarTurma(\`\${document.getElementById('turmaCurso').value}\`,\`\${document.getElementById('diretor').value}\`,\`\${document.getElementById('ano').value}\`,\`\${document.getElementById('numero').value}\`)">Criar turma</button></center>
+                                                    </div>
                                                 </div>
                                             </form>
-                                        </div>
+                                        </div> 
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="criacaoFormando" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                <div class="modal-body">
+                <div class="container mb-1">
+                    <div class="criarAluno shadow-lg p-3 bg-body rounded">
+                        <div class="row">
+                            <div class="col-4 mx-auto">
+                                <img class="img-fluid" style="width:auto;" src="http://localhost:3000/files/Assets/criarAluno.svg" alt="aluno">
+                            </div>
+                            <div class="col-md-8">
+                                <form>
+                                    <div class="row mt-4">
+                                        <div class="col-sm-6 mt-1">
+                                            <label for="nome" class="form-label"><strong>Primeiro e último nome</strong></label>
+                                            <input type="text" class="form-control" id="nome">
+                                        </div>
+                                            <div class="col-sm-6 mt-1">
+                                                <label for="email" class="form-label"><strong>Email</strong></label>
+                                                <input type="text" class="form-control" id="email">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6 mt-1">
+                                                <label for="formandoCurso" class="form-label"><strong>Curso</strong></label>
+                                                <select id="formandoCurso" class="form-select col-sm-12" style="color:gray" onChange="fillTurmas(this.value,'formandoTurma'); if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
+                                                </select>
+                                            </div>
+
+                                            <div class="col-sm-6 mt-1">
+                                                <label for="formandoTurma" class="form-label"><strong>Turma</strong></label>
+                                                <select id="formandoTurma" class="form-select col-sm-12" disabled style="color:gray" onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">>
+                                                </select>
+                                            </div>
+                                        </div>
+                                </form>
+                                <div class="col-sm-12 mt-4">
+                                    <center><button type="button" class="col-sm-3 btn btn-primary mx-1" style="border-radius: 30px;" onclick="criarFormando(\`\${document.getElementById('nome').value}\`,\`\${document.getElementById('email').value}\`,\`\${document.getElementById('formandoTurma').value}\`)">Criar conta</button></center>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>`
+            </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            }
-                document.getElementById("tblCursos").innerHTML = str;
+            `;
+            fillTabelaCursos();
+            fillTabelaTurmas();
+            fillTabelaFormandos('');
         }
-        else return;
-        })
-    .catch((err)=>{
-        console.log(err)
-        alert('Erro na recolha dos cursos')
-    })
-}
-function fillTabelaTurmas(){
-    document.getElementById("tblTurmas").innerHTML = ``;
-    const options = {
-        method: 'GET',
-        headers: {
-            'authorization': localStorage.getItem("token")
-        }
-    }
-    fetch('http://localhost:3000/api/admin/turmas',options)
-    .then((res) =>{
-        if(res.status ==200 ) return res.json()
-        return null
-    })
-    .then((data) => {
-        let str = '';
-        if(data){
-            for(let i = 0; i< data.length; i++){
-                if(data[i].curso == null)
-                    data[i].curso = ''
-                if(data[i].diretorTurma == null)
-                    data[i].diretorTurma = ''
-                if(data[i].numero == null)
-                    data[i].numero = ''
+        function renderGerirAdministracao(){
+            document.getElementById("painelGestao").innerHTML =`
+            <div class="mt-4">
+                <div class="container mb-4 shadow-lg p-3 bg-body rounded" onmouseover="mostrarBotao('btnCriarAdmin')" onmouseout="esconderBotao('btnCriarAdmin')">
+                    <div class="criar d-flex">
+                        <div>
+                            <h3>Administradores</h3>
+                        </div>
+                        <div id="btnCriarAdmin" style="display: none;">
+                            <button type="button" class="btn btn-primary mx-3" style="border-radius: 30px;" onclick="openModal('criacaoAdmin');">Abrir formulário</button>
+                        </div>
+                    </div>
                 
+                    <div class="table-responsive-sm">
+                        <table class="table text-center">
+                            <thead>
+                                <tr>
+                                    <th class="mx-auto" scope="col">Nome</th>
+                                    <th class="mx-auto" scope="col">Email</th> 
+                                    <th class="mx-auto" style="display:none" id="acoesAdmins" scope="col">Ações</th>  
+                                </tr>
+                            </thead>
+                            <tbody id="tblCursos" onmouseover="document.getElementById('acoesAdmins').style.display = 'block';" onmouseout="document.getElementById('acoesAdmins').style.display = 'none';">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center"><label class="text-danger" id="msgCursos"></label></div>
+                </div>
+            
+                <div class="container mb-4 shadow-lg p-3 bg-body rounded" onmouseover="mostrarBotao('btnCriarDiretorTurma')" onmouseout="esconderBotao('btnCriarDiretorTurma')">
+                    <div class="criar d-flex">
+                        <div>
+                            <h3>Diretores de turma</h3>
+                        </div>
+                        <div id="btnCriarDiretorTurma" style="display: none;">
+                            <button type="button" class="btn btn-primary mx-3" style="border-radius: 30px;" onclick="openModal('criacaoDiretorTurma');">Abrir formulário</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive-sm">
+                        <table class="table text-center">
+                            <thead>
+                                <th class="mx-auto" scope="col">Nome</th>
+                                <th class="mx-auto" scope="col">Email</th> 
+                                <th class="mx-auto" style="display:none" id="acoesDiretoresTurma" scope="col">Ações</th>  
+                                </tr>
+                            </thead>
+                            <tbody id="tblCursos" onmouseover="document.getElementById('acoesDiretoresTurma').style.display = 'block';" onmouseout="document.getElementById('acoesDiretoresTurma').style.display = 'none';">
+                            </tbody>
+                        </table>
+                    </div>
+                <div class="text-center"><label class="text-danger" id="msgCursos"></label></div>
+            </div>
 
-                str+= `
-                    <tr id="trT${data[i].idTurma}" onmouseover="document.getElementById('botoesT${data[i].idTurma}').style.display = 'flex';" onmouseout="document.getElementById('botoesT${data[i].idTurma}').style.display = 'none';">
-                        <td><input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" onchange="fillTabelaFormandos(${data[i].idTurma});"></td>`
+            <div class="modal fade" id="criacaoCurso" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="container mb-1">
+                            <div class="shadow-lg p-3 bg-body rounded">
+                                <div class="row">
+                                    <div class="col-4 mx-auto">
+                                        <img class="img-fluid" style="width:auto;" src="http://localhost:3000/files/Assets/curso.svg" alt="aluno">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <form>
+                                            <div class="row mt-4">
+                                                <div class="col-sm-6 mt-1">
+                                                    <label for="curso" class="form-label"><strong>Nome do curso</strong></label>
+                                                    <input type="text" class="form-control" id="curso" placeholder='Ex: "Técnico de vendas e marketing"'>
+                                                </div>
+                                                <div class="col-sm-6 mt-1">
+                                                    <label for="sigla" class="form-label"><strong>Sigla</strong></label>
+                                                    <input type="text" class="form-control" id="sigla" placeholder='Ex: "TVM"' onKeyUp="this.value = this.value.toUpperCase()">
+                                                </div>
+                                                <div class="col-sm-6 mt-1">
+                                                    <label for="area" class="form-label"><strong>Área</strong></label>
+                                                    <select id="area" class="form-select col-sm-12" style="color:gray" onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-6 mt-1">
+                                                    <label for="duracao" class="form-label"><strong>Duração</strong></label>
+                                                    <select id="duracao" class="form-select col-sm-12" style="color:gray" onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
+                                                        <option value="0" style="color:gray !important">Selecionar duração</option>
+                                                        <option value="1" style="color:black !important" >1 ano</option>
+                                                        <option value="3" style="color:black !important">3 anos</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 mt-4">
+                                                <center><button type="button" class="col-sm-3 btn btn-primary  mx-1" style="border-radius: 30px;" onclick="criarCurso(\`\${document.getElementById('curso').value}\`,\`\${document.getElementById('sigla').value}\`,\`\${document.getElementById('area').value}\`,\`\${document.getElementById('duracao').value}\`)">Criar curso</button></center>                                
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                        if(data[i].turma)
-                            str += `<td>${data[i].turma}</td>`
-                        else
-                            str += `<td style="color:red">Sem curso atribuído</td>`
 
-                        if(data[i].diretorTurma)
-                            str += `<td>${data[i].diretorTurma}</td>`
-                        else
-                        str +=  `<td style="color:red">Sem diretor de turma atribuído</td>`
-                        
-                        str +=  `
-                        <td class="my-auto" style="display: none;" id="botoesT${data[i].idTurma}">
-                            <button type="button"  class="col-6 btn btn-primary mx-1"  onclick="resetModalEdicaoTurma('${data[i].idTurma}','${data[i].idCurso}','${data[i].idConta}','${data[i].ano}','${data[i].numero}'); openModal('edicaoTurma${data[i].idTurma}');">editar</button>
-                            <button type="button" class="col-6 btn btn-danger mx-1"  onclick="openModal('eliminacaoTurma${data[i].idTurma}');">eliminar</button>
-                        </td>
-                    </tr>
+        <div class="modal fade" id="criacaoDiretor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                            <div class="container mb-2">
+                                <div class="shadow-lg p-3 mb-1 bg-body rounded">
+                                    <div class="row">
+                                        <div class="col-4 mx-auto">
+                                            <img class="img-fluid" src="http://localhost:3000/files/Assets/turma.svg" alt="aluno">
+                                        </div>
+                    
+                                        <div class="col-md-8 mx-auto mt-3">
+                                            <form>
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-6 mt-1">
+                                                        <label for="turmaCurso" class="form-label"><strong>Curso</strong></label>
+                                                        <select id="turmaCurso" class="form-select col-sm-12" style="color:gray" onChange="console.log('rebuçado'); if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-6 mt-1">
+                                                        <label for="diretor" class="form-label"><strong>Diretor de turma</strong></label>
+                                                        
+                                                        <select id="diretor" class="form-select col-sm-12" style="color:gray" onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">           
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-6 mt-1">
+                                                        <label for="ano"class="form-label"><strong>Ano</strong></label>
+                                                            <select id="ano" class="form-select col-sm-12" disabled>
+                                                            </select>
+                                                    </div>
+                                                    <div class="col-sm-6 mt-1">
+                                                        <label for="numero" class="form-label"><strong>Numero de turma</strong></label>
+                                                        <input type="number" min="0" class="form-control" id="numero" placeholder='ex: "1" (Preencher se necessário)' onKeyPress="if(this.value.length==1) return false;" onchange="if(this.value == '0')this.value =''"> </input>
+                                                    </div>'
 
-                    <div class="modal fade" id="edicaoTurma${data[i].idTurma}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                        <div class="container mb-2">
-                                            <div class="criarAluno shadow-lg p-3 mb-1 bg-body rounded">
+                                                    <div class="col-sm-12 mt-4">
+                                                                <center><button type="button" class="col-sm-3 btn btn-primary  mx-1" style="border-radius: 30px;">Criar turma</button></center>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+        }
+        function renderGerirEmpresas(){
+            document.getElementById("painelGestao").innerHTML =`
+            <div class="mt-4">
+                <div class="container mb-4 shadow-lg p-3 bg-body rounded">
+                    <h3>Empresas</h3>
+                
+                    <div class="table-responsive-sm">
+                        <table class="table text-center">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-4 mx-auto" scope="col">Nome</th>
+                                    <th class="col-sm-1 mx-auto" scope="col">Sigla</th>
+                                    <th class="col-sm-4 mx-auto" scope="col">Área</th>  
+                                    <th class="col-sm-3 mx-auto" style="display:none" id="acoesCursos" scope="col">Ações</th>  
+                                </tr>
+                            </thead>
+                            <tbody id="tblCursos" onmouseover="document.getElementById('acoesCursos').style.display = 'block';" onmouseout="document.getElementById('acoesCursos').style.display = 'none';">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center"><label class="text-danger" id="msgCursos"></label></div>
+                </div>
+        `;
+        }
+        /****   fillTabela{   ****/
+            function fillTabelaCursos(){
+                str = ``;
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        'authorization': localStorage.getItem("token")
+                    }
+                }
+                fetch('http://localhost:3000/api/admin/cursos',options)
+                .then((res) =>{
+                    if(res.status =200) return res.json()
+                    return null
+                })
+                .then((data) => {
+                    if(data){
+                        for(let i = 0; i< data.length; i++){
+                            
+                            str+=`
+                                <tr id="trC${data[i].idCurso}" onmouseover="document.getElementById('botoesC${data[i].idCurso}').style.display = 'flex';" onmouseout="document.getElementById('botoesC${data[i].idCurso}').style.display = 'none';">
+                                    <td id="tdCurso${data[i].idCurso}">${data[i].curso}</td>
+                                    <td id="tdSigla${data[i].idCurso}">${data[i].sigla}</td>
+                                    <td id="tdArea${data[i].idCurso}">${data[i].area}</td>
+                                    <td class="my-auto" style="display: none;" id="botoesC${data[i].idCurso}">
+                                        <button type="button"  class="col-6 btn btn-primary mx-1"  onclick="resetModalEdicaoCurso('${data[i].idCurso}','${data[i].curso}','${data[i].sigla}','${data[i].idArea}','${data[i].duracao}'); openModal('edicaoCurso${data[i].idCurso}');">editar</button>
+                                        <button type="button" class="col-6 btn btn-danger mx-1"  onclick="openModal('eliminacaoCurso${data[i].idCurso}');">eliminar</button>
+                                    </td>
+                                </tr>
+                                <div class="modal fade" id="edicaoCurso${data[i].idCurso}" style="text-align: left;" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <div class="container mb-1">
+                                                <div class="criarAluno shadow-lg p-3 bg-body rounded">
+                                                    <div class="row">
+                                                        <div class="col-4 mx-auto">
+                                                            <img class="img-fluid" style="width:auto;" src="http://localhost:3000/files/Assets/curso.svg" alt="aluno">
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <form id="formEdicaoCurso${data[i].idCurso}">
+                                                                <div class="row mt-4">
+                                                                    <div class="col-sm-6 mt-1">
+                                                                        <label for="curso${data[i].idCurso}" class="form-label"><strong>Nome do curso</strong></label>
+                                                                        <input type="text" class="form-control" id="curso${data[i].idCurso}" value="${data[i].curso}">
+                                                                    </div>
+                                                                    <div class="col-sm-6 mt-1">
+                                                                        <label for="sigla${data[i].idCurso}" class="form-label"><strong>Sigla</strong></label>
+                                                                        <input type="text" class="form-control" id="sigla${data[i].idCurso}" value="${data[i].sigla}">
+                                                                    </div>
+                                                                    <div class="col-sm-6 mt-1">
+                                                                        <label for="area${data[i].idCurso}" class="form-label"><strong>Area</strong></label>
+                                                                        <select id="area${data[i].idCurso}" class="form-select col-sm-12">
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-sm-6 mt-1">
+                                                                        <label for="duracao${data[i].idCurso}" class="form-label"><strong>Duração</strong></label>
+                                                                        <select id="duracao${data[i].idCurso}" class="form-select col-sm-12">`
+
+                            if(data[i].duracao == '1') 
+                                str += `<option value="${data[i].duracao}" selected>${data[i].duracao} ano</option>
+                                        <option value="3">3 anos</option>`;
+                            else 
+                                str += `<option value="${data[i].duracao}" selected>${data[i].duracao} anos</option>
+                                        <option value="1">1 ano</option>`;
+                                
+                            str += `
+                                                                        </select>                                                        </div>
+                                                                </div>
+                                                                <div class="col-sm-12 mt-4">
+                                                                    <center><button type="button" class="col-sm-4 btn btn-primary  mx-1" style="border-radius: 30px;" data-bs-dismiss="modal" onclick="editarCurso('${data[i].idCurso}',\`\${document.getElementById('curso${data[i].idCurso}').value}\`,\`\${document.getElementById('sigla${data[i].idCurso}').value}\`,\`\${document.getElementById('area${data[i].idCurso}').value}\`,\`\${document.getElementById('duracao${data[i].idCurso}').value}\`);">Confirmar alterações</button></center>                                
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>` 
+                            
+                            str+=`<div class="modal fade" id="eliminacaoCurso${data[i].idCurso}" style="text-align: left;" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <div class="container mb-1">
+                                            <div class="criarAluno shadow-lg p-3 bg-body rounded">
                                                 <div class="row">
                                                     <div class="col-4 mx-auto">
-                                                        <img class="img-fluid" src="http://localhost:3000/files/Assets/turma.svg" alt="aluno">
+                                                        <img class="img-fluid" style="width:auto;" src="http://localhost:3000/files/Assets/curso.svg" alt="aluno">
                                                     </div>
-                                
-                                                    <div class="col-md-8 mx-auto mt-3">
-                                                        <form>
+                                                    <div class="col-md-8">
+                                                        <form">
                                                             <div class="row mt-4">
                                                                 <div class="col-sm-6 mt-1">
-                                                                    <label for="turmaCurso${data[i].idTurma}" class="form-label"><strong>Curso</strong></label>
-                                                                    <select id="turmaCurso${data[i].idTurma}" class="form-select col-sm-12" onChange="fillAnos(this.value,'ano${data[i].idTurma}'); if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
+                                                                    <label class="form-label"><strong>Nome do curso</strong></label>
+                                                                    <input type="text" class="form-control" value="${data[i].curso}" disabled>
+                                                                </div>
+                                                                <div class="col-sm-6 mt-1">
+                                                                    <label class="form-label"><strong>Sigla</strong></label>
+                                                                    <input type="text" class="form-control" value="${data[i].sigla}" disabled>
+                                                                </div>
+                                                                <div class="col-sm-6 mt-1">
+                                                                    <label  class="form-label"><strong>Area</strong></label>
+                                                                    <select class="form-select col-sm-12" disabled>
+                                                                        <option selected>${data[i].area}</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="col-sm-6 mt-1">
-                                                                    <label for="diretor${data[i].idTurma}" class="form-label"><strong>Diretor de turma</strong></label>
-                                                                    <select id="diretor${data[i].idTurma}" class="form-select col-sm-12"  onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">           
+                                                                    <label class="form-label"><strong>Duração</strong></label>
+                                                                    <select class="form-select col-sm-12" disabled>
+                                                                        <option selected>${data[i].duracao}</option>
                                                                     </select>
-                                                                </div>
-                                                                <div class="col-sm-6 mt-1">
-                                                                    <label for="ano${data[i].idTurma}"class="form-label"><strong>Ano</strong></label>
-                                                                        <select id="ano${data[i].idTurma}" class="form-select col-sm-12" onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
-                                                                        </select>
-                                                                </div>
-                                                                <div class="col-sm-6 mt-1">
-                                                                    <label for="numero${data[i].idTurma}" class="form-label"><strong>Numero de turma</strong></label>
-                                                                    <input type="number" min="0" class="form-control" id="numero${data[i].idTurma}" placeholder='ex: "1" (Preencher se necessário)' onKeyPress="if(this.value.length==1) return false;" onchange="if(this.value == '0')this.value =''"> </input>
-                                                                </div>'
-
-                                                                <div class="col-sm-12 mt-4">
-                                                                            <center><button type="button" class="col-sm-3 btn btn-primary  mx-1" style="border-radius: 30px;" data-bs-dismiss="modal" onclick="editarTurma('${data[i].idTurma}',\`\${document.getElementById('turmaCurso${data[i].idTurma}').value}\`,\`\${document.getElementById('diretor${data[i].idTurma}').value}\`,\`\${document.getElementById('ano${data[i].idTurma}').value}\`,\`\${document.getElementById('numero${data[i].idTurma}').value}\`)">Editar turma</button></center>
                                                                 </div>
                                                             </div>
+                                                            <div class="col-sm-12 mt-4">
+                                                                <center><button type="button" class="col-sm-4 btn btn-danger  mx-1" style="border-radius: 30px;"  onclick="(eliminarCurso('${data[i].idCurso}'))" data-bs-dismiss="modal">Eliminar Curso</button></center>                                
+                                                            </div>
                                                         </form>
-                                                    </div> 
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </div>`
 
+                        }
+                            document.getElementById("tblCursos").innerHTML = str;
+                    }
+                    else return;
+                    })
+                .catch((err)=>{
+                    console.log(err)
+                    alert('Erro na recolha dos cursos')
+                })
+            }
+            function fillTabelaTurmas(){
+                document.getElementById("tblTurmas").innerHTML = ``;
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        'authorization': localStorage.getItem("token")
+                    }
+                }
+                fetch('http://localhost:3000/api/admin/turmas',options)
+                .then((res) =>{
+                    if(res.status ==200 ) return res.json()
+                    return null
+                })
+                .then((data) => {
+                    let str = '';
+                    if(data){
+                        for(let i = 0; i< data.length; i++){
+                            if(data[i].curso == null)
+                                data[i].curso = ''
+                            if(data[i].diretorTurma == null)
+                                data[i].diretorTurma = ''
+                            if(data[i].numero == null)
+                                data[i].numero = ''
+                            
 
-                    <div class="modal fade" id="eliminacaoTurma${data[i].idTurma}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                        <div class="container mb-2">
-                                            <div class="criarAluno shadow-lg p-3 mb-1 bg-body rounded">
-                                                <div class="row">
-                                                    <div class="col-4 mx-auto">
-                                                        <img class="img-fluid" src="http://localhost:3000/files/Assets/turma.svg" alt="aluno">
+                            str+= `
+                                <tr id="trT${data[i].idTurma}" onmouseover="document.getElementById('botoesT${data[i].idTurma}').style.display = 'flex';" onmouseout="document.getElementById('botoesT${data[i].idTurma}').style.display = 'none';">
+                                    <td><input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" onchange="fillTabelaFormandos(${data[i].idTurma});"></td>`
+
+                                    if(data[i].turma)
+                                        str += `<td>${data[i].turma}</td>`
+                                    else
+                                        str += `<td style="color:red">Sem curso atribuído</td>`
+
+                                    if(data[i].diretorTurma)
+                                        str += `<td>${data[i].diretorTurma}</td>`
+                                    else
+                                    str +=  `<td style="color:red">Sem diretor de turma atribuído</td>`
+                                    
+                                    str +=  `
+                                    <td class="my-auto" style="display: none;" id="botoesT${data[i].idTurma}">
+                                        <button type="button"  class="col-6 btn btn-primary mx-1"  onclick="resetModalEdicaoTurma('${data[i].idTurma}','${data[i].idCurso}','${data[i].idConta}','${data[i].ano}','${data[i].numero}'); openModal('edicaoTurma${data[i].idTurma}');">editar</button>
+                                        <button type="button" class="col-6 btn btn-danger mx-1"  onclick="openModal('eliminacaoTurma${data[i].idTurma}');">eliminar</button>
+                                    </td>
+                                </tr>
+
+                                <div class="modal fade" id="edicaoTurma${data[i].idTurma}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                    <div class="container mb-2">
+                                                        <div class="criarAluno shadow-lg p-3 mb-1 bg-body rounded">
+                                                            <div class="row">
+                                                                <div class="col-4 mx-auto">
+                                                                    <img class="img-fluid" src="http://localhost:3000/files/Assets/turma.svg" alt="aluno">
+                                                                </div>
+                                            
+                                                                <div class="col-md-8 mx-auto mt-3">
+                                                                    <form>
+                                                                        <div class="row mt-4">
+                                                                            <div class="col-sm-6 mt-1">
+                                                                                <label for="turmaCurso${data[i].idTurma}" class="form-label"><strong>Curso</strong></label>
+                                                                                <select id="turmaCurso${data[i].idTurma}" class="form-select col-sm-12" onChange="fillAnos(this.value,'ano${data[i].idTurma}'); if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-sm-6 mt-1">
+                                                                                <label for="diretor${data[i].idTurma}" class="form-label"><strong>Diretor de turma</strong></label>
+                                                                                <select id="diretor${data[i].idTurma}" class="form-select col-sm-12"  onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">           
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-sm-6 mt-1">
+                                                                                <label for="ano${data[i].idTurma}"class="form-label"><strong>Ano</strong></label>
+                                                                                    <select id="ano${data[i].idTurma}" class="form-select col-sm-12" onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
+                                                                                    </select>
+                                                                            </div>
+                                                                            <div class="col-sm-6 mt-1">
+                                                                                <label for="numero${data[i].idTurma}" class="form-label"><strong>Numero de turma</strong></label>
+                                                                                <input type="number" min="0" class="form-control" id="numero${data[i].idTurma}" placeholder='ex: "1" (Preencher se necessário)' onKeyPress="if(this.value.length==1) return false;" onchange="if(this.value == '0')this.value =''"> </input>
+                                                                            </div>'
+
+                                                                            <div class="col-sm-12 mt-4">
+                                                                                        <center><button type="button" class="col-sm-3 btn btn-primary  mx-1" style="border-radius: 30px;" data-bs-dismiss="modal" onclick="editarTurma('${data[i].idTurma}',\`\${document.getElementById('turmaCurso${data[i].idTurma}').value}\`,\`\${document.getElementById('diretor${data[i].idTurma}').value}\`,\`\${document.getElementById('ano${data[i].idTurma}').value}\`,\`\${document.getElementById('numero${data[i].idTurma}').value}\`)">Editar turma</button></center>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div> 
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                
-                                                    <div class="col-md-8 mx-auto mt-3">
-                                                        <form>
-                                                            <div class="row mt-4">
+                                                </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="modal fade" id="eliminacaoTurma${data[i].idTurma}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                    <div class="container mb-2">
+                                                        <div class="criarAluno shadow-lg p-3 mb-1 bg-body rounded">
+                                                            <div class="row">
+                                                                <div class="col-4 mx-auto">
+                                                                    <img class="img-fluid" src="http://localhost:3000/files/Assets/turma.svg" alt="aluno">
+                                                                </div>
+                                            
+                                                                <div class="col-md-8 mx-auto mt-3">
+                                                                    <form>
+                                                                        <div class="row mt-4">
+                                                                            <div class="col-sm-6 mt-1">
+                                                                                <label class="form-label"><strong>Curso</strong></label>
+                                                                                <select class="form-select col-sm-12" disabled>
+                                                                                    <option selected>${data[i].curso}</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-sm-6 mt-1">
+                                                                                <label  class="form-label"><strong>Diretor de turma</strong></label>
+                                                                                <select  class="form-select col-sm-12" disabled>    
+                                                                                    <option selected>${data[i].diretorTurma}</option>       
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-sm-6 mt-1">
+                                                                                <label class="form-label"><strong>Ano</strong></label>
+                                                                                    <select class="form-select col-sm-12" disabled>
+                                                                                    <option selected>${data[i].ano}</option>
+                                                                                    </select>
+                                                                            </div>
+
+                                                                            <div class="col-sm-6 mt-1">
+                                                                                <label  class="form-label"><strong>Numero de turma</strong></label>
+                                                                                <input class="form-control" disabled value="${data[i].numero}"></input>
+                                                                            </div>'
+
+                                                                            <div class="col-sm-12 mt-4">
+                                                                                        <center><button type="button" data-bs-dismiss="modal" class="col-sm-3 btn btn-danger  mx-1" style="border-radius: 30px;"onclick="eliminarTurma('${data[i].idTurma}')">Eliminar turma</button></center>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `}
+                            document.getElementById("tblTurmas").innerHTML = str;
+                    }
+                    else return;
+                    })
+                .catch((err)=>{
+                    console.log(err)
+                    alert('Erro na recolha das turmas')
+                })
+            }
+            function fillTabelaFormandos(idTurma){
+                document.getElementById("tblFormandos").innerHTML = ``;
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        'authorization': localStorage.getItem("token")
+                    }
+                }
+                fetch(`http://localhost:3000/api/admin/formandos/${idTurma}`,options)
+                .then((res) =>{
+                    if(res.status=200) return res.json()
+                    return null
+                })
+                .then((data) => {
+                    if(data){
+                        for(let i = 0; i< data.length; i++){
+                            if(data[i].turma == null && data[i].curso == null){
+                                data[i].turma = '';
+                                data[i].curso = '';
+                            }
+                            document.getElementById("tblFormandos").innerHTML += `
+                            <tr id="trF${data[i].idConta}"onmouseover="document.getElementById('botoesF${data[i].idConta}').style.display = 'flex';" onmouseout="document.getElementById('botoesF${data[i].idConta}').style.display = 'none';">
+                                <td>${data[i].nome}</td>
+                                <td>${data[i].email}</td>`
+                                if(data[i].turma)
+                                    document.getElementById(`trF${data[i].idConta}`).innerHTML+= `<td>${data[i].turma}</td>`
+                                else
+                                    document.getElementById(`trF${data[i].idConta}`).innerHTML+= `<td style="color:red">Sem turma atribuída</td>`
+                                document.getElementById(`trF${data[i].idConta}`).innerHTML += `
+                                <td class="my-auto" style="display: none;" id="botoesF${data[i].idConta}">
+                                <button type="button"  class="col-6 btn btn-primary mx-1"  onclick="console.log('${data[i].idCurso}'); resetModalEdicaoFormando('${data[i].idConta}','${data[i].nome}','${data[i].email}','${data[i].idCurso}','${data[i].idTurma}'); openModal('edicaoFormando${data[i].idConta}');">editar</button>
+                                <button type="button" class="col-6 btn btn-danger mx-1"  onclick="openModal('eliminacaoFormando${data[i].idConta}');">eliminar</button>
+                                </td>
+                            </tr>
+
+                            
+                            <div class="modal fade" id="edicaoFormando${data[i].idConta}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+                                    <div class="modal-content">
+                                    <div class="modal-body">
+                                    <div class="container mb-1">
+                                        <div class="criarAluno shadow-lg p-3 bg-body rounded">
+                                            <div class="row">
+                                                <div class="col-4 mx-auto">
+                                                    <img class="img-fluid" style="width:auto;" src="http://localhost:3000/files/Assets/criarAluno.svg" alt="aluno">
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <form>
+                                                        <div class="row mt-4">
+                                                            <div class="col-sm-6 mt-1">
+                                                                <label for="nome${data[i].idConta}" class="form-label"><strong>Primeiro e último nome</strong></label>
+                                                                <input type="text" id="nome${data[i].idConta}" class="form-control">
+                                                            </div>
+                                                                <div class="col-sm-6 mt-1">
+                                                                    <label for="email${data[i].idConta}"class="form-label"><strong>Email</strong></label>
+                                                                    <input type="text" id="email${data[i].idConta}" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-6 mt-1">
+                                                                    <label for="formandoCurso${data[i].idConta}" class="form-label"><strong>Curso</strong></label>
+                                                                    <select id="formandoCurso${data[i].idConta}" class="form-select col-sm-12"  onChange="fillTurmas(this.value,'formandoTurma${data[i].idConta}');if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="col-sm-6 mt-1">
+                                                                    <label for="formandoTurma${data[i].idConta}" class="form-label"><strong>Turma</strong></label>
+                                                                    <select id="formandoTurma${data[i].idConta}" class="form-select col-sm-12" onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                    </form>
+                                                    <div class="col-sm-12 mt-4">
+                                                        <center><button type="button" data-bs-dismiss="modal" class="col-sm-3 btn btn-primary mx-1" style="border-radius: 30px;" onclick="editarFormando('${data[i].idConta}',\`\${document.getElementById('nome${data[i].idConta}').value}\`,\`\${document.getElementById('email${data[i].idConta}').value}\`,\`\${document.getElementById('formandoTurma${data[i].idConta}').value}\`)">Editar conta</button></center>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="eliminacaoFormando${data[i].idConta}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+                                    <div class="modal-content">
+                                    <div class="modal-body">
+                                    <div class="container mb-1">
+                                        <div class="criarAluno shadow-lg p-3 bg-body rounded">
+                                            <div class="row">
+                                                <div class="col-4 mx-auto">
+                                                    <img class="img-fluid" style="width:auto;" src="http://localhost:3000/files/Assets/criarAluno.svg" alt="aluno">
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <form>
+                                                        <div class="row mt-4">
+                                                            <div class="col-sm-6 mt-1">
+                                                                <label class="form-label"><strong>Primeiro e último nome</strong></label>
+                                                                <input type="text" class="form-control" value="${data[i].nome}" disabled>
+                                                            </div>
+                                                                <div class="col-sm-6 mt-1">
+                                                                    <label class="form-label"><strong>Email</strong></label>
+                                                                    <input type="text" class="form-control" value="${data[i].email}" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
                                                                 <div class="col-sm-6 mt-1">
                                                                     <label class="form-label"><strong>Curso</strong></label>
                                                                     <select class="form-select col-sm-12" disabled>
-                                                                        <option selected>${data[i].curso}</option>
+                                                                    <option selected> ${data[i].curso}<option>
                                                                     </select>
-                                                                </div>
-                                                                <div class="col-sm-6 mt-1">
-                                                                    <label  class="form-label"><strong>Diretor de turma</strong></label>
-                                                                    <select  class="form-select col-sm-12" disabled>    
-                                                                        <option selected>${data[i].diretorTurma}</option>       
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-sm-6 mt-1">
-                                                                    <label class="form-label"><strong>Ano</strong></label>
-                                                                        <select class="form-select col-sm-12" disabled>
-                                                                        <option selected>${data[i].ano}</option>
-                                                                        </select>
                                                                 </div>
 
                                                                 <div class="col-sm-6 mt-1">
-                                                                    <label  class="form-label"><strong>Numero de turma</strong></label>
-                                                                    <input class="form-control" disabled value="${data[i].numero}"></input>
-                                                                </div>'
-
-                                                                <div class="col-sm-12 mt-4">
-                                                                            <center><button type="button" data-bs-dismiss="modal" class="col-sm-3 btn btn-danger  mx-1" style="border-radius: 30px;"onclick="eliminarTurma('${data[i].idTurma}')">Eliminar turma</button></center>
+                                                                    <label class="form-label"><strong>Turma</strong></label>
+                                                                    <select class="form-select col-sm-12" disabled >
+                                                                        <option selected> ${data[i].turma}<option>
+                                                                    </select>
                                                                 </div>
                                                             </div>
-                                                        </form>
-                                                    </div> 
+                                                    </form>
+                                                    <div class="col-sm-12 mt-4">
+                                                        <center><button type="button" data-bs-dismiss="modal" class="col-sm-3 btn btn-danger mx-1" style="border-radius: 30px;" onclick="eliminarFormando('${data[i].idConta}')">Eliminar conta</button></center>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                `}
-                document.getElementById("tblTurmas").innerHTML = str;
-        }
-        else return;
-        })
-    .catch((err)=>{
-        console.log(err)
-        alert('Erro na recolha das turmas')
-    })
-}
-function fillTabelaFormandos(idTurma){
-    document.getElementById("tblFormandos").innerHTML = ``;
-    const options = {
-        method: 'GET',
-        headers: {
-            'authorization': localStorage.getItem("token")
-        }
-    }
-    fetch(`http://localhost:3000/api/admin/formandos/${idTurma}`,options)
-    .then((res) =>{
-        if(res.status=200) return res.json()
-        return null
-    })
-    .then((data) => {
-        if(data){
-            for(let i = 0; i< data.length; i++){
-                if(data[i].turma == null && data[i].curso == null){
-                    data[i].turma = '';
-                    data[i].curso = '';
-                }
-                document.getElementById("tblFormandos").innerHTML += `
-                <tr id="trF${data[i].idConta}"onmouseover="document.getElementById('botoesF${data[i].idConta}').style.display = 'flex';" onmouseout="document.getElementById('botoesF${data[i].idConta}').style.display = 'none';">
-                    <td>${data[i].nome}</td>
-                    <td>${data[i].email}</td>`
-                    if(data[i].turma)
-                        document.getElementById(`trF${data[i].idConta}`).innerHTML+= `<td>${data[i].turma}</td>`
-                    else
-                        document.getElementById(`trF${data[i].idConta}`).innerHTML+= `<td style="color:red">Sem turma atribuída</td>`
-                    document.getElementById(`trF${data[i].idConta}`).innerHTML += `
-                    <td class="my-auto" style="display: none;" id="botoesF${data[i].idConta}">
-                    <button type="button"  class="col-6 btn btn-primary mx-1"  onclick="console.log('${data[i].idCurso}'); resetModalEdicaoFormando('${data[i].idConta}','${data[i].nome}','${data[i].email}','${data[i].idCurso}','${data[i].idTurma}'); openModal('edicaoFormando${data[i].idConta}');">editar</button>
-                    <button type="button" class="col-6 btn btn-danger mx-1"  onclick="openModal('eliminacaoFormando${data[i].idConta}');">eliminar</button>
-                    </td>
-                </tr>
+                            `}
+                    }
+                    })
+                .catch((err)=>{
+                    console.log(err)
+                    alert('Erro na recolha das Formandos')
+                })
+            }
+        /****   }fillTabela   ****/
 
+        /****   resetModal{   ****/
+            function resetModalEdicaoCurso(idCurso,curso,sigla,idArea,duracao){
+                document.getElementById(`curso${idCurso}`).value = curso;
+                document.getElementById(`sigla${idCurso}`).value = sigla;
                 
-                <div class="modal fade" id="edicaoFormando${data[i].idConta}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
-                        <div class="modal-content">
-                        <div class="modal-body">
-                        <div class="container mb-1">
-                            <div class="criarAluno shadow-lg p-3 bg-body rounded">
-                                <div class="row">
-                                    <div class="col-4 mx-auto">
-                                        <img class="img-fluid" style="width:auto;" src="http://localhost:3000/files/Assets/criarAluno.svg" alt="aluno">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <form>
-                                            <div class="row mt-4">
-                                                <div class="col-sm-6 mt-1">
-                                                    <label for="nome${data[i].idConta}" class="form-label"><strong>Primeiro e último nome</strong></label>
-                                                    <input type="text" id="nome${data[i].idConta}" class="form-control">
-                                                </div>
-                                                    <div class="col-sm-6 mt-1">
-                                                        <label for="email${data[i].idConta}"class="form-label"><strong>Email</strong></label>
-                                                        <input type="text" id="email${data[i].idConta}" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-6 mt-1">
-                                                        <label for="formandoCurso${data[i].idConta}" class="form-label"><strong>Curso</strong></label>
-                                                        <select id="formandoCurso${data[i].idConta}" class="form-select col-sm-12"  onChange="fillTurmas(this.value,'formandoTurma${data[i].idConta}');if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="col-sm-6 mt-1">
-                                                        <label for="formandoTurma${data[i].idConta}" class="form-label"><strong>Turma</strong></label>
-                                                        <select id="formandoTurma${data[i].idConta}" class="form-select col-sm-12" onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                        </form>
-                                        <div class="col-sm-12 mt-4">
-                                            <center><button type="button" data-bs-dismiss="modal" class="col-sm-3 btn btn-primary mx-1" style="border-radius: 30px;" onclick="editarFormando('${data[i].idConta}',\`\${document.getElementById('nome${data[i].idConta}').value}\`,\`\${document.getElementById('email${data[i].idConta}').value}\`,\`\${document.getElementById('formandoTurma${data[i].idConta}').value}\`)">Editar conta</button></center>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal fade" id="eliminacaoFormando${data[i].idConta}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
-                        <div class="modal-content">
-                        <div class="modal-body">
-                        <div class="container mb-1">
-                            <div class="criarAluno shadow-lg p-3 bg-body rounded">
-                                <div class="row">
-                                    <div class="col-4 mx-auto">
-                                        <img class="img-fluid" style="width:auto;" src="http://localhost:3000/files/Assets/criarAluno.svg" alt="aluno">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <form>
-                                            <div class="row mt-4">
-                                                <div class="col-sm-6 mt-1">
-                                                    <label class="form-label"><strong>Primeiro e último nome</strong></label>
-                                                    <input type="text" class="form-control" value="${data[i].nome}" disabled>
-                                                </div>
-                                                    <div class="col-sm-6 mt-1">
-                                                        <label class="form-label"><strong>Email</strong></label>
-                                                        <input type="text" class="form-control" value="${data[i].email}" disabled>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-6 mt-1">
-                                                        <label class="form-label"><strong>Curso</strong></label>
-                                                        <select class="form-select col-sm-12" disabled>
-                                                        <option selected> ${data[i].curso}<option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="col-sm-6 mt-1">
-                                                        <label class="form-label"><strong>Turma</strong></label>
-                                                        <select class="form-select col-sm-12" disabled >
-                                                            <option selected> ${data[i].turma}<option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                        </form>
-                                        <div class="col-sm-12 mt-4">
-                                            <center><button type="button" data-bs-dismiss="modal" class="col-sm-3 btn btn-danger mx-1" style="border-radius: 30px;" onclick="eliminarFormando('${data[i].idConta}')">Eliminar conta</button></center>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                `}
-        }
-        })
-    .catch((err)=>{
-        console.log(err)
-        alert('Erro na recolha das Formandos')
-    })
-}
-function resetModalEdicaoCurso(idCurso,curso,sigla,idArea,duracao){
-    document.getElementById(`curso${idCurso}`).value = curso;
-    document.getElementById(`sigla${idCurso}`).value = sigla;
-    
-
-    document.getElementById(`area${idCurso}`).innerHTML= ``;
-    fetch('http://localhost:3000/api/unrestricted/areas')
-    .then(res => res.json())
-    .then(data => {
-        for(let i = 0; i< data.length; i++){
-            document.getElementById(`area${idCurso}`).innerHTML+= `<option value="${data[i].idArea}">${data[i].nome}</option>`
-        }
-        document.getElementById(`area${idCurso}`).value = idArea;
-
-        console.log(duracao);
-        document.getElementById(`duracao${idCurso}`).value = duracao;
-    })
-    .catch((err)=>{
-        console.log(err)
-        alert('Erro na recolha das areas')
-    })
-
-}
-function editarCurso(idCurso,curso,sigla,idArea,duracao){
-    const options = {
-            method: 'PUT',
-            headers: {
-                'Content-type': 'application/json',
-                Authorization :  localStorage.getItem("token")
-            },
-            body: JSON.stringify({
-                idCurso: idCurso,
-                nome:curso,
-                sigla:sigla,
-                idArea: idArea,
-                duracao:duracao
-            })
-        }
-
-    fetch('http://localhost:3000/api/admin/cursos/', options)
-    .then((res) => {
-        if(res.status===200){
-            fillTabelaCursos();
-        }
-      })
-      .catch((error) => console.log(error));
-}
-
-function eliminarCurso(idCurso){
-    const options = {
-        method: 'DELETE',
-        headers: {
-            'Content-type': 'application/json',
-            Authorization :  localStorage.getItem("token")
-        },
-        body: JSON.stringify({
-            idCurso: idCurso
-        })
-    }
-    fetch('http://localhost:3000/api/admin/cursos/', options)
-    .then((res) => {
-        if(res.status===200){
-            document.getElementById(`trC${idCurso}`).remove();
-            fillTabelaTurmas();
-        }
-      })
-      .catch((error) => console.log(error));
-}
-
-function criarCurso(curso,sigla,idArea,duracao){
-    const options = {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-                Authorization :  localStorage.getItem("token")
-            },
-            body: JSON.stringify({
-                nome:curso,
-                sigla:sigla,
-                idArea: idArea,
-                duracao:duracao
-            })
-        }
-
-    fetch('http://localhost:3000/api/admin/cursos/', options)
-    .then((res) => {
-        if(res.status===200){
-            document.getElementById('curso').value = '';
-            document.getElementById('sigla').value = '';
-            fillAreas();
-            document.getElementById('duracao').value =  '0';
-            fillTabelaCursos();
-        }
-      })
-      .catch((error) => console.log(error));
-}
-
-function criarTurma(idCurso,idConta,ano,numero){
-    const options = {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-                Authorization :  localStorage.getItem("token")
-            },
-            body: JSON.stringify({
-                idCurso:idCurso,
-                idConta:idConta,
-                ano:ano,
-                numero:numero
-            })
-        }
-
-    fetch('http://localhost:3000/api/admin/turmas', options)
-    .then((res) => {
-        if(res.status===200){
-            fillCursos('turmaCurso');
-            fillDiretoresTurma("diretor");
-            document.getElementById('ano').disabled = true;
-            document.getElementById('ano').innerHTML = '';
-            document.getElementById('numero').value =  '';
-            fillTabelaTurmas();
-        }
-      })
-      .catch((error) => console.log(error));
-}
-async function resetModalEdicaoTurma(idTurma,idCurso,idConta,ano,numero){
-    document.getElementById(`numero${idTurma}`).value = numero;
-    
-    await fillCursos(`turmaCurso${idTurma}`);
-    document.getElementById(`turmaCurso${idTurma}`).value = idCurso;
-
-    await fillDiretoresTurma(`diretor${idTurma}`);
-    document.getElementById(`diretor${idTurma}`).value = idConta;
-
-    await fillAnos(idCurso,`ano${idTurma}`);
-    document.getElementById(`ano${idTurma}`).style.color = 'black';
-    document.getElementById(`ano${idTurma}`).value = ano;
+            
+                document.getElementById(`area${idCurso}`).innerHTML= ``;
+                fetch('http://localhost:3000/api/unrestricted/areas')
+                .then(res => res.json())
+                .then(data => {
+                    for(let i = 0; i< data.length; i++){
+                        document.getElementById(`area${idCurso}`).innerHTML+= `<option value="${data[i].idArea}">${data[i].nome}</option>`
+                    }
+                    document.getElementById(`area${idCurso}`).value = idArea;
+            
+                    console.log(duracao);
+                    document.getElementById(`duracao${idCurso}`).value = duracao;
+                })
+                .catch((err)=>{
+                    console.log(err)
+                    alert('Erro na recolha das areas')
+                })
+            
+            }
+            async function resetModalEdicaoTurma(idTurma,idCurso,idConta,ano,numero){
+                document.getElementById(`numero${idTurma}`).value = numero;
+                
+                await fillCursos(`turmaCurso${idTurma}`);
+                document.getElementById(`turmaCurso${idTurma}`).value = idCurso;
+            
+                await fillDiretoresTurma(`diretor${idTurma}`);
+                document.getElementById(`diretor${idTurma}`).value = idConta;
+            
+                await fillAnos(idCurso,`ano${idTurma}`);
+                document.getElementById(`ano${idTurma}`).style.color = 'black';
+                document.getElementById(`ano${idTurma}`).value = ano;
+            
+            
+            }
+            async function resetModalEdicaoFormando(idConta,nome,email,idCurso,idTurma){
+                document.getElementById(`nome${idConta}`).value = nome;
+                document.getElementById(`email${idConta}`).value = email;
+            
+                if(idTurma == null){
+                    document.getElementById(`formandoTurma${idConta}`).disabled = true;
+                    fillCursos(`formandoCurso${idConta}`);
+                }
+                else{
+                    await fillCursos(`formandoCurso${idConta}`);
+                    document.getElementById(`formandoCurso${idConta}`).value = idCurso;
+                
+                    await fillTurmas(idCurso,`formandoTurma${idConta}`);
+                    document.getElementById(`formandoTurma${idConta}`).style.color = "black";
+                    document.getElementById(`formandoTurma${idConta}`).value = idTurma;
+                }
+                
+            
+            
+            }
+            
+        /****   }resetModal   ****/
+    /****   }renders   ****/
 
 
-}
+    /****   CRUD{   ****/
+        /****   curso CRUD{   ****/
 
-function editarTurma(idTurma,idCurso,idConta,ano,numero){    
-    const options = {
-            method: 'PUT',
-            headers: {
-                'Content-type': 'application/json',
-                Authorization :  localStorage.getItem("token")
-            },
-            body: JSON.stringify({
-                idTurma: idTurma,
-                idCurso: idCurso,
-                ano: ano,
-                numero:numero,
-                idConta: idConta,
-            })
-        }
+            function criarCurso(curso,sigla,idArea,duracao){
+                const options = {
+                        method: 'POST',
+                        headers: {
+                            'Content-type': 'application/json',
+                            Authorization :  localStorage.getItem("token")
+                        },
+                        body: JSON.stringify({
+                            nome:curso,
+                            sigla:sigla,
+                            idArea: idArea,
+                            duracao:duracao
+                        })
+                    }
+            
+                fetch('http://localhost:3000/api/admin/cursos/', options)
+                .then((res) => {
+                    if(res.status===200){
+                        document.getElementById('curso').value = '';
+                        document.getElementById('sigla').value = '';
+                        fillAreas();
+                        document.getElementById('duracao').value =  '0';
+                        fillTabelaCursos();
+                    }
+                })
+                .catch((error) => console.log(error));
+            }
+            function editarCurso(idCurso,curso,sigla,idArea,duracao){
+                const options = {
+                        method: 'PUT',
+                        headers: {
+                            'Content-type': 'application/json',
+                            Authorization :  localStorage.getItem("token")
+                        },
+                        body: JSON.stringify({
+                            idCurso: idCurso,
+                            nome:curso,
+                            sigla:sigla,
+                            idArea: idArea,
+                            duracao:duracao
+                        })
+                    }
+            
+                fetch('http://localhost:3000/api/admin/cursos/', options)
+                .then((res) => {
+                    if(res.status===200){
+                        fillTabelaCursos();
+                    }
+                })
+                .catch((error) => console.log(error));
+            }
+            function eliminarCurso(idCurso){
+                const options = {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-type': 'application/json',
+                        Authorization :  localStorage.getItem("token")
+                    },
+                    body: JSON.stringify({
+                        idCurso: idCurso
+                    })
+                }
+                fetch('http://localhost:3000/api/admin/cursos/', options)
+                .then((res) => {
+                    if(res.status===200){
+                        document.getElementById(`trC${idCurso}`).remove();
+                        fillTabelaTurmas();
+                    }
+                })
+                .catch((error) => console.log(error));
+            }
+        /****   }curso CRUD   ****/
 
-    fetch('http://localhost:3000/api/admin/turmas/', options)
-    .then((res) => {
-        if(res.status===200){
-            fillTabelaTurmas();
-            document.getElementById("allTurmas").checked = true;
-            fillTabelaFormandos('');
-        }
-      })
-      .catch((error) => console.log(error));
-}
+        /****   turma CRUD{   ****/
+            function criarTurma(idCurso,idConta,ano,numero){
+                const options = {
+                        method: 'POST',
+                        headers: {
+                            'Content-type': 'application/json',
+                            Authorization :  localStorage.getItem("token")
+                        },
+                        body: JSON.stringify({
+                            idCurso:idCurso,
+                            idConta:idConta,
+                            ano:ano,
+                            numero:numero
+                        })
+                    }
+            
+                fetch('http://localhost:3000/api/admin/turmas', options)
+                .then((res) => {
+                    if(res.status===200){
+                        fillCursos('turmaCurso');
+                        fillDiretoresTurma("diretor");
+                        document.getElementById('ano').disabled = true;
+                        document.getElementById('ano').innerHTML = '';
+                        document.getElementById('numero').value =  '';
+                        fillTabelaTurmas();
+                    }
+                })
+                .catch((error) => console.log(error));
+            }
+            function editarTurma(idTurma,idCurso,idConta,ano,numero){    
+                const options = {
+                        method: 'PUT',
+                        headers: {
+                            'Content-type': 'application/json',
+                            Authorization :  localStorage.getItem("token")
+                        },
+                        body: JSON.stringify({
+                            idTurma: idTurma,
+                            idCurso: idCurso,
+                            ano: ano,
+                            numero:numero,
+                            idConta: idConta,
+                        })
+                    }
+            
+                fetch('http://localhost:3000/api/admin/turmas/', options)
+                .then((res) => {
+                    if(res.status===200){
+                        fillTabelaTurmas();
+                        document.getElementById("allTurmas").checked = true;
+                        fillTabelaFormandos('');
+                    }
+                })
+                .catch((error) => console.log(error));
+            }
+            function eliminarTurma(idTurma){
+                console.log(idTurma)
+                    const options = {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-type': 'application/json',
+                            Authorization :  localStorage.getItem("token")
+                        },
+                        body: JSON.stringify({
+                            idTurma: idTurma
+                        })
+                    }
+                    fetch('http://localhost:3000/api/admin/turmas/', options)
+                    .then((res) => {
+                        if(res.status===200){
+                            document.getElementById(`trT${idTurma}`).remove();
+                            fillTabelaTurmas();
+                            fillTabelaFormandos('');
+                        }
+                    })
+                    .catch((error) => console.log(error));
+            }
+        /****   }turma CRUD   ****/
 
-function criarFormando(nome,email,idTurma){
-    const options = {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-                Authorization :  localStorage.getItem("token")
-            },
-            body: JSON.stringify({
-                nome: nome,
-                email: email,
-                idTurma: idTurma
-            })
-        }
+        /****   Formando CRUD{   ****/
+            function criarFormando(nome,email,idTurma){
+                const options = {
+                        method: 'POST',
+                        headers: {
+                            'Content-type': 'application/json',
+                            Authorization :  localStorage.getItem("token")
+                        },
+                        body: JSON.stringify({
+                            nome: nome,
+                            email: email,
+                            idTurma: idTurma
+                        })
+                    }
+            
+                fetch('http://localhost:3000/api/admin/formandos', options)
+                .then((res) => {
+                    if(res.status===200){
+            
+                        fillCursos('formandoCurso');
+                        document.getElementById('nome').value =  '';
+                        document.getElementById('email').value =  '';
+                        document.getElementById('formandoTurma').disabled = true;
+                        document.getElementById('formandoTurma').innerHTML = '';
+            
+                        document.getElementById("allTurmas").checked = true;
+                        fillTabelaFormandos('');
+                    }
+                })
+                .catch((error) => console.log(error));
+            }
+            function editarFormando(idConta,nome,email,idTurma){
+                console.log(numero);
+                
+                const options = {
+                        method: 'PUT',
+                        headers: {
+                            'Content-type': 'application/json',
+                            Authorization :  localStorage.getItem("token")
+                        },
+                        body: JSON.stringify({
+                            idConta: idConta,
+                            nome:nome,
+                            email:email,
+                            idTurma:idTurma
+                        })
+                    }
+            
+                fetch('http://localhost:3000/api/admin/formandos/', options)
+                .then((res) => {
+                    if(res.status===200){
+                        document.getElementById("allTurmas").checked = true;
+                        fillTabelaFormandos('');
+                    }
+                })
+                .catch((error) => console.log(error));
+            }
+            function eliminarFormando(idConta){
+                const options = {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-type': 'application/json',
+                        Authorization :  localStorage.getItem("token")
+                    },
+                    body: JSON.stringify({
+                        idConta: idConta
+                    })
+                }
+                fetch('http://localhost:3000/api/admin/users/', options)
+                .then((res) => {
+                    if(res.status===200){
+                        document.getElementById("allTurmas").checked = true;
+                        fillTabelaFormandos('');
+                    }
+                })
+                .catch((error) => console.log(error));
+            }
+        /****   }Formando CRUD   ****/
+    /****   }CRUD   ****/
 
-    fetch('http://localhost:3000/api/admin/formandos', options)
-    .then((res) => {
-        if(res.status===200){
-
-            fillCursos('formandoCurso');
-            document.getElementById('nome').value =  '';
-            document.getElementById('email').value =  '';
-            document.getElementById('formandoTurma').disabled = true;
-            document.getElementById('formandoTurma').innerHTML = '';
-
-            document.getElementById("allTurmas").checked = true;
-            fillTabelaFormandos('');
-        }
-      })
-      .catch((error) => console.log(error));
-}
-
-async function resetModalEdicaoFormando(idConta,nome,email,idCurso,idTurma){
-    document.getElementById(`nome${idConta}`).value = nome;
-    document.getElementById(`email${idConta}`).value = email;
-
-    if(idTurma == null){
-        document.getElementById(`formandoTurma${idConta}`).disabled = true;
-        fillCursos(`formandoCurso${idConta}`);
-    }
-    else{
-        await fillCursos(`formandoCurso${idConta}`);
-        document.getElementById(`formandoCurso${idConta}`).value = idCurso;
-     
-        await fillTurmas(idCurso,`formandoTurma${idConta}`);
-        document.getElementById(`formandoTurma${idConta}`).style.color = "black";
-        document.getElementById(`formandoTurma${idConta}`).value = idTurma;
-    }
-    
-
-
-}
-function editarFormando(idConta,nome,email,idTurma){
-    console.log(numero);
-    
-    const options = {
-            method: 'PUT',
-            headers: {
-                'Content-type': 'application/json',
-                Authorization :  localStorage.getItem("token")
-            },
-            body: JSON.stringify({
-                idConta: idConta,
-                nome:nome,
-                email:email,
-                idTurma:idTurma
-            })
-        }
-
-    fetch('http://localhost:3000/api/admin/formandos/', options)
-    .then((res) => {
-        if(res.status===200){
-            document.getElementById("allTurmas").checked = true;
-            fillTabelaFormandos('');
-        }
-      })
-      .catch((error) => console.log(error));
-}
-function eliminarFormando(idConta){
-    const options = {
-        method: 'DELETE',
-        headers: {
-            'Content-type': 'application/json',
-            Authorization :  localStorage.getItem("token")
-        },
-        body: JSON.stringify({
-            idConta: idConta
-        })
-    }
-    fetch('http://localhost:3000/api/admin/users/', options)
-    .then((res) => {
-        if(res.status===200){
-            document.getElementById("allTurmas").checked = true;
-            fillTabelaFormandos('');
-        }
-      })
-      .catch((error) => console.log(error));
-}
 
 
 async function fillCursos(id){
@@ -1791,29 +1824,6 @@ async function fillAnos(idCurso,id){
         })
     }
 }
-function eliminarTurma(idTurma){
-console.log(idTurma)
-    const options = {
-        method: 'DELETE',
-        headers: {
-            'Content-type': 'application/json',
-            Authorization :  localStorage.getItem("token")
-        },
-        body: JSON.stringify({
-            idTurma: idTurma
-        })
-    }
-    fetch('http://localhost:3000/api/admin/turmas/', options)
-    .then((res) => {
-        if(res.status===200){
-            document.getElementById(`trT${idTurma}`).remove();
-            fillTabelaTurmas();
-            fillTabelaFormandos('');
-        }
-      })
-      .catch((error) => console.log(error));
-}
-
 async function fillTurmas(idCurso,id){
     const options = {
         method: 'GET',
@@ -2327,7 +2337,7 @@ function logout(){
 
 /****   Metodos Auxiliares   ****/
 function openModal(id) {
-    var myModal = new bootstrap.Modal(document.getElementById(id), {  keyboard: false });
+    var myModal = new bootstrap.Modal(document.getElementById(id), {keyboard: false});
     myModal.show();
 }
 function mostrarBotao(x){
