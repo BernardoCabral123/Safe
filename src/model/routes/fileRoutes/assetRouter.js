@@ -107,8 +107,8 @@ router.get("/profile.svg",(req,res)=>{
 
 //dashboard
 
-router.get("/diretorTurma.svg",(req,res)=>{
-    res.sendFile(path.join(srcLocation,"/view/assets/diretorTurma.svg"));
+router.get("/admin.svg",(req,res)=>{
+    res.sendFile(path.join(srcLocation,"/view/assets/admin.svg"));
 })
 
 router.get("/criarAluno.svg",(req,res)=>{
@@ -123,8 +123,8 @@ router.get("/turma.svg",(req,res)=>{
     res.sendFile(path.join(srcLocation,"/view/assets/turma.svg"));
 })
 
-router.get("/diretor.svg",(req,res)=>{
-    res.sendFile(path.join(srcLocation,"/view/assets/diretor.svg"));
+router.get("/diretorTurma.svg",(req,res)=>{
+    res.sendFile(path.join(srcLocation,"/view/assets/diretorTurma.svg"));
 })
 
 //duvidas

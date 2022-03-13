@@ -1,5 +1,4 @@
 async function renderPage(){
-
     if(localStorage.getItem("token")){
         const options = {
             method: 'POST',
@@ -94,7 +93,7 @@ function renderInicio(){
             <div class="row">
                 <div class="col-sm-6 mt-5">
                     <strong><h1>Plataforma Estágios</h1></strong>
-                    <p>A Plataforma que simplifica todo o processo para obter o local de estagio.</p>
+                    <p>A Plataforma que simplifica todo o processo para obter o local de estágio.</p>
                 </div>
 
                 <div class="col-sm-6">
@@ -116,7 +115,7 @@ function renderInicio(){
             <div class="estagio col-sm-6">
                 <h1>O que é formação em contexto de traballho?</h1>
                 <p>A formação em contexto de trabalho integra um conjunto de atividades profissionais desenvolvidas sob cordenação e acompanhamento da escola. 
-                A zero custo para empresa.
+                A zero custo para a empresa.
                 <p>
             </div>
         </div>
@@ -159,7 +158,7 @@ function renderInicio(){
                 </div>
 
                 <div class="px-4 py-3">
-                    <h5>Encontrar Estagio</h5>
+                    <h5>Encontrar Estágio</h5>
                 </div>
             </div>
         </div>
@@ -212,7 +211,7 @@ function renderInicio(){
                 </div>
 
                 <div class="px-4 py-3">
-                    <h5>Criar Anuncio</h5>
+                    <h5>Criar oferta de estágio</h5>
                 </div>
             </div>
         </div>
@@ -244,7 +243,7 @@ function renderDuvidas(){
     renderCode("content",
     `
         <div class="container text-center">
-            <h1>Duvidas</h1>
+            <h1>Dúvidas</h1>
         </div>
 
         <div class="container shadow-lg p-3 mb-5 bg-body rounded">
@@ -488,21 +487,8 @@ async function registar(){
 }
 
 
-/****   Admin   ****/
+/****   Admin{   ****/
     /****   renders{   ****/
-        function selecionarRender(){
-            switch(document.getElementById("estado").value){
-                case "alunos":
-                    renderGerirFormacao();
-                    break
-                case "adminsDiretores":
-                    renderGerirAdministracao();
-                    break;
-                case "empresa":
-                    renderGerirEmpresas()
-                    break;
-            } 
-        }
         function renderNavAdmin(){
             renderCode("navbar",`<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #3898ec;">
                             <div class="container-fluid">
@@ -549,6 +535,19 @@ async function registar(){
 
             </div>
         </div>`);
+        }
+        function selecionarRender(){
+            switch(document.getElementById("estado").value){
+                case "alunos":
+                    renderGerirFormacao();
+                    break
+                case "adminsDiretores":
+                    renderGerirAdministracao();
+                    break;
+                case "empresa":
+                    renderGerirEmpresas()
+                    break;
+            } 
         }
         function renderGerirFormacao(){
             document.getElementById("painelGestao").innerHTML =`
@@ -814,7 +813,7 @@ async function registar(){
                                     <th class="mx-auto" style="display:none" id="acoesAdmins" scope="col">Ações</th>  
                                 </tr>
                             </thead>
-                            <tbody id="tblCursos" onmouseover="document.getElementById('acoesAdmins').style.display = 'block';" onmouseout="document.getElementById('acoesAdmins').style.display = 'none';">
+                            <tbody id="tblAdmins" onmouseover="document.getElementById('acoesAdmins').style.display = 'block';" onmouseout="document.getElementById('acoesAdmins').style.display = 'none';">
                             </tbody>
                         </table>
                     </div>
@@ -827,7 +826,7 @@ async function registar(){
                             <h3>Diretores de turma</h3>
                         </div>
                         <div id="btnCriarDiretorTurma" style="display: none;">
-                            <button type="button" class="btn btn-primary mx-3" style="border-radius: 30px;" onclick="openModal('criacaoDiretorTurma');">Abrir formulário</button>
+                            <button type="button" class="btn btn-primary mx-3" style="border-radius: 30px;" onclick="openModal('criacaoDiretor');">Abrir formulário</button>
                         </div>
                     </div>
                     <div class="table-responsive-sm">
@@ -838,14 +837,14 @@ async function registar(){
                                 <th class="mx-auto" style="display:none" id="acoesDiretoresTurma" scope="col">Ações</th>  
                                 </tr>
                             </thead>
-                            <tbody id="tblCursos" onmouseover="document.getElementById('acoesDiretoresTurma').style.display = 'block';" onmouseout="document.getElementById('acoesDiretoresTurma').style.display = 'none';">
+                            <tbody id="tblDiretores" onmouseover="document.getElementById('acoesDiretoresTurma').style.display = 'block';" onmouseout="document.getElementById('acoesDiretoresTurma').style.display = 'none';">
                             </tbody>
                         </table>
                     </div>
                 <div class="text-center"><label class="text-danger" id="msgCursos"></label></div>
             </div>
 
-            <div class="modal fade" id="criacaoCurso" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="criacaoAdmin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -853,35 +852,22 @@ async function registar(){
                             <div class="shadow-lg p-3 bg-body rounded">
                                 <div class="row">
                                     <div class="col-4 mx-auto">
-                                        <img class="img-fluid" style="width:auto;" src="http://localhost:3000/files/Assets/curso.svg" alt="aluno">
+                                        <img class="img-fluid" style="width:auto;" src="http://localhost:3000/files/Assets/admin.svg" alt="aluno">
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-8 mt-sm-4">
                                         <form>
                                             <div class="row mt-4">
                                                 <div class="col-sm-6 mt-1">
-                                                    <label for="curso" class="form-label"><strong>Nome do curso</strong></label>
-                                                    <input type="text" class="form-control" id="curso" placeholder='Ex: "Técnico de vendas e marketing"'>
+                                                    <label for="adminNome" class="form-label"><strong>Primeiro e último nome</strong></label>
+                                                    <input type="text" class="form-control" id="adminNome" placeholder='Ex: "Bernardo Branco"'>
                                                 </div>
                                                 <div class="col-sm-6 mt-1">
-                                                    <label for="sigla" class="form-label"><strong>Sigla</strong></label>
-                                                    <input type="text" class="form-control" id="sigla" placeholder='Ex: "TVM"' onKeyUp="this.value = this.value.toUpperCase()">
-                                                </div>
-                                                <div class="col-sm-6 mt-1">
-                                                    <label for="area" class="form-label"><strong>Área</strong></label>
-                                                    <select id="area" class="form-select col-sm-12" style="color:gray" onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
-                                                    </select>
-                                                </div>
-                                                <div class="col-sm-6 mt-1">
-                                                    <label for="duracao" class="form-label"><strong>Duração</strong></label>
-                                                    <select id="duracao" class="form-select col-sm-12" style="color:gray" onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
-                                                        <option value="0" style="color:gray !important">Selecionar duração</option>
-                                                        <option value="1" style="color:black !important" >1 ano</option>
-                                                        <option value="3" style="color:black !important">3 anos</option>
-                                                    </select>
+                                                    <label for="adminEmail" class="form-label"><strong>Email</strong></label>
+                                                    <input type="text" class="form-control" id="adminEmail" placeholder='Ex: "bernardobranco@gmail.com"'>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-12 mt-4">
-                                                <center><button type="button" class="col-sm-3 btn btn-primary  mx-1" style="border-radius: 30px;" onclick="criarCurso(\`\${document.getElementById('curso').value}\`,\`\${document.getElementById('sigla').value}\`,\`\${document.getElementById('area').value}\`,\`\${document.getElementById('duracao').value}\`)">Criar curso</button></center>                                
+                                            <div class="col-sm-12 mt-4 mt-sm-5">
+                                                <center><button type="button" class="col-sm-3 btn btn-primary  mx-1" style="border-radius: 30px;" onclick="criarAdmin(\`\${document.getElementById('adminNome').value}\`,\`\${document.getElementById('adminEmail').value}\`)">Criar conta</button></center>                                
                                             </div>
                                         </form>
                                     </div>
@@ -896,52 +882,37 @@ async function registar(){
             </div>
         </div>
 
-
         <div class="modal fade" id="criacaoDiretor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body">
-                            <div class="container mb-2">
-                                <div class="shadow-lg p-3 mb-1 bg-body rounded">
-                                    <div class="row">
-                                        <div class="col-4 mx-auto">
-                                            <img class="img-fluid" src="http://localhost:3000/files/Assets/turma.svg" alt="aluno">
-                                        </div>
-                    
-                                        <div class="col-md-8 mx-auto mt-3">
-                                            <form>
-                                                <div class="row mt-4">
-                                                    <div class="col-sm-6 mt-1">
-                                                        <label for="turmaCurso" class="form-label"><strong>Curso</strong></label>
-                                                        <select id="turmaCurso" class="form-select col-sm-12" style="color:gray" onChange="console.log('rebuçado'); if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-6 mt-1">
-                                                        <label for="diretor" class="form-label"><strong>Diretor de turma</strong></label>
-                                                        
-                                                        <select id="diretor" class="form-select col-sm-12" style="color:gray" onChange="if(this.value != '0')this.style.color='black'; if(this.value == '0')this.style.color='gray'">           
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-6 mt-1">
-                                                        <label for="ano"class="form-label"><strong>Ano</strong></label>
-                                                            <select id="ano" class="form-select col-sm-12" disabled>
-                                                            </select>
-                                                    </div>
-                                                    <div class="col-sm-6 mt-1">
-                                                        <label for="numero" class="form-label"><strong>Numero de turma</strong></label>
-                                                        <input type="number" min="0" class="form-control" id="numero" placeholder='ex: "1" (Preencher se necessário)' onKeyPress="if(this.value.length==1) return false;" onchange="if(this.value == '0')this.value =''"> </input>
-                                                    </div>'
-
-                                                    <div class="col-sm-12 mt-4">
-                                                                <center><button type="button" class="col-sm-3 btn btn-primary  mx-1" style="border-radius: 30px;">Criar turma</button></center>
-                                                    </div>
+                        <div class="container mb-1">
+                            <div class="shadow-lg p-3 bg-body rounded">
+                                <div class="row">
+                                    <div class="col-4 mx-auto">
+                                        <img class="img-fluid" style="width:auto;" src="http://localhost:3000/files/Assets/diretorTurma.svg" alt="aluno">
+                                    </div>
+                                    <div class="col-md-8 mt-sm-4">
+                                        <form>
+                                            <div class="row mt-4">
+                                                <div class="col-sm-6 mt-1">
+                                                    <label for="diretorNome" class="form-label"><strong>Primeiro e último nome</strong></label>
+                                                    <input type="text" class="form-control" id="diretorNome" placeholder='Ex: "Bernardo Branco"'>
                                                 </div>
-                                            </form>
-                                        </div> 
+                                                <div class="col-sm-6 mt-1">
+                                                    <label for="diretorEmail" class="form-label"><strong>Email</strong></label>
+                                                    <input type="text" class="form-control" id="diretorEmail" placeholder='Ex: "bernardobranco@gmail.com"'>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 mt-4 mt-sm-5">
+                                                <center><button type="button" class="col-sm-3 btn btn-primary  mx-1" style="border-radius: 30px;" onclick="criarDiretorTurma(\`\${document.getElementById('diretorNome').value}\`,\`\${document.getElementById('diretorEmail').value}\`)">Criar conta</button></center>                                
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
                     </div>
@@ -949,6 +920,8 @@ async function registar(){
             </div>
         </div>
         `;
+        fillTabelaAdmins();
+        fillTabelaDiretoresTurma();
         }
         function renderGerirEmpresas(){
             document.getElementById("painelGestao").innerHTML =`
@@ -1024,7 +997,7 @@ async function registar(){
                                                                         <input type="text" class="form-control" id="sigla${data[i].idCurso}" value="${data[i].sigla}">
                                                                     </div>
                                                                     <div class="col-sm-6 mt-1">
-                                                                        <label for="area${data[i].idCurso}" class="form-label"><strong>Area</strong></label>
+                                                                        <label for="area${data[i].idCurso}" class="form-label"><strong>Área</strong></label>
                                                                         <select id="area${data[i].idCurso}" class="form-select col-sm-12">
                                                                         </select>
                                                                     </div>
@@ -1080,7 +1053,7 @@ async function registar(){
                                                                     <input type="text" class="form-control" value="${data[i].sigla}" disabled>
                                                                 </div>
                                                                 <div class="col-sm-6 mt-1">
-                                                                    <label  class="form-label"><strong>Area</strong></label>
+                                                                    <label  class="form-label"><strong>Área</strong></label>
                                                                     <select class="form-select col-sm-12" disabled>
                                                                         <option selected>${data[i].area}</option>
                                                                     </select>
@@ -1310,7 +1283,7 @@ async function registar(){
                                     document.getElementById(`trF${data[i].idConta}`).innerHTML+= `<td style="color:red">Sem turma atribuída</td>`
                                 document.getElementById(`trF${data[i].idConta}`).innerHTML += `
                                 <td class="my-auto" style="display: none;" id="botoesF${data[i].idConta}">
-                                <button type="button"  class="col-6 btn btn-primary mx-1"  onclick="console.log('${data[i].idCurso}'); resetModalEdicaoFormando('${data[i].idConta}','${data[i].nome}','${data[i].email}','${data[i].idCurso}','${data[i].idTurma}'); openModal('edicaoFormando${data[i].idConta}');">editar</button>
+                                <button type="button"  class="col-6 btn btn-primary mx-1"  onclick="resetModalEdicaoFormando('${data[i].idConta}','${data[i].nome}','${data[i].email}','${data[i].idCurso}','${data[i].idTurma}'); openModal('edicaoFormando${data[i].idConta}');">editar</button>
                                 <button type="button" class="col-6 btn btn-danger mx-1"  onclick="openModal('eliminacaoFormando${data[i].idConta}');">eliminar</button>
                                 </td>
                             </tr>
@@ -1335,7 +1308,7 @@ async function registar(){
                                                             </div>
                                                                 <div class="col-sm-6 mt-1">
                                                                     <label for="email${data[i].idConta}"class="form-label"><strong>Email</strong></label>
-                                                                    <input type="text" id="email${data[i].idConta}" class="form-control">
+                                                                    <input type="text" id="email${data[i].idConta}" class="form-control" disabled>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
@@ -1353,7 +1326,7 @@ async function registar(){
                                                             </div>
                                                     </form>
                                                     <div class="col-sm-12 mt-4">
-                                                        <center><button type="button" data-bs-dismiss="modal" class="col-sm-3 btn btn-primary mx-1" style="border-radius: 30px;" onclick="editarFormando('${data[i].idConta}',\`\${document.getElementById('nome${data[i].idConta}').value}\`,\`\${document.getElementById('email${data[i].idConta}').value}\`,\`\${document.getElementById('formandoTurma${data[i].idConta}').value}\`)">Editar conta</button></center>
+                                                        <center><button type="button" data-bs-dismiss="modal" class="col-sm-3 btn btn-primary mx-1" style="border-radius: 30px;" onclick="editarFormando('${data[i].idConta}',\`\${document.getElementById('nome${data[i].idConta}').value}\`,\`\${document.getElementById('formandoTurma${data[i].idConta}').value}\`)">Editar conta</button></center>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1427,8 +1400,366 @@ async function registar(){
                     alert('Erro na recolha das Formandos')
                 })
             }
-        /****   }fillTabela   ****/
+            function fillTabelaAdmins(){
+                document.getElementById("tblAdmins").innerHTML = ``;
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        'authorization': localStorage.getItem("token")
+                    }
+                }
+                fetch('http://localhost:3000/api/admin/admins',options)
+                .then((res) =>{
+                    if(res.status ==200 ) return res.json()
+                    return null
+                })
+                .then((data) => {
+                    let str = '';
+                    if(data){
+                        for(let i = 0; i< data.length; i++){
+                            
+                            str+= `
+                                <tr id="trA${data[i].idConta}" onmouseover="document.getElementById('botoesA${data[i].idConta}').style.display = 'flex';" onmouseout="document.getElementById('botoesA${data[i].idConta}').style.display = 'none';">
+                                    <td>${data[i].nome}</td>
+                                    <td>${data[i].email}</td>
+                                    <td class="my-auto" style="display: none;" id="botoesA${data[i].idConta}">
+                                        <button type="button"  class="col-6 btn btn-primary mx-1" onclick="resetModalEdicaoAdmin('${data[i].idConta}','${data[i].nome}'); openModal('edicaoAdmin${data[i].idConta}');">editar</button>
+                                        <button type="button" class="col-6 btn btn-danger mx-1" onclick="openModal('eliminacaoAdmin${data[i].idConta}');">eliminar</button>
+                                    </td>
+                                </tr>
 
+                                <div class="modal fade" id="edicaoAdmin${data[i].idConta}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="container mb-1">
+                                                    <div class="shadow-lg p-3 bg-body rounded">
+                                                        <div class="row">
+                                                            <div class="col-4 mx-auto">
+                                                                <img class="img-fluid" style="width:auto;" src="http://localhost:3000/files/Assets/admin.svg" alt="aluno">
+                                                            </div>
+                                                            <div class="col-md-8 mt-sm-4">
+                                                                <form>
+                                                                    <div class="row mt-4">
+                                                                        <div class="col-sm-6 mt-1">
+                                                                            <label for="adminNome${data[i].idConta}" class="form-label"><strong>Primeiro e último nome</strong></label>
+                                                                            <input type="text" class="form-control" id="adminNome${data[i].idConta}" placeholder='Ex: "Bernardo Branco"'>
+                                                                        </div>
+                                                                        <div class="col-sm-6 mt-1">
+                                                                            <labelclass="form-label"><strong>Email</strong></label>
+                                                                            <input type="text" class="form-control" placeholder='Ex: "bernardobranco@gmail.com"' value="${data[i].email}" disabled>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-12 mt-4 mt-sm-5">
+                                                                        <center><button type="button" class="col-sm-3 btn btn-primary  mx-1" style="border-radius: 30px;" data-bs-dismiss="modal" onclick="editarAdmin('${data[i].idConta}',\`\${document.getElementById('adminNome${data[i].idConta}').value}\`)">Editar conta</button></center>                                
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="modal fade" id="eliminacaoAdmin${data[i].idConta}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="container mb-1">
+                                                    <div class="shadow-lg p-3 bg-body rounded">
+                                                        <div class="row">
+                                                            <div class="col-4 mx-auto">
+                                                                <img class="img-fluid" style="width:auto;" src="http://localhost:3000/files/Assets/admin.svg" alt="aluno">
+                                                            </div>
+                                                            <div class="col-md-8 mt-sm-4">
+                                                                <form>
+                                                                    <div class="row mt-4">
+                                                                        <div class="col-sm-6 mt-1">
+                                                                            <label class="form-label"><strong>Primeiro e último nome</strong></label>
+                                                                            <input type="text" class="form-control" placeholder='Ex: "Bernardo Branco"' value="${data[i].nome}" disabled>
+                                                                        </div>
+                                                                        <div class="col-sm-6 mt-1">
+                                                                            <label for="adminEmail" class="form-label"><strong>Email</strong></label>
+                                                                            <input type="text" class="form-control" placeholder='Ex: "bernardobranco@gmail.com"' value="${data[i].email}" disabled>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-12 mt-4 mt-sm-5">
+                                                                        <center><button type="button" class="col-sm-3 btn btn-danger  mx-1" style="border-radius: 30px;" data-bs-dismiss="modal" onclick="eliminarAdmin(${data[i].idConta})">Eliminar conta</button></center>                                
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            `}
+                            document.getElementById("tblAdmins").innerHTML = str;
+                    }
+                    else return;
+                    })
+                .catch((err)=>{
+                    console.log(err)
+                    alert('Erro na recolha dos admins')
+                })
+            }
+            function fillTabelaDiretoresTurma(){
+                document.getElementById("tblDiretores").innerHTML = ``;
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        'authorization': localStorage.getItem("token")
+                    }
+                }
+                fetch('http://localhost:3000/api/admin/diretores',options)
+                .then((res) =>{
+                    if(res.status ==200 ) return res.json()
+                    return null
+                })
+                .then((data) => {
+                    let str = '';
+                    if(data){
+                        for(let i = 0; i< data.length; i++){
+                            
+                            str+= `
+                                <tr id="trA${data[i].idConta}" onmouseover="document.getElementById('botoesD${data[i].idConta}').style.display = 'flex';" onmouseout="document.getElementById('botoesD${data[i].idConta}').style.display = 'none';">
+                                    <td>${data[i].nome}</td>
+                                    <td>${data[i].email}</td>
+                                    <td class="my-auto" style="display: none;" id="botoesD${data[i].idConta}">
+                                        <button type="button"  class="col-6 btn btn-primary mx-1" onclick="resetModalEdicaoDiretorTurma('${data[i].idConta}','${data[i].nome}'); openModal('edicaoDiretorTurma${data[i].idConta}');">editar</button>
+                                        <button type="button" class="col-6 btn btn-danger mx-1" onclick="openModal('eliminacaoDiretorTurma${data[i].idConta}');">eliminar</button>
+                                    </td>
+                                </tr>
+
+                                <div class="modal fade" id="edicaoDiretorTurma${data[i].idConta}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="container mb-1">
+                                                    <div class="shadow-lg p-3 bg-body rounded">
+                                                        <div class="row">
+                                                            <div class="col-4 mx-auto">
+                                                                <img class="img-fluid" style="width:auto;" src="http://localhost:3000/files/Assets/admin.svg" alt="aluno">
+                                                            </div>
+                                                            <div class="col-md-8 mt-sm-4">
+                                                                <form>
+                                                                    <div class="row mt-4">
+                                                                        <div class="col-sm-6 mt-1">
+                                                                            <label for="diretorNome${data[i].idConta}" class="form-label"><strong>Primeiro e último nome</strong></label>
+                                                                            <input type="text" class="form-control" id="diretorNome${data[i].idConta}" placeholder='Ex: "Bernardo Branco"'>
+                                                                        </div>
+                                                                        <div class="col-sm-6 mt-1">
+                                                                            <label class="form-label"><strong>Email</strong></label>
+                                                                            <input type="text" class="form-control" placeholder='Ex: "bernardobranco@gmail.com"' value="${data[i].email}" disabled>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-12 mt-4 mt-sm-5">
+                                                                        <center><button type="button" class="col-sm-3 btn btn-primary  mx-1" style="border-radius: 30px;" data-bs-dismiss="modal" onclick="editarDiretorTurma('${data[i].idConta}',\`\${document.getElementById('diretorNome${data[i].idConta}').value}\`)">Editar conta</button></center>                                
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="modal fade" id="eliminacaoDiretorTurma${data[i].idConta}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="container mb-1">
+                                                    <div class="shadow-lg p-3 bg-body rounded">
+                                                        <div class="row">
+                                                            <div class="col-4 mx-auto">
+                                                                <img class="img-fluid" style="width:auto;" src="http://localhost:3000/files/Assets/admin.svg" alt="aluno">
+                                                            </div>
+                                                            <div class="col-md-8 mt-sm-4">
+                                                                <form>
+                                                                    <div class="row mt-4">
+                                                                        <div class="col-sm-6 mt-1">
+                                                                            <label class="form-label"><strong>Primeiro e último nome</strong></label>
+                                                                            <input type="text" class="form-control" placeholder='Ex: "Bernardo Branco"' value="${data[i].nome}" disabled>
+                                                                        </div>
+                                                                        <div class="col-sm-6 mt-1">
+                                                                            <label class="form-label"><strong>Email</strong></label>
+                                                                            <input type="text" class="form-control" placeholder='Ex: "bernardobranco@gmail.com"' value="${data[i].email}" disabled>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-12 mt-4 mt-sm-5">
+                                                                        <center><button type="button" class="col-sm-3 btn btn-danger  mx-1" style="border-radius: 30px;" data-bs-dismiss="modal" onclick="eliminarDiretorTurma(${data[i].idConta})">Eliminar conta</button></center>                                
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            `}
+                            document.getElementById("tblDiretores").innerHTML = str;
+                    }
+                    else return;
+                    })
+                .catch((err)=>{
+                    console.log(err)
+                    alert('Erro na recolha das turmas')
+                })
+            }
+        /****   }fillTabela   ****/
+        /****   fillData{   ****/
+            async function fillCursos(id){
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        Authorization: localStorage.getItem("token")
+                    }
+                }
+                await    fetch('http://localhost:3000/api/admin/cursos',options)
+                .then((res) =>{
+                    if(res.status == 200) return res.json()
+                    return null
+                })
+                .then((data) => {
+                    if(data){            
+                        document.getElementById(id).innerHTML='<option value="0" style="color:gray !important">Selecionar curso</option>';
+                        for(let i = 0; i< data.length; i++){
+                            document.getElementById(id).innerHTML+= `<option value="${data[i].idCurso}" style="color:black !important">${data[i].sigla} - ${data[i].curso}</option>`
+                        }
+                    }
+                })
+                .catch((err)=>{
+                    console.log(err)
+                    alert('Erro na recolha dos cursos')
+                })
+            }
+            async function fillDiretoresTurma(id){
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        Authorization: localStorage.getItem("token")
+                    }
+                }
+                await fetch('http://localhost:3000/api/admin/diretores',options)
+                .then((res) =>{
+                    if(res.status == 200) return res.json()
+                    return null
+                })
+                .then((data) => {
+                    if(data){            
+                        document.getElementById(id).innerHTML='<option value="0" style="color:gray !important">Selecionar diretor de turma</option>';
+                        for(let i = 0; i< data.length; i++){
+                            document.getElementById(id).innerHTML+= `<option value="${data[i].idConta}" style="color:black !important">${data[i].nome} - ${data[i].email}</option>`
+                        }
+                    }
+                })
+                .catch((err)=>{
+                    console.log(err)
+                    alert('Erro na recolha dos diretores')
+                })
+            }
+            async function fillAnos(idCurso,id){
+                if(idCurso =='0'){
+                    document.getElementById(id).disabled = true;     
+                    document.getElementById(id).innerHTML='';
+                }
+                else{
+                    const options = {
+                        method: 'GET',
+                        headers: {
+                            Authorization: localStorage.getItem("token")
+                        }
+                    }
+                    await fetch(`http://localhost:3000/api/admin/cursos/${idCurso}`,options)
+                    .then((res) =>{
+                        if(res.status == 200){
+                            return res.json();
+                        }
+                        else{
+                        location.reload();
+                        return null;
+                        }
+                    })
+                    .then((data) => {
+                        if(data){
+                            if(data.duracao == '1'){
+                                document.getElementById(id).disabled = true;     
+                                document.getElementById(id).innerHTML='<option value="1">1º ano</option>';
+                            }
+                            else{
+                                document.getElementById(id).disabled = false;
+                                document.getElementById(id).style.color = 'gray';
+                                document.getElementById(id).innerHTML=  `<option value="0" style="color:gray !important">Selecionar o ano</option>
+                                                                            <option value="1" style="color:black !important">1º ano</option>
+                                                                            <option value="2" style="color:black !important">2º ano</option>
+                                                                            <option value="3" style="color:black !important">3º ano</option>`;
+                            }
+                        }
+                    })
+                    .catch((err)=>{
+                        console.log(err)
+                        alert('Erro na recolha dos anos')
+                    })
+                }
+            }
+            async function fillTurmas(idCurso,id){
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        Authorization: localStorage.getItem("token")
+                    }
+                }
+                await fetch(`http://localhost:3000/api/admin/turmas/${idCurso}`,options)
+                .then((res) =>{
+                    if(res.status == 200) return res.json()
+                    return null
+                })
+                .then((data) => {
+                    if(data){
+                        if(data.length > 0){
+                            document.getElementById(id).disabled = false;
+                            document.getElementById(id).style.color = 'gray';
+                            document.getElementById(id).innerHTML='<option value="0" style="color:gray !important">Selecionar turma</option>';
+                            for(let i = 0; i< data.length; i++){
+                                document.getElementById(id).innerHTML+= `<option value="${data[i].idTurma}" style="color:black !important">${data[i].turma}</option>`
+                            }
+                        }
+                        else{
+                            document.getElementById(id).innerHTML='';
+                            document.getElementById(id).disabled = true;
+                        }
+                    }
+                })
+                .catch((err)=>{
+                    console.log(err)
+                    alert(`Erro na recolha das tumas para o curso ${idCurso}`)
+                })
+            }
+        /****   }fillData   ****/
         /****   resetModal{   ****/
             function resetModalEdicaoCurso(idCurso,curso,sigla,idArea,duracao){
                 document.getElementById(`curso${idCurso}`).value = curso;
@@ -1488,14 +1819,18 @@ async function registar(){
             
             
             }
-            
+            function resetModalEdicaoAdmin(idConta,nome){
+                document.getElementById(`adminNome${idConta}`).value = nome;
+            }
+            function resetModalEdicaoDiretorTurma(idConta,nome){
+                document.getElementById(`diretorNome${idConta}`).value = nome;
+            }
         /****   }resetModal   ****/
     /****   }renders   ****/
 
 
     /****   CRUD{   ****/
         /****   curso CRUD{   ****/
-
             function criarCurso(curso,sigla,idArea,duracao){
                 const options = {
                         method: 'POST',
@@ -1568,7 +1903,6 @@ async function registar(){
                 .catch((error) => console.log(error));
             }
         /****   }curso CRUD   ****/
-
         /****   turma CRUD{   ****/
             function criarTurma(idCurso,idConta,ano,numero){
                 const options = {
@@ -1647,8 +1981,7 @@ async function registar(){
                     .catch((error) => console.log(error));
             }
         /****   }turma CRUD   ****/
-
-        /****   Formando CRUD{   ****/
+        /****   formando CRUD{   ****/
             function criarFormando(nome,email,idTurma){
                 const options = {
                         method: 'POST',
@@ -1659,14 +1992,14 @@ async function registar(){
                         body: JSON.stringify({
                             nome: nome,
                             email: email,
-                            idTurma: idTurma
+                            idTurma: idTurma,
+                            tipoConta:'formando'
                         })
                     }
             
-                fetch('http://localhost:3000/api/admin/formandos', options)
+                fetch('http://localhost:3000/api/admin/users', options)
                 .then((res) => {
                     if(res.status===200){
-            
                         fillCursos('formandoCurso');
                         document.getElementById('nome').value =  '';
                         document.getElementById('email').value =  '';
@@ -1679,9 +2012,7 @@ async function registar(){
                 })
                 .catch((error) => console.log(error));
             }
-            function editarFormando(idConta,nome,email,idTurma){
-                console.log(numero);
-                
+            function editarFormando(idConta,nome,idTurma){
                 const options = {
                         method: 'PUT',
                         headers: {
@@ -1691,12 +2022,11 @@ async function registar(){
                         body: JSON.stringify({
                             idConta: idConta,
                             nome:nome,
-                            email:email,
                             idTurma:idTurma
                         })
                     }
             
-                fetch('http://localhost:3000/api/admin/formandos/', options)
+                fetch('http://localhost:3000/api/admin/users/', options)
                 .then((res) => {
                     if(res.status===200){
                         document.getElementById("allTurmas").checked = true;
@@ -1725,138 +2055,149 @@ async function registar(){
                 })
                 .catch((error) => console.log(error));
             }
-        /****   }Formando CRUD   ****/
+        /****   }formando CRUD   ****/
+        /****   admin CRUD{   ****/
+            function criarAdmin(nome,email){
+                const options = {
+                        method: 'POST',
+                        headers: {
+                            'Content-type': 'application/json',
+                            Authorization :  localStorage.getItem("token")
+                        },
+                        body: JSON.stringify({
+                            nome: nome,
+                            email: email,
+                            tipoConta:'admin'
+                        })
+                    }
+            
+                fetch('http://localhost:3000/api/admin/users', options)
+                .then((res) => {
+                    if(res.status===200){
+                        document.getElementById('adminNome').value =  '';
+                        document.getElementById('adminEmail').value =  '';
+            
+                        fillTabelaAdmins();
+                    }
+                })
+                .catch((error) => console.log(error));
+            }
+
+            function editarAdmin(idConta,nome){
+                
+                const options = {
+                        method: 'PUT',
+                        headers: {
+                            'Content-type': 'application/json',
+                            Authorization :  localStorage.getItem("token")
+                        },
+                        body: JSON.stringify({
+                            idConta: idConta,
+                            nome:nome,
+                        })
+                    }
+            
+                fetch('http://localhost:3000/api/admin/users/', options)
+                .then((res) => {
+                    if(res.status===200){
+                        fillTabelaAdmins();
+                    }
+                })
+                .catch((error) => console.log(error));
+            }
+            function eliminarAdmin(idConta){
+                const options = {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-type': 'application/json',
+                        Authorization :  localStorage.getItem("token")
+                    },
+                    body: JSON.stringify({
+                        idConta: idConta
+                    })
+                }
+                fetch('http://localhost:3000/api/admin/users/', options)
+                .then((res) => {
+                    if(res.status===200){
+                        fillTabelaAdmins();
+                    }
+                })
+                .catch((error) => console.log(error));
+            }
+        /****   }admin CRUD   ****/
+        /****   }diretor CRUD   ****/
+            function criarDiretorTurma(nome,email){
+                const options = {
+                        method: 'POST',
+                        headers: {
+                            'Content-type': 'application/json',
+                            Authorization :  localStorage.getItem("token")
+                        },
+                        body: JSON.stringify({
+                            nome: nome,
+                            email: email,
+                            tipoConta:'diretor de turma'
+                        })
+                    }
+            
+                fetch('http://localhost:3000/api/admin/users', options)
+                .then((res) => {
+                    if(res.status===200){
+                        document.getElementById('diretorNome').value =  '';
+                        document.getElementById('diretorEmail').value =  '';
+            
+                        fillTabelaDiretoresTurma()
+                    }
+                })
+                .catch((error) => console.log(error));
+            }
+            function editarDiretorTurma(idConta,nome){
+                
+                const options = {
+                        method: 'PUT',
+                        headers: {
+                            'Content-type': 'application/json',
+                            Authorization :  localStorage.getItem("token")
+                        },
+                        body: JSON.stringify({
+                            idConta: idConta,
+                            nome:nome,
+                        })
+                    }
+            
+                fetch('http://localhost:3000/api/admin/users/', options)
+                .then((res) => {
+                    if(res.status===200){
+                        fillTabelaDiretoresTurma();
+                    }
+                })
+                .catch((error) => console.log(error));
+            }
+            function eliminarDiretorTurma(idConta){
+                const options = {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-type': 'application/json',
+                        Authorization :  localStorage.getItem("token")
+                    },
+                    body: JSON.stringify({
+                        idConta: idConta
+                    })
+                }
+                fetch('http://localhost:3000/api/admin/users/', options)
+                .then((res) => {
+                    if(res.status===200){
+                        fillTabelaDiretoresTurma();
+                    }
+                })
+                .catch((error) => console.log(error));
+            }
+        /****   }diretor CRUD   ****/
     /****   }CRUD   ****/
 
+/****   Admin{   ****/
 
 
-async function fillCursos(id){
-    const options = {
-        method: 'GET',
-        headers: {
-            Authorization: localStorage.getItem("token")
-        }
-    }
-    await    fetch('http://localhost:3000/api/admin/cursos',options)
-    .then((res) =>{
-        if(res.status == 200) return res.json()
-        return null
-    })
-    .then((data) => {
-        if(data){            
-            document.getElementById(id).innerHTML='<option value="0" style="color:gray !important">Selecionar curso</option>';
-            for(let i = 0; i< data.length; i++){
-                document.getElementById(id).innerHTML+= `<option value="${data[i].idCurso}" style="color:black !important">${data[i].sigla} - ${data[i].curso}</option>`
-            }
-        }
-    })
-    .catch((err)=>{
-        console.log(err)
-        alert('Erro na recolha dos cursos')
-    })
-}
-async function fillDiretoresTurma(id){
-    const options = {
-        method: 'GET',
-        headers: {
-            Authorization: localStorage.getItem("token")
-        }
-    }
-    await fetch('http://localhost:3000/api/admin/diretores',options)
-    .then((res) =>{
-        if(res.status == 200) return res.json()
-        return null
-    })
-    .then((data) => {
-        if(data){            
-            document.getElementById(id).innerHTML='<option value="0" style="color:gray !important">Selecionar diretor de turma</option>';
-            for(let i = 0; i< data.length; i++){
-                document.getElementById(id).innerHTML+= `<option value="${data[i].idConta}" style="color:black !important">${data[i].nome} - ${data[i].email}</option>`
-            }
-        }
-    })
-    .catch((err)=>{
-        console.log(err)
-        alert('Erro na recolha dos cursos')
-    })
-}
-async function fillAnos(idCurso,id){
-    if(idCurso =='0'){
-        document.getElementById(id).disabled = true;     
-        document.getElementById(id).innerHTML='';
-    }
-    else{
-        const options = {
-            method: 'GET',
-            headers: {
-                Authorization: localStorage.getItem("token")
-            }
-        }
-        await fetch(`http://localhost:3000/api/admin/cursos/${idCurso}`,options)
-        .then((res) =>{
-            if(res.status == 200){
-                return res.json();
-            }
-            else{
-            location.reload();
-            return null;
-            }
-        })
-        .then((data) => {
-            if(data){
-                if(data.duracao == '1'){
-                    document.getElementById(id).disabled = true;     
-                    document.getElementById(id).innerHTML='<option value="1">1º ano</option>';
-                }
-                else{
-                    document.getElementById(id).disabled = false;
-                    document.getElementById(id).style.color = 'gray';
-                    document.getElementById(id).innerHTML=  `<option value="0" style="color:gray !important">Selecionar o ano</option>
-                                                                <option value="1" style="color:black !important">1º ano</option>
-                                                                <option value="2" style="color:black !important">2º ano</option>
-                                                                <option value="3" style="color:black !important">3º ano</option>`;
-                }
-            }
-        })
-        .catch((err)=>{
-            console.log(err)
-            alert('Erro na recolha dos anos')
-        })
-    }
-}
-async function fillTurmas(idCurso,id){
-    const options = {
-        method: 'GET',
-        headers: {
-            Authorization: localStorage.getItem("token")
-        }
-    }
-    await fetch(`http://localhost:3000/api/admin/turmas/${idCurso}`,options)
-    .then((res) =>{
-        if(res.status == 200) return res.json()
-        return null
-    })
-    .then((data) => {
-        if(data){
-            if(data.length > 0){
-                document.getElementById(id).disabled = false;
-                document.getElementById(id).style.color = 'gray';
-                document.getElementById(id).innerHTML='<option value="0" style="color:gray !important">Selecionar turma</option>';
-                for(let i = 0; i< data.length; i++){
-                    document.getElementById(id).innerHTML+= `<option value="${data[i].idTurma}" style="color:black !important">${data[i].turma}</option>`
-                }
-            }
-            else{
-                document.getElementById(id).innerHTML='';
-                document.getElementById(id).disabled = true;
-            }
-        }
-    })
-    .catch((err)=>{
-        console.log(err)
-        alert(`Erro na recolha das tumas para o curso ${idCurso}`)
-    })
-}
 
 /****   Formando   ****/
 
@@ -1934,89 +2275,30 @@ function renderOfertas(){
     </div>
 </div>
 
-<div class="container mt-5">
-    <nav class="col-lg-6" style="background-color: #3898ec;">
-        <div class="container-fluid d-sm-flex col-sm-12 mb-5">
-            <div class="col-sm-12 d-sm-flex mx-auto">
-                    <div class="w-100 w-sm-75 mx-auto d-sm-flex">
-                    
-                        <p class="mx-2"><strong>Ilha</strong></p>
-                        <select class="form-select" id="ilha" onchange="getConcelhos();">
-                        <option value="0">Todas</option>
-                        </select>
-                    </div>
-
-                    
-                    <div class="w-100 w-sm-75 mx-auto d-sm-flex">
-                        <p class="mx-2"><strong>Concelho</strong></p>
-                        <select class="form-select" id="concelho" onchange="getAnunciosConcelho();" disabled>
-                        </select>
-                    </div>
-
-            </div>
-        </div>
-    </nav>
-</div>
-
 <div class="container">
     <div class="mt-5">
-        <h2>Anuncios existentes</h2>
+        <h2>Ofertas existentes</h2>
     </div>
 
     <div class="card mt-5 shadow-lg p-3 mb-5 bg-body rounded">
         <div class="row">
             <div class="logo col-sm-3">
                 <div class="img">
-                    <center><button type="button" class="btn btn-sm btn-outline-primary mt-2 mb-2">Manifestar interese</button></center>
                     <img src="http://localhost:3000/files/Assets/MUSAMI.jpg" class="img-fluid" alt="logo" style="width: 225px; height: 225px;">
                 </div>
             </div>
 
-            <div class="col-sm-4 mt-5">
+            <div class="col-sm-4 mt-3">
                 <div class="col">
-                    <h5>MUSAMI</h5>
+                    <h4>MUSAMI</h4>
                 </div>
 
                 <div class="col mt-4">
-                    <h5>Area</h5>
+                    <h5>Área</h5>
                     <p>Técnico de informática - Sistemas</p>
                 </div>
 
-                <div class="col mt-5">
-                    <h5>Localização</h5>
-                    <p>São pedro, Ponta Delgada, São Miguel</p>
-                </div>
-            </div>
-
-            <div class="col-sm-5 mt-5">
-                <div class="col">
-                    <h5 class="card-title">Descrição do trabalho</h5>
-                    <p class="card-text">Gestão de redes e equipamento informático da empresa</p> 
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card mt-5 shadow-lg p-3 mb-5 bg-body rounded">
-        <div class="row">
-            <div class="logo col-sm-3">
-                <div class="img">
-                    <center><button type="button" class="btn btn-sm btn-outline-primary mt-2 mb-2">Manifestar interese</button></center>
-                    <img src="http://localhost:3000/files/Assets/MUSAMI.jpg" class="img-fluid" alt="logo" style="width: 225px; height: 225px;">
-                </div>
-            </div>
-
-            <div class="col-sm-4 mt-5">
-                <div class="col">
-                    <h5>MUSAMI</h5>
-                </div>
-
-                <div class="col mt-4">
-                    <h5>Area</h5>
-                    <p>Técnico de informática - Sistemas</p>
-                </div>
-
-                <div class="col mt-5">
+                <div class="col mt-3">
                     <h5>Localização</h5>
                     <p>São pedro, Ponta Delgada, São Miguel</p>
                 </div>
@@ -2031,8 +2313,13 @@ function renderOfertas(){
 
             <div class="col-sm-1">
                 <div class="col">
-                    <div class="row mx-auto">
-                        <button type="button" class="btn btn-primary mt-5"><i class="fas fa-user-alt"></i></button> <button type="button" class="btn btn-success mt-3"><i class="fas fa-check"></i></button> <button type="button" class="btn btn-danger mt-3"><i class="fas fa-times"></i></button>
+                    <div class="row mx-auto d-flex aligns-items-center">
+                            <button type="button" class="btn btn-primary "> 
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-plus-fill" viewBox="0 0 16 16">
+                                    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm4.5 6V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5a.5.5 0 0 1 1 0Z"/>
+                                </svg>
+                            </button>
                     </div>
                 </div>
             </div>
@@ -2043,71 +2330,94 @@ function renderOfertas(){
         <h2>Inscrições pendentes</h2>
     </div>
 
-    <div class="card mt-3 shadow-lg p-3 mb-5 bg-body rounded">
+
+    <div class="card mt-5 shadow-lg p-3 mb-5 bg-body rounded">
         <div class="row">
-            <div class="logo col-sm-3">
+            <div class="logo col-md-3">
                 <div class="img">
-                    <center><button type="button" class="btn btn-sm btn-outline-danger mb-2">Cancelar interese</button></center>
                     <img src="http://localhost:3000/files/Assets/MUSAMI.jpg" class="img-fluid" alt="logo" style="width: 225px; height: 225px;">
                 </div>
             </div>
 
-            <div class="col-sm-4 mt-5">
+            <div class="col-md-4 mt-3">
                 <div class="col">
-                    <h5>MUSAMI</h5>
+                    <h4>MUSAMI</h4>
                 </div>
 
-                <div class="col">
-                    <h5>Area</h5>
+                <div class="col mt-4">
+                    <h5>Área</h5>
                     <p>Técnico de informática - Sistemas</p>
+                </div>
+
+                <div class="col mt-3">
+                    <h5>Localização</h5>
+                    <p>São pedro, Ponta Delgada, São Miguel</p>
                 </div>
             </div>
 
-            <div class="col-sm-5 mt-5">
-                <div class="col">
-                    <h5>Localização</h5>
-                    <p>São pedro, Ponta Delgada, São Miguel</p>                            
-                </div>
-
+            <div class="col-md-4 mt-5">
                 <div class="col">
                     <h5 class="card-title">Descrição do trabalho</h5>
-                    <p class="card-text">Gestão de redes e equipamento informático da empresa</p>                           
+                    <p class="card-text">Gestão de redes e equipamento informático da empresa</p> 
+                </div>
+            </div>
+
+            <div class="col-md-1">
+                <div class="col mt-4 mt-sm-0">
+                    <div class="row mx-auto d-flex aligns-items-center">
+                            <button type="button" class="btn btn-success "> 
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+                                    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+                                </svg>
+                            </button>
+                            <button type="button" class="btn btn-danger mt-2"> 
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-x-fill" viewBox="0 0 16 16">
+                                    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm4 7.793 1.146-1.147a.5.5 0 1 1 .708.708L8.707 10l1.147 1.146a.5.5 0 0 1-.708.708L8 10.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 10 6.146 8.854a.5.5 0 1 1 .708-.708L8 9.293Z"/>
+                                </svg>
+                            </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="mt-3">
     
-    <h2>Anuncios confirmados</h2>
-    <div class="card mt-3 shadow-lg p-3 mb-5 bg-body rounded">
+    <h2>Oferta confirmada</h2>
+    
+    <div class="card mt-5 shadow-lg p-3 mb-5 bg-body rounded">
         <div class="row">
-            <div class="logo col-sm-3">
+            <div class="logo col-md-3">
                 <div class="img">
-                    <center><button type="button" class="btn btn-sm btn-outline-success mb-2">Confirmar estagio</button></center>
                     <img src="http://localhost:3000/files/Assets/MUSAMI.jpg" class="img-fluid" alt="logo" style="width: 225px; height: 225px;">
                 </div>
             </div>
 
-            <div class="conteudo col-sm-9 mt-4">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h5>Curso</h5>
-                        <p>Técnico de informática - Sistemas</p>
-                    </div>
+            <div class="col-md-4 mt-3">
+                <div class="col">
+                    <h4>MUSAMI</h4>
+                </div>
 
-                    <div class="col-sm-6">
-                        <h5>Área de integração</h5>
-                        <p>Gestão de redes</p>                            
-                    </div>
+                <div class="col mt-4">
+                    <h5>Área</h5>
+                    <p>Técnico de informática - Sistemas</p>
+                </div>
 
-                    <div class="col-sm-6 mt-5">
-                        <h5 class="card-title">Descrição do trabalho</h5>
-                        <p class="card-text">Gestão de redes e equipamento informático da empresa</p>                           
-                    </div>
+                <div class="col mt-3">
+                    <h5>Localização</h5>
+                    <p>São pedro, Ponta Delgada, São Miguel</p>
+                </div>
+            </div>
 
-                    <div class="col-sm-6 mt-5">
-                        <h5>Localização</h5>
-                        <p>São pedro, Ponta Delgada, São Miguel</p>
-                    </div>
+            <div class="col-md-5 mt-5">
+                <div class="col">
+                    <h5 class="card-title">Descrição do trabalho</h5>
+                    <p class="card-text">Gestão de redes e equipamento informático da empresa</p> 
+                </div>
+            </div>
+
                 </div>
             </div>
         </div>
@@ -2163,13 +2473,13 @@ function renderMinhaArea(){
                         </div>
                     </div>
 
-                    <div class="col-sm-4 mt-2">
+                    <div class="col-sm-4 mt-3">
                         <div class="col">
-                            <h5>MUSAMI</h5>
+                            <h4>MUSAMI</h4>
                         </div>
 
                         <div class="col mt-4">
-                            <h5>Area</h5>
+                            <h5>Área</h5>
                             <p>Técnico de informática - Sistemas</p>
                         </div>
 
@@ -2260,7 +2570,7 @@ function renderMinhaArea(){
                     <form class="needs-validation" novalidate>
                         <div class="row">
                             <div class="col-sm-12 mt-2">
-                                <label for="area" class="form-label">Area</label>
+                                <label for="area" class="form-label">Área</label>
                                 <select class="form-select" id="area" required>
                                     <option value="0" selected></option>
                                 </select>
@@ -2346,131 +2656,13 @@ function mostrarBotao(x){
 function esconderBotao(x){
     document.getElementById(x).style.display = "none";
 }
-function abrirCriarAdm(){
-    document.getElementById("criacaoDTS").innerHTML = "";
-    document.getElementById("criacaoAdm").innerHTML = `
-    <div class="container mt-5">
-    <div class="criarAluno shadow-lg p-3 mb-5 bg-body rounded">
-        <div class="row">
-            <div class="col-6 mx-auto">
-                <img class="img-fluid " src="http://localhost:3000/files/Assets/diretorTurma.svg" alt="aluno">
-            </div>
-
-            <div class="col-md-6 mt-4 mb-5">
-                <form>
-                    <div class="col-sm-12 mt-1">
-                        <div class="mt-1" style="display: flex; justify-content: space-between;">
-                            <label for="emailadd" class="form-label"><strong>Email</strong></label>
-                                <div style="display: inline-block; width: 100%; text-align: right;" id="erroEmail"></div>
-                        </div>
-                        
-                        <div id="emailHelp" class="form-text"><input type="email" class="form-control" id="email" aria-describedby="emailHelp" maxlength="255" onchange="validaEmail();" onclick="document.getElementById('erro').innerHTML = '';"></div>
-                    </div>
-
-                    <div class="col mt-4">
-                        <center><div id="btn"><button type="button" class="col-sm-5 btn btn-primary" style="border-radius: 30px;" onclick="adicionar();">Adicionar</button></div></center>
-                        <center><div id="erro" class="mt-4"></div></center>
-                    </div>
-                            
-                    <div class="table-responsive-md mx-auto mt-3">
-                        <table class="table text-center align-middle mt-2" id="tabela">
-                            <thead>
-                                <tr>
-                                    <th class="text-center" scope="col">Email</th>
-                                    <th class="text-center" scope="col">Ações</th>
-
-                                </tr>
-                            </thead >
-
-                            <tbody id="lista">
-                            </tbody>
-                        </table>
-                        <center><button type="button" class="col-sm-5 btn btn-primary mt-1" style="border-radius: 30px; display: none;" onclick="introduzir();" id="btnIntroduzir">Introduzir no sistema</button></center>
-                    </div>
-                </form>
-            </div>
-        </div>     
-    </div>
-</div>`
-
-    document.getElementById('criacaoAdm').scrollIntoView();
-}
-function abrirCriarDTS(){
-    document.getElementById('criacaoAdm').innerHTML = "";
-    document.getElementById("criacaoDTS").innerHTML = `
-    <div class="container mt-5">
-        <div class="criarAluno shadow-lg p-3 mb-5 bg-body rounded">
-            <div class="row">
-                <div class="col-6">
-                    <img class="img-fluid" src="http://localhost:3000/files/Assets/diretorTurma.svg" alt="aluno">
-                </div>
-
-                <div class="col-6 mt-4">
-                    <form>
-                            <div class="col-sm-12">
-                                <label for="email" class="form-label"><strong>Email</strong></label>
-                                <input type="text" class="form-control" id="email" style="border-radius: 15px;">
-                            </div>
-
-                            <div class="col-sm-12 mt-2">
-                                <div class="table-responsive-sm">
-                                    <table class="table text-center align-middle">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col"></th>
-                                                <th scope="col">Turma</th>
-                                                <th scope="col">Ano </th>
-                                                <th scope="col">Curso</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><div><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label=""></div></td>
-                                                <td>Tis T1</td>
-                                                <td>3º</td>
-                                                <td>Tecnico de informatica - Sistemas</td>
-                                            </tr>
-                                    
-                                            <tr>
-                                                <td><div><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label=""></div></td>
-                                                <td>Tis T1</td>
-                                                <td>3º</td>
-                                                <td>Tecnico de informatica - Sistemas</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <div class="col mt-4">
-                                <center><button type="submit" class="col-sm-5 btn btn-primary" style="border-radius: 30px;">Adicionar</button></center>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div class="container mt-3 shadow-lg p-3 mb-5 bg-body rounded col-sm-12" >
-                <div class="table-responsive-sm mx-auto col-sm-6">
-                    <table class="table text-center align-middle">
-                        <thead>
-                            <tr>
-                                <th scope="col">Email</th>
-                                <th scope="col">Ações</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>                   
-                        </tbody>
-                    </table>
-                    <center><button type="submit" class="col-sm-5 btn btn-primary mt-1" style="border-radius: 30px;">Introduzir no sistema</button></center>
-                </div>
-            </div>
-        </div>
-    </div>`
-    document.getElementById('criacaoDTS').scrollIntoView();
-}
 function renderCode(id,codigo){
     document.getElementById(id).innerHTML = codigo;
+}
+
+function validaEmail(email) {
+    if (email.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/))
+        return true;
+    return false;
 }
 
