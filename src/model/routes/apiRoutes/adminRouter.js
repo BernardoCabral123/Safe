@@ -95,6 +95,17 @@ const dbConnection = require("../../dbConnection");
             }
         })
     });
+    router.get(`/empresas`,(req,res)=>{
+        dbConnection.query("SELECT * FROM vistaEmpresa ORDER BY nome",(err,result)=>{
+            if(err){
+                console.log(err);
+                res.status(422).send("Erro na recolha de empresas");
+            }
+            else{
+                res.json(result);
+            }
+        })
+    });
 // }Getters
 
 // CRUD cursos{

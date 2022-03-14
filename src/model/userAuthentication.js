@@ -136,80 +136,101 @@ exports.checkAuthAdmin = (req, res, callback) => {
 exports.checkAuthDiretorTurma = (req, res, callback) => {
 
     if(!req.headers.authorization) res.status(406).json({msg:"Não autorizado"})
-    try {
-        connection.query(
-            'SELECT * FROM conta WHERE publicKey = ?',
-            [jwt.decode(req.headers.authorization).pk],
-            (error,result) => {
-                if (error) throw error;
-                if(!result) res.status(401).json({msg:'Utlizador não encontrado'});
-
-                jwt.verify(req.headers.authorization,result[0].privateKey, (error)=>{
-                    if(error) res.status(401).json('Token inválido');
-                        if(result[0].tipoConta == 'diretor de turma'){
-                            req.user = result[0];
-                            return callback();
+    else{
+        try {
+            connection.query(
+                'SELECT * FROM conta WHERE publicKey = ?',
+                [jwt.decode(req.headers.authorization).pk],
+                (error,result) => {
+                    if (error) throw error;
+                    if(!result) res.status(401).json({msg:'Utlizador não encontrado'});
+    
+                    else{
+                    jwt.verify(req.headers.authorization,result[0].privateKey, (error)=>{
+                        if(error) res.status(401).json('Token inválido');
+                        else{
+                            if(result[0].tipoConta == 'diretor de turma'){
+                                req.user = result[0];
+                                return callback();
+                            }else{
+                                res.status(406).json({msg:"Não autorizado"})
+                            }
                         }
-                        res.status(406).json({msg:"Não autorizado"})
-                })
-            }
-        )
-    }
-    catch(error){
-        res.json({msg:'Ocorreu um erro'})
+    
+                    })
+                }
+            })
+        }
+        catch(error){
+            res.json({msg:'Ocorreu um erro'})
+        }
     }
 }
 
 exports.checkAuthFormando = (req, res, callback) => {
 
     if(!req.headers.authorization) res.status(406).json({msg:"Não autorizado"})
-    try {
-        connection.query(
-            'SELECT * FROM conta WHERE publicKey = ?',
-            [jwt.decode(req.headers.authorization).pk],
-            (error,result) => {
-                if (error) throw error;
-                if(!result) res.status(401).json({msg:'Utlizador não encontrado'});
-
-                jwt.verify(req.headers.authorization,result[0].privateKey, (error)=>{
-                    if(error) res.status(401).json('Token inválido');
-                        if(result[0].tipoConta == 'formando'){
-                            req.user = result[0];
-                            return callback();
+    else{
+        try {
+            connection.query(
+                'SELECT * FROM conta WHERE publicKey = ?',
+                [jwt.decode(req.headers.authorization).pk],
+                (error,result) => {
+                    if (error) throw error;
+                    if(!result) res.status(401).json({msg:'Utlizador não encontrado'});
+    
+                    else{
+                    jwt.verify(req.headers.authorization,result[0].privateKey, (error)=>{
+                        if(error) res.status(401).json('Token inválido');
+                        else{
+                            if(result[0].tipoConta == 'formando'){
+                                req.user = result[0];
+                                return callback();
+                            }else{
+                                res.status(406).json({msg:"Não autorizado"})
+                            }
                         }
-                        res.status(406).json({msg:"Não autorizado"})
-                })
-            }
-        )
-    }
-    catch(error){
-        res.json({msg:'Ocorreu um erro'})
+    
+                    })
+                }
+            })
+        }
+        catch(error){
+            res.json({msg:'Ocorreu um erro'})
+        }
     }
 }
 
 exports.checkAuthEmpresa = (req, res, callback) => {
 
     if(!req.headers.authorization) res.status(406).json({msg:"Não autorizado"})
-    try {
-        connection.query(
-            'SELECT * FROM conta WHERE publicKey = ?',
-            [jwt.decode(req.headers.authorization).pk],
-            (error,result) => {
-                if (error) throw error;
-                if(!result) res.status(401).json({msg:'Utlizador não encontrado'});
-
-                jwt.verify(req.headers.authorization,result[0].privateKey, (error)=>{
-                    if(error) res.status(401).json('Token inválido');
-                        if(result[0].tipoConta == 'empresa'){
-                            req.user = result[0];
-                            return callback();
+    else{
+        try {
+            connection.query(
+                'SELECT * FROM conta WHERE publicKey = ?',
+                [jwt.decode(req.headers.authorization).pk],
+                (error,result) => {
+                    if (error) throw error;
+                    if(!result) res.status(401).json({msg:'Utlizador não encontrado'});
+    
+                    else{
+                    jwt.verify(req.headers.authorization,result[0].privateKey, (error)=>{
+                        if(error) res.status(401).json('Token inválido');
+                        else{
+                            if(result[0].tipoConta == 'empresa'){
+                                req.user = result[0];
+                                return callback();
+                            }else{
+                                res.status(406).json({msg:"Não autorizado"})
+                            }
                         }
-                        res.status(406).json({msg:"Não autorizado"})
-                })
-            }
-        )
-    }
-    catch(error){
-        res.json({msg:'Ocorreu um erro'})
+    
+                    })
+                }
+            })
+        }
+        catch(error){
+            res.json({msg:'Ocorreu um erro'})
+        }
     }
 }

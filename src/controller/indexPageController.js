@@ -287,7 +287,7 @@ function renderDuvidas(){
                     <form class="row needs-validation" action="" novalidate>
                         <div class="col-sm-12 mt-2">
                             <label for="nomeempresa" class="form-label">Nome</label>
-                            <input type="text" class="form-control" id="nome" maxlength="50" required>
+                            <input type="text" class="form-control" id="nome" maxlength="50" >
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
@@ -295,12 +295,12 @@ function renderDuvidas(){
 
                         <div class="col-sm-12 mt-2">
                             <label for="nomeempresa" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="nome" maxlength="50" required>
+                            <input type="text" class="form-control" id="nome" maxlength="50" >
                         </div>
 
                         <div class="col-sm-6 mt-2">
                             <label for="conselho" class="form-label">Tipo de duvida</label>
-                            <select class="form-select" id="concelho" required>
+                            <select class="form-select" id="concelho" >
                                 <option selected>Tipo de duvida</option>
                                 <option>Erros</option>
                                 <option>bugs</option>
@@ -309,7 +309,7 @@ function renderDuvidas(){
 
                         <div class="col-sm-12 mt-2">
                             <label for="descricao" class="form-label">Descrição da duvida</label>
-                            <textarea class="form-control" id="descricao" style="border-radius: 15px;" rows="3"></textarea required>
+                            <textarea class="form-control" id="descricao" style="border-radius: 15px;" rows="3"></textarea >
                         </div>
                         
                         <div class="col-12 mt-3">
@@ -338,11 +338,11 @@ function renderLogin(){
                     <center><div class="row" style="max-width: 460px; text-align: start;">
                         <div class="col-sm-12 mb-3">
                             <label for="email" class="form-label">Email:</label>
-                            <input type="email" class="form-control" id="email" placeholder="email" name="email" style="border-radius: 20px;" required>
+                            <input type="email" class="form-control" id="email" placeholder="email" name="email" style="border-radius: 20px;" >
                         </div>
                         <div class="col-sm-12 mb-3">
                             <label for="exampleInputPassword1" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Password" style="border-radius: 20px;" required>
+                            <input type="password" class="form-control" id="password" placeholder="Password" style="border-radius: 20px;" >
                         </div>
                         <center><button style="border-radius: 20px; width: 150px; height: auto;" type="button" class="btn btn-primary" onclick='login();'>Login</button></center>
                     </div></center>
@@ -664,7 +664,7 @@ function validaTermosUsos(idInput){
                             <h3>Cursos</h3>
                         </div>
                         <div id="btnCriarCurso" style="display: none;">
-                            <button type="button" class="btn btn-primary mx-3" style="border-radius: 30px;" onclick="fillAreas(); openModal('criacaoCurso');">Abrir formulário</button>
+                            <button type="button" class="btn btn-primary mx-3" style="border-radius: 30px;" onclick="fillAreas('area'); openModal('criacaoCurso');">Abrir formulário</button>
                         </div>
                     </div>
                 
@@ -1043,13 +1043,14 @@ function validaTermosUsos(idInput){
                                     <th class="mx-auto" scope="col">Email</th>
                                 </tr>
                             </thead>
-                            <tbody id="tblEmpresas" onmouseover="document.getElementById('acoesCursos').style.display = 'block';" onmouseout="document.getElementById('acoesCursos').style.display = 'none';">
+                            <tbody id="tblEmpresas">
                             </tbody>
                         </table>
                     </div>
                     <div class="text-center"><label class="text-danger" id="msgCursos"></label></div>
                 </div>
         `;
+        fillTabelaEmpresas();
         }
         /****   fillTabela{   ****/
             function fillTabelaCursos(){
@@ -1734,6 +1735,35 @@ function validaTermosUsos(idInput){
                     alert('Erro na recolha das turmas')
                 })
             }
+            function fillTabelaEmpresas(){
+                document.getElementById("tblEmpresas").innerHTML = ``;
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        'authorization': localStorage.getItem("token")
+                    }
+                }
+                fetch(`http://localhost:3000/api/admin/empresas`,options)
+                .then((res) =>{
+                    if(res.status=200) return res.json()
+                    return null
+                })
+                .then((data) => {
+                    if(data){
+                        for(let i = 0; i< data.length; i++){
+                            
+                            document.getElementById("tblEmpresas").innerHTML += `
+                            <tr id="trE${data[i].idConta}">
+                                <td>${data[i].nome}</td>
+                                <td>${data[i].email}</td>`;
+                            }
+                        }
+                    })
+                .catch((err)=>{
+                    console.log(err)
+                    alert('Erro na recolha das empresas')
+                })
+            }
         /****   }fillTabela   ****/
         /****   fillData{   ****/
             async function fillCursos(id){
@@ -1955,7 +1985,7 @@ function validaTermosUsos(idInput){
                     if(res.status===200){
                         document.getElementById('curso').value = '';
                         document.getElementById('sigla').value = '';
-                        fillAreas();
+                        fillAreas('area');
                         document.getElementById('duracao').value =  '0';
                         fillTabelaCursos();
                     }
@@ -2303,8 +2333,6 @@ function validaTermosUsos(idInput){
 
 
 
-/****   Formando   ****/
-
 //renders
 function renderNavDiretorTurma(){
     renderCode("navbar",`<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #3898ec;">
@@ -2529,7 +2557,142 @@ function renderOfertas(){
 </div>`)
 }
 //funções
+function fillOfertasEmpresa(){
+    document.getElementById("ofertasAtivas").innerHTML = ``;
+    document.getElementById("ofertasFinalizadas").innerHTML = ``;
+    const options = {
+        method: 'GET',
+        headers: {
+            'authorization': localStorage.getItem("token")
+        }
+    }
+    fetch(`http://localhost:3000/api/empresa/ofertas`,options)
+    .then((res) =>{
+        if(res.status=200) return res.json()
+        return null
+    })
+    .then((data) => {
+        if(data){
+            for(let i = 0; i< data.length; i++){
+                if(data[i].finalizado == '0'){
+                    console.log(data[i].descricao);
 
+                    document.getElementById("ofertasAtivas").innerHTML += `
+                    <div class="container">
+                        <div class="mt-5 shadow-lg p-3 mb-5 bg-body rounded">
+                            <div class="row">
+                                <div class="logo col-sm-3">
+                                    <div class="img">
+                                        <img src="http://localhost:3000/files/Assets/empresa.png" class="img-fluid" alt="logo" style="width: 225px; height: 225px;">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-8 mt-3">
+                                    <div class="col">
+                                        <h2>${data[i].nome}</h2>
+                                    </div>
+
+                                    <div class="col mt-4">
+                                        <h4 class="card-text">${data[i].titulo}</h4>
+                                    </div>
+                                    <div class="col mt-3">
+                                        <p style="text-align: justify">${data[i].descricao}</p> 
+                                    </div>
+                                </div>
+                                <div class="col-sm-1 d-flex align-items-center">
+                                    <div class="row">
+                                        <div>
+                                            <button type="button" class="btn btn-primary mt-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
+                                                    <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z"/>
+                                                </svg>
+                                            </button>
+                                            <button type="button" class="btn btn-success mt-2" onclick="resetModalEdicaoOferta(\`${data[i].idOferta}\`,\`${data[i].idArea}\`,\`${data[i].titulo}\`,\`${data[i].descricao}\`,\`${data[i].vagas}\`); openModal('edicaoOferta${data[i].idOferta}')">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                                </svg>
+                                            </button>
+                                            <button type="button" class="btn btn-danger mt-2" onclick="openModal('eliminacaoOferta${data[i].idOferta}')" >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`
+
+                   
+                }
+                else{
+                     document.getElementById("ofertasFinalizadas").innerHTML = `<div class="container">
+                     <div class="mt-5 shadow-lg p-3 mb-5 bg-body rounded">
+                         <div class="row">
+                             <div class="logo col-sm-3">
+                                 <div class="img">
+                                     <img src="http://localhost:3000/files/Assets/empresa.png" class="img-fluid" alt="logo" style="width: 225px; height: 225px;">
+                                 </div>
+                             </div>
+                             <div class="col-sm-8 mt-3">
+                                <div class="col">
+                                     <h2>${data[i].nome}</h2>
+                                </div>
+                 
+                                <div class="col mt-4">
+                                     <h4 class="card-text">${data[i].titulo}</h4>
+                                </div>
+                                <div class="col mt-3">
+                                     <p style="text-align: justify">${data[i].descricao}</p>
+                                </div>
+                             </div>
+                             <div class="col-sm-1 d-flex align-items-center">
+                                 <div class="row">
+                                     <div>
+                                         <button type="button" class="btn btn-primary mt-2">
+                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
+                                                 <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z"/>
+                                             </svg>
+                                         </button>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                 `;
+                }
+            }
+            if(document.getElementById("ofertasAtivas").innerHTML == '')
+                    document.getElementById("ofertasAtivas").innerHTML = `
+                    <div class="container">
+                        <div class="card mt-5 shadow-lg p-3 mb-5 bg-body rounded">
+                            <div class="d-flex justify-content-center mt-5 mb-5">
+                                <h1 style="text-align: center;">Nenhuma oferta ativa</h1>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                if(document.getElementById("ofertasFinalizadas").innerHTML == ''){
+                    document.getElementById("ofertasFinalizadas").innerHTML = `
+                    <div class="container">
+                        <div class="card mt-5 shadow-lg p-3 mb-5 bg-body rounded">
+                            <div class="d-flex justify-content-center mt-5 mb-5">
+                                <h1 style="text-align: center;">Nenhuma oferta finalizada</h1>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                }
+        }
+        })
+    .catch((err)=>{
+        console.log(err)
+        alert('Erro na recolha das ofertas')
+    })
+}
 
 /****   Empresa   ****/
 
@@ -2562,103 +2725,18 @@ function renderNavEmpresa(){
                 </nav>`)
 }
 function renderMinhaArea(){
-    renderCode("content",
-`<div class="container mt-5 d-flex">
-<h2>Ofertas Ativas</h2>
-<button type="button" class="btn btn-primary mx-3 rounded" onclick='fillAreas(); openModal("criacaoOferta");' >Criar Oferta</button>
+    renderCode("content",`
+<div class="container mt-5 d-flex">
+    <h2>Ofertas Ativas</h2>
+    <button type="button" class="btn btn-primary mx-3 rounded" onclick="fillAreas('area'); openModal('criacaoOferta')" >Criar Oferta</button>
 </div>
 
-<div class="container">
-<div class="mt-5 shadow-lg p-3 mb-5 bg-body rounded" onmouseover="mostrarBotao('btn')" onmouseout="esconderBotao('btn')">
-                <div class="row">
-                    <div class="logo col-sm-3">
-                        <div class="img">
-                            <img src="http://localhost:3000/files/Assets/MUSAMI.jpg" class="img-fluid" alt="logo" style="width: 225px; height: 225px;">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 mt-3">
-                        <div class="col">
-                            <h4>MUSAMI</h4>
-                        </div>
-
-                        <div class="col mt-4">
-                            <h5>Área</h5>
-                            <p>Técnico de informática - Sistemas</p>
-                        </div>
-
-                        <div class="col mt-5">
-                            <h5>Localização</h5>
-                            <p>São pedro, Ponta Delgada, São Miguel</p>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 mt-2">
-                        <div class="col">
-                            <h5 class="card-title">Descrição do trabalho</h5>
-                            <p class="card-text">Gestão de redes e equipamento informático da empresa</p> 
-                        </div>
-                    </div>
-
-                    <div class="col-sm-1 d-flex align-items-center">
-                        <div class="row">
-                            <div>
-                                <button type="button" class="btn btn-success mt-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                    </svg>
-                                </button>
-                                <button type="button" class="btn btn-danger mt-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-</div>
+<div id="ofertasAtivas"></div> 
 
 <div class="container">
 <h2>Ofertas finalizadas</h2>
 
-<div class="card mt-3 shadow-lg p-3 mb-5 bg-body rounded">
-    <div class="row">
-        <div class="logo col-sm-3">
-            <div class="img">
-                <img src="http://localhost:3000/files/Assets/MUSAMI.jpg" class="img-fluid" alt="logo" style="width: 225px; height: 225px;">
-            </div>
-        </div>
-
-        <div class="conteudo col-sm-9 mt-4">
-            <div class="row">
-                <div class="col-sm-6">
-                    <h5>Curso</h5>
-                    <p>Técnico de informática - Sistemas</p>
-                </div>
-
-                <div class="col-sm-6">
-                    <h5>Área de integração</h5>
-                    <p>Gestão de redes</p>                            
-                </div>
-
-                <div class="col-sm-6 mt-5">
-                    <h5 class="card-title">Descrição do trabalho</h5>
-                    <p class="card-text">Gestão de redes e equipamento informático da empresa</p>                           
-                </div>
-
-                <div class="col-sm-6 mt-5">
-                    <h5>Localização</h5>
-                    <p>São pedro, Ponta Delgada, São Miguel</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-
+<div id="ofertasFinalizadas"></div> 
 
 <div class="modal fade" id="criacaoOferta" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
@@ -2675,28 +2753,27 @@ function renderMinhaArea(){
                         <div class="row">
                             <div class="col-sm-12 mt-2">
                                 <label for="area" class="form-label">Área</label>
-                                <select class="form-select" id="area" required>
-                                    <option value="0" selected></option>
+                                <select class="form-select" id="area">
                                 </select>
                             </div>
 
                             <div class="col-sm-12 mt-2">
-                                <label for="vagas" class="form-label">Título da oferta</label>
-                                <input type="text" class="form-control" id="vagas" style="border-radius: 15px;" required>
+                                <label for="titulo" class="form-label">Título da oferta</label>
+                                <input type="text" class="form-control" id="titulo" style="border-radius: 15px;" >
                             </div>
 
                             <div class="col-sm-12 mt-2">
                                 <label for="descricao" class="form-label">Descrição da oferta</label>
-                                <textarea class="form-control" id="descricao" style="border-radius: 15px;" rows="3" required></textarea>
+                                <textarea class="form-control" id="descricao" style="border-radius: 15px;" rows="3" ></textarea>
                             </div>
             
                             <div class="col-sm-12 mt-2">
                                 <label for="vagas" class="form-label">Número de vagas</label>
-                                <input type="number" class="form-control" id="vagas" style="border-radius: 15px;" onKeyPress="if(this.value.length==2) return false;" required>
+                                <input type="number" class="form-control" id="vagas" style="border-radius: 15px;" onKeyPress="if(this.value.length==2) return false;" >
                             </div>
                             <center>
                                 <div class="col-sm-12 mt-4">
-                                    <button type="button" class="btn btn-primary col-sm-6" style="border-radius: 30px;">Criar Oferta</button>
+                                    <button type="button" class="btn btn-primary col-sm-6" style="border-radius: 30px;" onclick="criarOferta()">Criar Oferta</button>
                                 </div>
                             </center>
                         </div>
@@ -2712,21 +2789,345 @@ function renderMinhaArea(){
 </div>
 </div>
 `);
+fillOfertasEmpresa()
 }
 //funçoes
-function fillAreas(){
-    fetch('http://localhost:3000/api/unrestricted/areas')
+
+function fillOfertasEmpresa(){
+    document.getElementById("ofertasAtivas").innerHTML = ``;
+    document.getElementById("ofertasFinalizadas").innerHTML = ``;
+    const options = {
+        method: 'GET',
+        headers: {
+            'authorization': localStorage.getItem("token")
+        }
+    }
+    fetch(`http://localhost:3000/api/empresa/ofertas`,options)
+    .then((res) =>{
+        if(res.status=200) return res.json()
+        return null
+    })
+    .then((data) => {
+        if(data){
+            for(let i = 0; i< data.length; i++){
+                if(data[i].finalizado == '0'){
+                    console.log(data[i].descricao);
+
+                    document.getElementById("ofertasAtivas").innerHTML += `
+                    <div class="container">
+                        <div class="mt-5 shadow-lg p-3 mb-5 bg-body rounded">
+                            <div class="row">
+                                <div class="logo col-sm-3">
+                                    <div class="img">
+                                        <img src="http://localhost:3000/files/Assets/empresa.png" class="img-fluid" alt="logo" style="width: 225px; height: 225px;">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-8 mt-3">
+                                    <div class="col">
+                                        <h2>${data[i].nome}</h2>
+                                    </div>
+
+                                    <div class="col mt-4">
+                                        <h4 class="card-text">${data[i].titulo}</h4>
+                                    </div>
+                                    <div class="col mt-3">
+                                        <p style="text-align: justify">${data[i].descricao}</p> 
+                                    </div>
+                                </div>
+                                <div class="col-sm-1 d-flex align-items-center">
+                                    <div class="row">
+                                        <div>
+                                            <button type="button" class="btn btn-primary mt-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
+                                                    <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z"/>
+                                                </svg>
+                                            </button>
+                                            <button type="button" class="btn btn-success mt-2" onclick="resetModalEdicaoOferta(\`${data[i].idOferta}\`,\`${data[i].idArea}\`,\`${data[i].titulo}\`,\`${data[i].descricao}\`,\`${data[i].vagas}\`); openModal('edicaoOferta${data[i].idOferta}')">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                                </svg>
+                                            </button>
+                                            <button type="button" class="btn btn-danger mt-2" onclick="openModal('eliminacaoOferta${data[i].idOferta}')" >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="edicaoOferta${data[i].idOferta}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                <div class="registo shadow-lg p-3 bg-body rounded">
+                                    <div class="row">
+                                        <div class="imgCriarAnuncio col-sm-6 mt-3">
+                                            <img class="img-fluid" src="http://localhost:3000/files/Assets/criarAnuncio.svg" alt="work">
+                                        </div>
+
+                                        <div class="formulario col-sm-6 align-self-center">
+                                            <form class="needs-validation" novalidate>
+                                                <div class="row">
+                                                    <div class="col-sm-12 mt-2">
+                                                        <label for="area" class="form-label">Área</label>
+                                                        <select class="form-select" id="area${data[i].idOferta}">
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-sm-12 mt-2">
+                                                        <label for="titulo" class="form-label">Título da oferta</label>
+                                                        <input type="text" class="form-control" id="titulo${data[i].idOferta}" style="border-radius: 15px;">
+                                                    </div>
+
+                                                    <div class="col-sm-12 mt-2">
+                                                        <label for="descricao" class="form-label">Descrição da oferta</label>
+                                                        <textarea class="form-control" id="descricao${data[i].idOferta}" style="border-radius: 15px;" rows="3"></textarea>
+                                                    </div>
+                                    
+                                                    <div class="col-sm-12 mt-2">
+                                                        <label for="vagas" class="form-label">Número de vagas</label>
+                                                        <input type="number" class="form-control" id="vagas${data[i].idOferta}" style="border-radius: 15px;" onKeyPress="if(this.value.length==2) return false;" disabled>
+                                                    </div>
+                                                    <center>
+                                                        <div class="col-sm-12 mt-4">
+                                                            <button type="button" class="btn btn-primary col-sm-6" style="border-radius: 30px;" data-bs-dismiss="modal" onclick="editarOferta('${data[i].idOferta}')">Editar Oferta</button>
+                                                        </div>
+                                                    </center>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>                                              
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="eliminacaoOferta${data[i].idOferta}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                <div class="registo shadow-lg p-3 bg-body rounded">
+                                    <div class="row">
+                                        <div class="imgCriarAnuncio col-sm-6 mt-3">
+                                            <img class="img-fluid" src="http://localhost:3000/files/Assets/criarAnuncio.svg" alt="work">
+                                        </div>
+
+                                        <div class="formulario col-sm-6 align-self-center">
+                                            <form class="needs-validation" novalidate>
+                                                <div class="row">
+                                                    <div class="col-sm-12 mt-2">
+                                                        <label class="form-label">Área</label>
+                                                        <select class="form-select" disabled>
+                                                            <option selected>${data[i].area}</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-sm-12 mt-2">
+                                                        <label class="form-label">Título da oferta</label>
+                                                        <input type="text" class="form-control" style="border-radius: 15px;" value="${data[i].titulo}" disabled>
+                                                    </div>
+
+                                                    <div class="col-sm-12 mt-2">
+                                                        <label class="form-label">Descrição da oferta</label>
+                                                        <textarea class="form-control" style="border-radius: 15px;" rows="3" disabled>${data[i].descricao}</textarea>
+                                                    </div>
+                                    
+                                                    <div class="col-sm-12 mt-2">
+                                                        <label for="vagas" class="form-label">Número de vagas</label>
+                                                        <input type="number" class="form-control"  style="border-radius: 15px;" onKeyPress="if(this.value.length==2) return false;" value="${data[i].vagas}" disabled>
+                                                    </div>
+                                                    <center>
+                                                        <div class="col-sm-12 mt-4">
+                                                            <button type="button" class="btn btn-danger col-sm-6" style="border-radius: 30px;" data-bs-dismiss="modal" onclick="eliminarOferta('${data[i].idOferta}')">Eliminar Oferta</button>
+                                                        </div>
+                                                    </center>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>                                              
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`
+                }
+                else{
+                     document.getElementById("ofertasFinalizadas").innerHTML = `<div class="container">
+                     <div class="mt-5 shadow-lg p-3 mb-5 bg-body rounded">
+                         <div class="row">
+                             <div class="logo col-sm-3">
+                                 <div class="img">
+                                     <img src="http://localhost:3000/files/Assets/empresa.png" class="img-fluid" alt="logo" style="width: 225px; height: 225px;">
+                                 </div>
+                             </div>
+                             <div class="col-sm-8 mt-3">
+                                <div class="col">
+                                     <h2>${data[i].nome}</h2>
+                                </div>
+                 
+                                <div class="col mt-4">
+                                     <h4 class="card-text">${data[i].titulo}</h4>
+                                </div>
+                                <div class="col mt-3">
+                                     <p style="text-align: justify">${data[i].descricao}</p>
+                                </div>
+                             </div>
+                             <div class="col-sm-1 d-flex align-items-center">
+                                 <div class="row">
+                                     <div>
+                                         <button type="button" class="btn btn-primary mt-2">
+                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
+                                                 <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z"/>
+                                             </svg>
+                                         </button>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                 `;
+                }
+            }
+            if(document.getElementById("ofertasAtivas").innerHTML == '')
+                    document.getElementById("ofertasAtivas").innerHTML = `
+                    <div class="container">
+                        <div class="card mt-5 shadow-lg p-3 mb-5 bg-body rounded">
+                            <div class="d-flex justify-content-center mt-5 mb-5">
+                                <h1 style="text-align: center;">Nenhuma oferta ativa</h1>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                if(document.getElementById("ofertasFinalizadas").innerHTML == ''){
+                    document.getElementById("ofertasFinalizadas").innerHTML = `
+                    <div class="container">
+                        <div class="card mt-5 shadow-lg p-3 mb-5 bg-body rounded">
+                            <div class="d-flex justify-content-center mt-5 mb-5">
+                                <h1 style="text-align: center;">Nenhuma oferta finalizada</h1>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                }
+        }
+        })
+    .catch((err)=>{
+        console.log(err)
+        alert('Erro na recolha das ofertas')
+    })
+}
+async function fillAreas(id){
+    await fetch('http://localhost:3000/api/unrestricted/areas')
     .then(res => res.json())
     .then(data => {
-        document.getElementById("area").innerHTML='<option value="0" style="color:gray !important">Selecionar área</option>';
+        document.getElementById(id).innerHTML='<option value="0" style="color:gray !important">Selecionar área</option>';
         for(let i = 0; i< data.length; i++){
-            document.getElementById("area").innerHTML+= `<option value="${data[i].idArea}" style="color:black !important">${data[i].nome} </option>`
+            document.getElementById(id).innerHTML+= `<option value="${data[i].idArea}" style="color:black !important">${data[i].nome} </option>`
     }})
     .catch((err)=>{
         console.log(err)
         alert('Erro na recolha das areas')
     })
 }
+
+async function resetModalEdicaoOferta(idOferta,idArea,titulo,descricao,vagas){
+    document.getElementById(`titulo${idOferta}`).value = titulo;
+    document.getElementById(`descricao${idOferta}`).value = descricao;
+    document.getElementById(`vagas${idOferta}`).value = vagas;
+
+    await fillAreas(`area${idOferta}`)
+        document.getElementById(`area${idOferta}`).value = idArea;
+}
+
+function criarOferta(){
+    const options = {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+                Authorization :  localStorage.getItem("token")
+            },
+            body: JSON.stringify({
+                idArea: document.getElementById('area').value,
+                titulo: document.getElementById('titulo').value,
+                descricao: document.getElementById('descricao').value,
+            })
+        }
+
+    fetch('http://localhost:3000/api/empresa/ofertas', options)
+    .then((res) => {
+        if(res.status===200){
+            document.getElementById('area').value =  '0';
+            document.getElementById('titulo').value =  '';
+            document.getElementById('descricao').value =  '';
+            document.getElementById('vagas').value =  '';
+
+            fillOfertasEmpresa();
+        }
+    })
+    .catch((error) => console.log(error));
+}
+
+function editarOferta(idOferta){
+    const options = {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json',
+                Authorization :  localStorage.getItem("token")
+            },
+            body: JSON.stringify({
+                idOferta: idOferta,
+                idArea: document.getElementById(`area${idOferta}`).value,
+                titulo: document.getElementById(`titulo${idOferta}`).value,
+                descricao: document.getElementById(`descricao${idOferta}`).value,
+                vagas: document.getElementById(`vagas${idOferta}`).value,
+            })
+        }
+
+    fetch('http://localhost:3000/api/empresa/ofertas', options)
+    .then((res) => {
+        if(res.status===200){
+            fillOfertasEmpresa();
+        }
+    })
+    .catch((error) => console.log(error));
+}
+
+function eliminarOferta(idOferta){
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Content-type': 'application/json',
+            Authorization :  localStorage.getItem("token")
+        },
+        body: JSON.stringify({
+            idOferta: idOferta
+        })
+    }
+    fetch('http://localhost:3000/api/empresa/ofertas', options)
+    .then((res) => {
+        if(res.status===200){
+            fillOfertasEmpresa();
+        }
+    })
+    .catch((error) => console.log(error));
+}
+
+
+
 
 /****   Todos   ****/
 //renders
