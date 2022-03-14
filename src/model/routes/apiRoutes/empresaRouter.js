@@ -12,7 +12,7 @@ router.get(`/ofertas`,(req,res)=>{
             res.status(422).send("Erro na busca das ofertas");
         }
         else{
-            res.status(200).send("Ofertas buscadas com sucesso");
+            res.status(200).json(result);
         }
     })
 });

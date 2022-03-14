@@ -31,7 +31,8 @@ async function renderPage(){
                     break;
                  case 'diretor de turma':
                     renderNavDiretorTurma();
-                    renderAprovacoesEstagio();
+                    renderGerirTurmas();
+                    fillTabelaFormandosDiretor('');
                     break;
                 case 'formando':
                     renderNavFormando();
@@ -72,9 +73,6 @@ function renderNavNaoAutenticado(){
                 <ul class="navbar-nav" style="cursor: pointer;">
                     <li class="nav-item" onclick="renderInicio();">
                         <a class="nav-link">Inicio</a>
-                    </li>
-                    <li class="nav-item" onclick="renderDuvidas();">
-                        <a class="nav-link" >Duvidas</a>
                     </li>
                     <li class="nav-item" onclick="renderLogin();">
                         <a class="nav-link">login</a>
@@ -473,14 +471,14 @@ async function registar(){
             })
         }
 
-        await fetch('http://localhost:3000/api/users', options)
+        await fetch('http://localhost:3000/api/unrestricted/registo', options)
         .then(res => res.text())
         .then(text =>{
             alert(text)
         })
         .catch((err) =>{
             alert("Ocorreu um erro na efetuação do seu registo");
-            alert(err);
+            console.log(err);
         })
         location.reload()
     }
@@ -682,7 +680,6 @@ function validaTermosUsos(idInput){
                             </tbody>
                         </table>
                     </div>
-                    <div class="text-center"><label class="text-danger" id="msgCursos"></label></div>
                 </div>
             
                 <div class="container mb-4  shadow-lg p-3 bg-body rounded" onmouseover="mostrarBotao('btnCriarTurma')" onmouseout="esconderBotao('btnCriarTurma')">
@@ -707,7 +704,6 @@ function validaTermosUsos(idInput){
                             
                         </tbody>
                     </table>
-                        <div class="text-center"><label class="text-danger" id="msgTurmas"></label></div>
                     </div>
                 </div>
             
@@ -731,7 +727,6 @@ function validaTermosUsos(idInput){
 
                         </tbody>
                     </table>
-                    <div class="text-center"><label class="text-danger" id="msgAlunos"></label></div>
                     </div>
                 </div>
             </div>
@@ -923,7 +918,6 @@ function validaTermosUsos(idInput){
                             </tbody>
                         </table>
                     </div>
-                    <div class="text-center"><label class="text-danger" id="msgCursos"></label></div>
                 </div>
             
                 <div class="container mb-4 shadow-lg p-3 bg-body rounded" onmouseover="mostrarBotao('btnCriarDiretorTurma')" onmouseout="esconderBotao('btnCriarDiretorTurma')">
@@ -947,7 +941,6 @@ function validaTermosUsos(idInput){
                             </tbody>
                         </table>
                     </div>
-                <div class="text-center"><label class="text-danger" id="msgCursos"></label></div>
             </div>
 
             <div class="modal fade" id="criacaoAdmin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1047,7 +1040,6 @@ function validaTermosUsos(idInput){
                             </tbody>
                         </table>
                     </div>
-                    <div class="text-center"><label class="text-danger" id="msgCursos"></label></div>
                 </div>
         `;
         fillTabelaEmpresas();
@@ -2337,7 +2329,7 @@ function validaTermosUsos(idInput){
 function renderNavDiretorTurma(){
     renderCode("navbar",`<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #3898ec;">
                     <div class="container-fluid">
-                        <div class="ml-5"  onclick='renderOfertas();'>
+                        <div class="ml-5"  onclick='renderGerirTurmas();'>
                             <img class="d-inline-block align-text-top" src="http://localhost:3000/files/Assets/logoPlataformaPrincipal.png" alt="img-fluid" height="60px" width="auto" style="cursor: pointer;">
                         </div>
                         
@@ -2347,9 +2339,6 @@ function renderNavDiretorTurma(){
                         
                         <div class="collapse navbar-collapse" style="justify-content: end !important;" id="navbarNav">
                             <ul class="navbar-nav" style="cursor: pointer;">
-                                <li class="nav-item" onclick="renderAprovacoesEstagio();">
-                                    <a class="nav-link">Aprovações de estágio</a>
-                                </li>
                                 <li class="nav-item" onclick="renderGerirTurmas();">
                                     <a class="nav-link" >Gerir Turmas</a>
                                 </li>
@@ -2361,15 +2350,120 @@ function renderNavDiretorTurma(){
                     </div>
                 </nav>`)
 }
-function renderAprovacoesEstagio(){
-    renderCode('content',`Aprovacoes de estágio`)
-}
+
 function renderGerirTurmas(){
-    renderCode("content",`Gerir turmas`);
+    renderCode("content",`
+    <div class="container shadow-lg p-3 mb-5 bg-body rounded mt-5">
+    <h3>Turmas</h3>
+        <div class="table-responsive-sm">
+            <table class="table text-center">
+            <thead >
+                <tr>
+                <th scope="col"><input class="form-check-input" type="radio" name="inlineRadioOptions" id="allTurmas" value=0 checked="checked" onchange="fillTabelaFormandosDiretor('')"></th>
+                <th scope="col">Turma</th>
+                <th scope="col">Diretor de turma</th>
+                </tr>
+            </thead>
+            <tbody id="tblTurmas">
+                
+            </tbody>
+        </table>
+        </div>
+        </div>
+    </div>
+    <div class="container shadow-lg p-3 mb-5 bg-body rounded">
+   
+    <h3>Formandos</h3>
+
+    <div class="table-responsive-sm">
+    <table class="table text-center">
+        <thead >
+        <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Email</th>
+        <th scope="col">Turma</th>
+        </tr>
+        </thead>
+        <tbody id="tblFormandos">
+        </tbody>
+    </table>
+    </div>
+    </div>
+    </div>
+    `    
+    );
+    fillTabelaTurmasDiretor();
 }
 //funções
+function fillTabelaTurmasDiretor(){
+    document.getElementById("tblTurmas").innerHTML = ``;
+    const options = {
+        method: 'GET',
+        headers: {
+            'authorization': localStorage.getItem("token")
+        }
+    }
+    fetch('http://localhost:3000/api/diretorTurma/turmas',options)
+    .then((res) =>{
+        if(res.status ==200 ) return res.json()
+        return null
+    })
+    .then((data) => {
+        let str = '';
+        if(data){
+            for(let i = 0; i< data.length; i++){
 
+                str+= `<tr"><td><input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" onchange="fillTabelaFormandosDiretor(${data[i].idTurma});"></td>`
 
+                if(data[i].turma)
+                    str += `<td>${data[i].turma}</td>`
+                else
+                    str += `<td style="color:red">Sem curso atribuído</td>`
+
+                str += `<td>${data[i].diretorTurma}</td></tr>`
+                  
+                document.getElementById("tblTurmas").innerHTML = str;
+            };
+        }
+    })
+    .catch((err)=>{
+        console.log(err)
+        alert('Erro na recolha das turmas')
+    })
+}
+
+function fillTabelaFormandosDiretor(idTurma){
+    document.getElementById("tblFormandos").innerHTML = ``;
+    const options = {
+        method: 'GET',
+        headers: {
+            'authorization': localStorage.getItem("token")
+        }
+    }
+    fetch(`http://localhost:3000/api/diretorTurma/formandos/${idTurma}`,options)
+    .then((res) =>{
+        if(res.status ==200 ) return res.json()
+        return null
+    })
+    .then((data) => {
+        let str = '';
+        if(data){
+            for(let i = 0; i< data.length; i++){
+
+                str+=  `<tr"><td>${data[i].nome}</td>
+                            <td>${data[i].email}</td>
+                            <td>${data[i].turma}</td>
+                        </tr>`
+                  
+                document.getElementById("tblFormandos").innerHTML = str;
+            };
+        }
+    })
+    .catch((err)=>{
+        console.log(err)
+        alert('Erro na recolha das formandos')
+    })
+}
 /****   Formando   ****/
 
 //renders
@@ -2388,9 +2482,6 @@ function renderNavFormando(){
                             <ul class="navbar-nav" style="cursor: pointer;">
                                 <li class="nav-item" onclick="renderOfertas();">
                                     <a class="nav-link">Ofertas</a>
-                                </li>
-                                <li class="nav-item" onclick="renderDuvidas();">
-                                    <a class="nav-link" >Duvidas</a>
                                 </li>
                                 <li class="nav-item" onclick="logout();">
                                     <a class="nav-link">Logout</a>
@@ -2703,9 +2794,6 @@ function renderNavEmpresa(){
                                 <li class="nav-item" onclick="renderMinhaArea();">
                                     <a class="nav-link">Minha Área</a>
                                 </li>
-                                <li class="nav-item" onclick="renderDuvidas();">
-                                    <a class="nav-link" >Duvidas</a>
-                                </li>
                                 <li class="nav-item" onclick="logout();">
                                     <a class="nav-link">Logout</a>
                                 </li>
@@ -2865,23 +2953,23 @@ function fillOfertasEmpresa(){
                                             <form class="needs-validation" novalidate>
                                                 <div class="row">
                                                     <div class="col-sm-12 mt-2">
-                                                        <label for="area" class="form-label">Área</label>
+                                                        <label for="area${data[i].idOferta}" class="form-label">Área</label>
                                                         <select class="form-select" id="area${data[i].idOferta}">
                                                         </select>
                                                     </div>
 
                                                     <div class="col-sm-12 mt-2">
-                                                        <label for="titulo" class="form-label">Título da oferta</label>
+                                                        <label for="titulo${data[i].idOferta}" class="form-label">Título da oferta</label>
                                                         <input type="text" class="form-control" id="titulo${data[i].idOferta}" style="border-radius: 15px;">
                                                     </div>
 
                                                     <div class="col-sm-12 mt-2">
-                                                        <label for="descricao" class="form-label">Descrição da oferta</label>
+                                                        <label for="descricao${data[i].idOferta}" class="form-label">Descrição da oferta</label>
                                                         <textarea class="form-control" id="descricao${data[i].idOferta}" style="border-radius: 15px;" rows="3"></textarea>
                                                     </div>
                                     
                                                     <div class="col-sm-12 mt-2">
-                                                        <label for="vagas" class="form-label">Número de vagas</label>
+                                                        <label for="vagas${data[i].idOferta}" class="form-label">Número de vagas</label>
                                                         <input type="number" class="form-control" id="vagas${data[i].idOferta}" style="border-radius: 15px;" onKeyPress="if(this.value.length==2) return false;" disabled>
                                                     </div>
                                                     <center>
@@ -2933,7 +3021,7 @@ function fillOfertasEmpresa(){
                                                     </div>
                                     
                                                     <div class="col-sm-12 mt-2">
-                                                        <label for="vagas" class="form-label">Número de vagas</label>
+                                                        <label for="${data[i].vagas}" class="form-label">Número de vagas</label>
                                                         <input type="number" class="form-control"  style="border-radius: 15px;" onKeyPress="if(this.value.length==2) return false;" value="${data[i].vagas}" disabled>
                                                     </div>
                                                     <center>
@@ -3054,6 +3142,7 @@ function criarOferta(){
                 idArea: document.getElementById('area').value,
                 titulo: document.getElementById('titulo').value,
                 descricao: document.getElementById('descricao').value,
+                vagas: document.getElementById('vagas').value,
             })
         }
 
@@ -3122,7 +3211,59 @@ function eliminarOferta(idOferta){
 /****   Todos   ****/
 //renders
 function renderFooter(){
-    renderCode('foot',`<footer class="mt-auto bg-dark text-white"><div class="container text-left"><div class="row text-left"><div class="col-md-3 col-sm-3 col-sml-3 mx-auto mt-3"><h5 class="text-uppercase text-center mb-4 font-weight-bold text-white">ENTA</h5><p class=" text-justify"> A Enta iniciou a sua atividade a 6 de outubro de 1993, sendo parte integrante do INOVA até setembro de 2001, desde então, tem vindo a promover a formação profissionalizante, disponibilizando cursos de nível V e nivel IV.</p></div><div class="col-md-4 col-sm-3 col-sm-3 mx-auto mt-3"><h5 class="text-uppercase text-center mb-4 font-weight-bold text-white">Contacto</h5><p><i class="fas fa-home mr-3"></i> R. de São Gonçalo 101, Ponta Delgada</p><p><i class="fas fa-envelope mr-3"></i> enta@gmail.com</p><p><i class="fas fa-phone mr-3"></i> +351 296 650 660</p></div></div><hr class="mb-2"><div class="row align-items-center"><div class="col-sm-6 col-sm-6"><p>Copyright ©2021:<a href="https://www.enta.store/" style="text-decoration: none;"><strong class="text-white"> ENTA</strong></a></p></div><div class="col-sm-6 col-sm-6"><div class="text-right text-sm-right"><ul class="list-unstyled list-inline"><li class="list-inline-item"><a href="https://www.facebook.com/escoladenovastecnologias/" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="fab fa-facebook"></i></a></li><li class="list-inline-item"><a href="https://www.enta.store/" target="_blank" class="btn-floating btn-sm text-white"style="font-size: 23px;"><i class="fas fa-globe"></i></a></li></ul></div></div></div></div></footer>`);
+    renderCode('foot',`
+    <footer class="bg-dark text-white">
+    <div class="container text-center text-md-left">
+        <div class="row text-center text-md-left">
+            <div class="col-md-3 col-sm-3 col-sml-3 mx-auto mt-3">
+                <h5 class="text-uppercase mb-4 font-weight-bold text-white">ENTA</h5>
+                <p> A Enta, iniciou a sua actividade a 6 de Outubro de 1993, 
+                    sendo parte integrante do INOVA até Setembro de 2001, 
+                    desde então, tem vindo a promover a formação profissionalizante, 
+                    disponibilizando cursos de nível V e nivel IV.
+                </p>
+            </div>
+
+            <div class="col-md-4 col-sm-3 col-sm-3 mx-auto mt-3">
+                <h5 class="text-uppercase mb-4 font-weight-bold text-white">Contact</h5>
+                <p>
+                    <i class="fas fa-home mr-3"></i> R. de São Gonçalo 101, Ponta Delgada
+                </p>
+                <p>
+                    <i class="fas fa-envelope mr-3"></i> enta@gmail.com
+                </p>
+                <p>
+                    <i class="fas fa-phone mr-3"></i> +351 296 650 660
+                </p>
+            </div>
+        </div>
+
+        <hr class="mb-2">
+
+        <div class="row align-items-center">
+            <div class="col-sm-6 col-sm-6">
+                <p>Copyright ©2021:<a href="https://www.enta.store/" style="text-decoration: none;"><strong
+                            class="text-white"> ENTA</strong></a>
+                </p>
+            </div>
+            <div class="col-sm-6 col-sm-6">
+                <div class="text-center text-sm-right">
+                    <ul class="list-unstyled list-inline">
+                        <li class="list-inline-item">
+                            <a href="https://www.facebook.com/escoladenovastecnologias/"
+                                class="btn-floating btn-sm text-white" style="font-size: 23px;"><i
+                                    class="fab fa-facebook"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://www.enta.store/" target="_blank" class="btn-floating btn-sm text-white"
+                                style="font-size: 23px;"><i class="fas fa-globe"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>`);
 }
 //funções
 function logout(){
