@@ -2408,292 +2408,282 @@ function renderOfertas(){
 </div>
 
 <div class="container">
-    <div class="mt-5">
-        <h2>Ofertas existentes</h2>
-    </div>
-
-    <div class="card mt-5 shadow-lg p-3 mb-5 bg-body rounded">
-        <div class="row">
-            <div class="logo col-sm-3">
-                <div class="img">
-                    <img src="http://localhost:3000/files/Assets/MUSAMI.jpg" class="img-fluid" alt="logo" style="width: 225px; height: 225px;">
-                </div>
-            </div>
-
-            <div class="col-sm-4 mt-3">
-                <div class="col">
-                    <h4>MUSAMI</h4>
-                </div>
-
-                <div class="col mt-4">
-                    <h5>Área</h5>
-                    <p>Técnico de informática - Sistemas</p>
-                </div>
-
-                <div class="col mt-3">
-                    <h5>Localização</h5>
-                    <p>São pedro, Ponta Delgada, São Miguel</p>
-                </div>
-            </div>
-
-            <div class="col-sm-4 mt-5">
-                <div class="col">
-                    <h5 class="card-title">Descrição do trabalho</h5>
-                    <p class="card-text">Gestão de redes e equipamento informático da empresa</p> 
-                </div>
-            </div>
-
-            <div class="col-sm-1">
-                <div class="col">
-                    <div class="row mx-auto d-flex aligns-items-center">
-                            <button type="button" class="btn btn-primary "> 
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-plus-fill" viewBox="0 0 16 16">
-                                    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
-                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm4.5 6V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5a.5.5 0 0 1 1 0Z"/>
-                                </svg>
-                            </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="mt-3">
-        <h2>Inscrições pendentes</h2>
-    </div>
-
-
-    <div class="card mt-5 shadow-lg p-3 mb-5 bg-body rounded">
-        <div class="row">
-            <div class="logo col-md-3">
-                <div class="img">
-                    <img src="http://localhost:3000/files/Assets/MUSAMI.jpg" class="img-fluid" alt="logo" style="width: 225px; height: 225px;">
-                </div>
-            </div>
-
-            <div class="col-md-4 mt-3">
-                <div class="col">
-                    <h4>MUSAMI</h4>
-                </div>
-
-                <div class="col mt-4">
-                    <h5>Área</h5>
-                    <p>Técnico de informática - Sistemas</p>
-                </div>
-
-                <div class="col mt-3">
-                    <h5>Localização</h5>
-                    <p>São pedro, Ponta Delgada, São Miguel</p>
-                </div>
-            </div>
-
-            <div class="col-md-4 mt-5">
-                <div class="col">
-                    <h5 class="card-title">Descrição do trabalho</h5>
-                    <p class="card-text">Gestão de redes e equipamento informático da empresa</p> 
-                </div>
-            </div>
-
-            <div class="col-md-1">
-                <div class="col mt-4 mt-sm-0">
-                    <div class="row mx-auto d-flex aligns-items-center">
-                            <button type="button" class="btn btn-success "> 
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
-                                    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
-                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
-                                </svg>
-                            </button>
-                            <button type="button" class="btn btn-danger mt-2"> 
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-x-fill" viewBox="0 0 16 16">
-                                    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
-                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm4 7.793 1.146-1.147a.5.5 0 1 1 .708.708L8.707 10l1.147 1.146a.5.5 0 0 1-.708.708L8 10.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 10 6.146 8.854a.5.5 0 1 1 .708-.708L8 9.293Z"/>
-                                </svg>
-                            </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="mt-3">
     
-    <h2>Oferta confirmada</h2>
-    
-    <div class="card mt-5 shadow-lg p-3 mb-5 bg-body rounded">
-        <div class="row">
-            <div class="logo col-md-3">
-                <div class="img">
-                    <img src="http://localhost:3000/files/Assets/MUSAMI.jpg" class="img-fluid" alt="logo" style="width: 225px; height: 225px;">
-                </div>
-            </div>
-
-            <div class="col-md-4 mt-3">
-                <div class="col">
-                    <h4>MUSAMI</h4>
-                </div>
-
-                <div class="col mt-4">
-                    <h5>Área</h5>
-                    <p>Técnico de informática - Sistemas</p>
-                </div>
-
-                <div class="col mt-3">
-                    <h5>Localização</h5>
-                    <p>São pedro, Ponta Delgada, São Miguel</p>
-                </div>
-            </div>
-
-            <div class="col-md-5 mt-5">
-                <div class="col">
-                    <h5 class="card-title">Descrição do trabalho</h5>
-                    <p class="card-text">Gestão de redes e equipamento informático da empresa</p> 
-                </div>
-            </div>
-
-                </div>
-            </div>
+    <div id="ofertasConfirmadas" style="display: none">
+        <div class="mt-5">
+            <h2>Oferta confirmada</h2>
         </div>
     </div>
-</div>`)
+
+
+   
+
+    <div id="ofertasInscritas" style="display: none">
+        <div class="mt-3">
+            <h2>Inscrições pendentes</h2>
+        </div>
+    </div>
+
+
+
+    <div id="ofertasExistentes" style="display: none">
+        <div class="mt-3">
+            <h2>Ofertas existentes</h2>
+        </div>
+    </div>
+</div>
+`);
+fillOfertasFormando();
 }
 //funções
-function fillOfertasEmpresa(){
-    document.getElementById("ofertasAtivas").innerHTML = ``;
-    document.getElementById("ofertasFinalizadas").innerHTML = ``;
+function fillOfertasFormando(){
+    document.getElementById("ofertasConfirmadas").innerHTML=`<div class="mt-3"><h2>Oferta confirmada</h2></div>`
+    document.getElementById("ofertasInscritas").innerHTML=`<div class="mt-3"><h2>Inscrições pendentes</h2></div>`
+    document.getElementById("ofertasExistentes").innerHTML=`<div class="mt-3"><h2>Ofertas existentes</h2></div>`
+
     const options = {
         method: 'GET',
         headers: {
             'authorization': localStorage.getItem("token")
         }
     }
-    fetch(`http://localhost:3000/api/empresa/ofertas`,options)
+    fetch(`http://localhost:3000/api/formando/ofertas/confirmadas`,options)
     .then((res) =>{
         if(res.status=200) return res.json()
         return null
     })
     .then((data) => {
         if(data){
-            for(let i = 0; i< data.length; i++){
-                if(data[i].finalizado == '0'){
-                    console.log(data[i].descricao);
-
-                    document.getElementById("ofertasAtivas").innerHTML += `
-                    <div class="container">
-                        <div class="mt-5 shadow-lg p-3 mb-5 bg-body rounded">
-                            <div class="row">
-                                <div class="logo col-sm-3">
-                                    <div class="img">
-                                        <img src="http://localhost:3000/files/Assets/empresa.png" class="img-fluid" alt="logo" style="width: 225px; height: 225px;">
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-8 mt-3">
-                                    <div class="col">
-                                        <h2>${data[i].nome}</h2>
+            if(data.length>0){
+                document.getElementById("ofertasConfirmadas").style.display = "block";
+                
+                document.getElementById("ofertasInscritas").style.display = "none";
+                
+                document.getElementById("ofertasExistentes").style.display = "none";
+                for(let i = 0; i< data.length; i++){
+                    document.getElementById("ofertasConfirmadas").innerHTML += `
+                        <div class="container">
+                            <div class="mt-5 shadow-lg p-3 mb-5 bg-body rounded">
+                                <div class="row">
+                                    <div class="logo col-sm-3">
+                                        <div class="img">
+                                            <img src="http://localhost:3000/files/Assets/empresa.png" class="img-fluid" alt="logo" style="width: 225px; height: 225px;">
+                                        </div>
                                     </div>
 
-                                    <div class="col mt-4">
-                                        <h4 class="card-text">${data[i].titulo}</h4>
+                                    <div class="col-sm-9 mt-3">
+                                        <div class="col">
+                                            <h2>${data[i].nome}</h2>
+                                        </div>
+
+                                        <div class="col mt-4">
+                                            <h4 class="card-text">${data[i].titulo}</h4>
+                                        </div>
+                                        <div class="col mt-3">
+                                            <p style="text-align: justify">${data[i].descricao}</p> 
+                                        </div>
                                     </div>
-                                    <div class="col mt-3">
-                                        <p style="text-align: justify">${data[i].descricao}</p> 
-                                    </div>
-                                </div>
-                                <div class="col-sm-1 d-flex align-items-center">
-                                    <div class="row">
-                                        <div>
-                                            <button type="button" class="btn btn-primary mt-2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
-                                                    <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z"/>
-                                                </svg>
-                                            </button>
-                                            <button type="button" class="btn btn-success mt-2" onclick="resetModalEdicaoOferta(\`${data[i].idOferta}\`,\`${data[i].idArea}\`,\`${data[i].titulo}\`,\`${data[i].descricao}\`,\`${data[i].vagas}\`); openModal('edicaoOferta${data[i].idOferta}')">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                                </svg>
-                                            </button>
-                                            <button type="button" class="btn btn-danger mt-2" onclick="openModal('eliminacaoOferta${data[i].idOferta}')" >
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-                                                </svg>
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>`
+                        </div>`
+                }
+            }else{
+                fetch(`http://localhost:3000/api/formando/ofertas/inscritas`,options)
+                .then((res) =>{
+                    if(res.status=200) return res.json()
+                    return null
+                })
+                .then((data) => {
+                    if(data){
+                        if(data.length>0){
+                            document.getElementById("ofertasInscritas").style.display = "block";
+                            for(let i = 0; i< data.length; i++){
+                                document.getElementById("ofertasInscritas").innerHTML += `
+                                <div class="mt-5 shadow-lg p-3 mb-5 bg-body rounded">
+                                        <div class="row">
+                                            <div class="logo col-sm-3">
+                                                <div class="img">
+                                                    <img src="http://localhost:3000/files/Assets/empresa.png" class="img-fluid" alt="logo" style="width: 225px; height: 225px;">
+                                                </div>
+                                            </div>
+            
+                                            <div class="col-sm-8 mt-3">
+                                                <div class="col">
+                                                    <h2>${data[i].nome}</h2>
+                                                </div>
+            
+                                                <div class="col mt-4">
+                                                    <h4 class="card-text">${data[i].titulo}</h4>
+                                                </div>
+                                                <div class="col mt-3">
+                                                    <p style="text-align: justify">${data[i].descricao}</p> 
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1 d-flex align-items-center">
+                                                <div class="row">
+                                                    <div>
+                                                        <button type="button" class="btn btn-success mt-2" onclick="confirmar('${data[i].idOferta}')">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+                                                                <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+                                                                <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+                                                            </svg>
+                                                        </button>
+                                                        <button type="button" class="btn btn-danger mt-2" onclick="desinscrever('${data[i].idOferta}')" >
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-x-fill" viewBox="0 0 16 16">
+                                                                <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+                                                                <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm4 7.793 1.146-1.147a.5.5 0 1 1 .708.708L8.707 10l1.147 1.146a.5.5 0 0 1-.708.708L8 10.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 10 6.146 8.854a.5.5 0 1 1 .708-.708L8 9.293Z"/>
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`
+                            }
+                        }
+                    }
+                })
+                document.getElementById("ofertasExistentes").style.display = "block";
 
-                   
-                }
-                else{
-                     document.getElementById("ofertasFinalizadas").innerHTML = `<div class="container">
-                     <div class="mt-5 shadow-lg p-3 mb-5 bg-body rounded">
-                         <div class="row">
-                             <div class="logo col-sm-3">
-                                 <div class="img">
-                                     <img src="http://localhost:3000/files/Assets/empresa.png" class="img-fluid" alt="logo" style="width: 225px; height: 225px;">
-                                 </div>
-                             </div>
-                             <div class="col-sm-8 mt-3">
-                                <div class="col">
-                                     <h2>${data[i].nome}</h2>
+                fetch(`http://localhost:3000/api/formando/ofertas/`,options)
+                .then((res) =>{
+                    if(res.status=200) return res.json()
+                    return null
+                })
+                .then((data) => {
+                    if(data){
+                        if(data.length>0){
+                            for(let i = 0; i< data.length; i++){
+                                document.getElementById("ofertasExistentes").innerHTML += `
+                                <div class="mt-5 shadow-lg p-3 mb-5 bg-body rounded">
+                                        <div class="row">
+                                            <div class="logo col-sm-3">
+                                                <div class="img">
+                                                    <img src="http://localhost:3000/files/Assets/empresa.png" class="img-fluid" alt="logo" style="width: 225px; height: 225px;">
+                                                </div>
+                                            </div>
+            
+                                            <div class="col-sm-8 mt-3">
+                                                <div class="col">
+                                                    <h2>${data[i].nome}</h2>
+                                                </div>
+            
+                                                <div class="col mt-4">
+                                                    <h4 class="card-text">${data[i].titulo}</h4>
+                                                </div>
+                                                <div class="col mt-3">
+                                                    <p style="text-align: justify">${data[i].descricao}</p> 
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1 d-flex align-items-center">
+                                                <div class="row">
+                                                    <div>
+                                                        <button type="button" class="btn btn-primary mt-2" onclick="inscrever('${data[i].idOferta}');">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-plus-fill" viewBox="0 0 16 16">
+                                                                <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"></path>
+                                                                <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm4.5 6V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5a.5.5 0 0 1 1 0Z"></path>
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`
+                            }
+                        }else{
+                            document.getElementById("ofertasExistentes").innerHTML += `                    
+                            <div class="container">
+                                <div class="card mt-5 shadow-lg p-3 mb-5 bg-body rounded">
+                                    <div class="d-flex justify-content-center mt-5 mb-5">
+                                        <h1 style="text-align: center;">Nenhuma oferta disponivel</h1>
+                                    </div>
                                 </div>
-                 
-                                <div class="col mt-4">
-                                     <h4 class="card-text">${data[i].titulo}</h4>
-                                </div>
-                                <div class="col mt-3">
-                                     <p style="text-align: justify">${data[i].descricao}</p>
-                                </div>
-                             </div>
-                             <div class="col-sm-1 d-flex align-items-center">
-                                 <div class="row">
-                                     <div>
-                                         <button type="button" class="btn btn-primary mt-2">
-                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
-                                                 <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z"/>
-                                             </svg>
-                                         </button>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
-                 `;
-                }
+                            </div>
+                        `
+                        }
+                    }
+                })
+                .catch((err)=>{
+                    console.log(err)
+                    alert('Erro na recolha das ofertas')
+                })
             }
-            if(document.getElementById("ofertasAtivas").innerHTML == '')
-                    document.getElementById("ofertasAtivas").innerHTML = `
-                    <div class="container">
-                        <div class="card mt-5 shadow-lg p-3 mb-5 bg-body rounded">
-                            <div class="d-flex justify-content-center mt-5 mb-5">
-                                <h1 style="text-align: center;">Nenhuma oferta ativa</h1>
-                            </div>
-                        </div>
-                    </div>
-                    `;
-                if(document.getElementById("ofertasFinalizadas").innerHTML == ''){
-                    document.getElementById("ofertasFinalizadas").innerHTML = `
-                    <div class="container">
-                        <div class="card mt-5 shadow-lg p-3 mb-5 bg-body rounded">
-                            <div class="d-flex justify-content-center mt-5 mb-5">
-                                <h1 style="text-align: center;">Nenhuma oferta finalizada</h1>
-                            </div>
-                        </div>
-                    </div>
-                    `;
-                }
         }
-        })
+    })
     .catch((err)=>{
         console.log(err)
         alert('Erro na recolha das ofertas')
     })
 }
+function inscrever(idOferta){
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+            Authorization :  localStorage.getItem("token")
+        },
+        body: JSON.stringify({
+            idOferta: idOferta,
+        })
+    }
 
+    fetch('http://localhost:3000/api/formando/ofertas/inscrever', options)
+    .then((res) => {
+        if(res.status===200){
+            fillOfertasFormando();
+        }
+    })
+    .catch((error) => console.log(error));
+}
+
+function confirmar(idOferta){
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-type': 'application/json',
+            Authorization :  localStorage.getItem("token")
+        },
+        body: JSON.stringify({
+            idOferta: idOferta,
+        })
+    }
+
+    fetch('http://localhost:3000/api/formando/ofertas/confirmar', options)
+    .then((res) => {
+        if(res.status===200){
+            fillOfertasFormando();
+        }
+    })
+    .catch((error) => console.log(error));
+    }
+
+    function desinscrever(idOferta){
+        const options = {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json',
+                Authorization :  localStorage.getItem("token")
+            },
+            body: JSON.stringify({
+                idOferta: idOferta,
+            })
+        }
+    
+        fetch('http://localhost:3000/api/formando/ofertas/desinscrever', options)
+        .then((res) => {
+            if(res.status===200){
+                fillOfertasFormando();
+            }
+        })
+        .catch((error) => console.log(error));
+        }
+
+
+    
 /****   Empresa   ****/
 
 //renders
